@@ -11,13 +11,14 @@ export function initExperiences() {
 
   if (slides.length === 0) return;
 
-  /** Figma: positions in 412px stage, card size for 314px content lane (378 − 32×2) */
-  const DESIGN_LAYOUT_W = 412;
-  const DESIGN_CONTENT_W = 314;
-  const DESIGN_CARD_W = 205;
-  const DESIGN_CARD_H = 274;
-  const SCALE_INACTIVE = 163.2 / 205;
-  const OFFSET_Y_INACTIVE = 27.4;
+  /** Figma 614:2836 — stage 412×274, gap 14px between cards */
+  const DESIGN_STAGE_W = 412;
+  const DESIGN_ACTIVE_W = 205;
+  const DESIGN_ACTIVE_H = 274;
+  const DESIGN_INACTIVE_W = 163.2;
+  const DESIGN_INACTIVE_H = 219.2;
+  const DESIGN_INACTIVE_Y = 27.4;
+  const DESIGN_PROGRESS_X = 65;
   const PEEK_LEFT = -107.2;
   const SWIPE_THRESHOLD = 40;
   const count = slides.length;
@@ -47,22 +48,22 @@ export function initExperiences() {
   let moved = false;
   let suppressHitClick = false;
 
-  function posScale() {
-    const w = stage.clientWidth || DESIGN_LAYOUT_W;
-    return w / DESIGN_LAYOUT_W;
+  function layoutScale() {
+    const w = stage.clientWidth || DESIGN_STAGE_W;
+    return w / DESIGN_STAGE_W;
   }
 
-  /** Scale card size to content width so phones match Figma proportions, not shrink */
-  function sizeScale() {
-    const w = stage.clientWidth || DESIGN_CONTENT_W;
-    return w / DESIGN_CONTENT_W;
-  }
+  function applyCard(card, slot, scale) {
+    const isActive = slot.active;
+    const w = isActive ? DESIGN_ACTIVE_W * scale : DESIGN_INACTIVE_W * scale;
+    const h = isActive ? DESIGN_ACTIVE_H * scale : DESIGN_INACTIVE_H * scale;
 
-  function styleCard(card, isActive, scale) {
-    const offsetY = OFFSET_Y_INACTIVE * scale;
+    card.style.width = `${w}px`;
+    card.style.height = `${h}px`;
+    card.style.left = `${slot.x * scale}px`;
     card.style.transform = isActive
-      ? "translate3d(0, 0, 0) scale(1)"
-      : `translate3d(0, ${offsetY}px, 0) scale(${SCALE_INACTIVE})`;
+      ? "translate3d(0, 0, 0)"
+      : `translate3d(0, ${DESIGN_INACTIVE_Y * scale}px, 0)`;
     card.classList.toggle("is-active", isActive);
   }
 
@@ -70,27 +71,23 @@ export function initExperiences() {
     track.style.transform = dragX ? `translate3d(${dragX}px, 0, 0)` : "translate3d(0, 0, 0)";
   }
 
-  function syncCarouselHeight(scale) {
-    const h = DESIGN_CARD_H * scale;
+  function syncLayoutMetrics(scale) {
+    const h = DESIGN_ACTIVE_H * scale;
     stage.style.height = `${h}px`;
     track.style.height = `${h}px`;
     stage.style.setProperty("--days-scale", String(scale));
+    stage.style.setProperty("--days-progress-x", `${DESIGN_PROGRESS_X * scale}px`);
   }
 
   function layoutCards() {
-    const scalePos = posScale();
-    const scaleSize = sizeScale();
-    const cardW = DESIGN_CARD_W * scaleSize;
+    const scale = layoutScale();
     const layout = LAYOUTS[active];
 
-    syncCarouselHeight(scaleSize);
+    syncLayoutMetrics(scale);
 
     slides.forEach((card, i) => {
       const slot = layout[i];
-      card.style.width = `${cardW}px`;
-      card.style.height = `${DESIGN_CARD_H * scaleSize}px`;
-      card.style.left = `${slot.x * scalePos}px`;
-      styleCard(card, slot.active, scaleSize);
+      applyCard(card, slot, scale);
       card.classList.remove("is-prev", "is-next");
 
       const rel = (i - active + count) % count;
