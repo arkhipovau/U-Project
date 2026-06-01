@@ -11,8 +11,9 @@ export function initExperiences() {
 
   if (slides.length === 0) return;
 
-  /** Figma layout coords at 412px-wide stage */
+  /** Figma: positions in 412px stage, card size for 314px content lane (378 − 32×2) */
   const DESIGN_LAYOUT_W = 412;
+  const DESIGN_CONTENT_W = 314;
   const DESIGN_CARD_W = 205;
   const DESIGN_CARD_H = 274;
   const SCALE_INACTIVE = 163.2 / 205;
@@ -46,9 +47,15 @@ export function initExperiences() {
   let moved = false;
   let suppressHitClick = false;
 
-  function layoutScale() {
+  function posScale() {
     const w = stage.clientWidth || DESIGN_LAYOUT_W;
     return w / DESIGN_LAYOUT_W;
+  }
+
+  /** Scale card size to content width so phones match Figma proportions, not shrink */
+  function sizeScale() {
+    const w = stage.clientWidth || DESIGN_CONTENT_W;
+    return w / DESIGN_CONTENT_W;
   }
 
   function styleCard(card, isActive, scale) {
@@ -71,18 +78,19 @@ export function initExperiences() {
   }
 
   function layoutCards() {
-    const scale = layoutScale();
-    const cardW = DESIGN_CARD_W * scale;
+    const scalePos = posScale();
+    const scaleSize = sizeScale();
+    const cardW = DESIGN_CARD_W * scaleSize;
     const layout = LAYOUTS[active];
 
-    syncCarouselHeight(scale);
+    syncCarouselHeight(scaleSize);
 
     slides.forEach((card, i) => {
       const slot = layout[i];
       card.style.width = `${cardW}px`;
-      card.style.height = `${DESIGN_CARD_H * scale}px`;
-      card.style.left = `${slot.x * scale}px`;
-      styleCard(card, slot.active, scale);
+      card.style.height = `${DESIGN_CARD_H * scaleSize}px`;
+      card.style.left = `${slot.x * scalePos}px`;
+      styleCard(card, slot.active, scaleSize);
       card.classList.remove("is-prev", "is-next");
 
       const rel = (i - active + count) % count;

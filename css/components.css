@@ -177,7 +177,8 @@
 .location-card {
   flex: 0 0 var(--content-width);
   width: var(--content-width);
-  height: 420px;
+  height: 100%;
+  max-height: 420px;
   border-radius: 16px;
   border: 1px solid rgba(229, 218, 203, 0.7);
   background: rgba(255, 255, 255, 0.01);

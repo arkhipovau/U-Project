@@ -21,11 +21,48 @@ body {
   .hero {
     width: var(--app-width);
     max-width: none;
+    height: 100dvh;
+    height: 100svh;
+    min-height: 680px;
+    max-height: 100dvh;
   }
 
   .hero__bg-layer {
     left: -12%;
     width: 124%;
+  }
+
+  .hero__fade {
+    top: auto;
+    bottom: 0;
+    height: min(62px, 10vh);
+  }
+
+  .hero__content {
+    top: max(108px, calc(env(safe-area-inset-top, 0px) + 96px));
+    bottom: calc(var(--dock-safe) + 12px);
+    gap: 12px;
+  }
+
+  .heading-hero {
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .hero__cards-wrap {
+    max-height: none;
+  }
+
+  .hero__cards {
+    min-height: 0;
+  }
+
+  .location-card {
+    height: 100%;
+    max-height: 400px;
+    min-height: 240px;
   }
 
   .opening__sticky {
