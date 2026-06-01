@@ -590,12 +590,12 @@
   max-width: var(--max-width);
   min-height: 861px;
   margin: 0 auto;
-  padding-block: 48px 64px;
+  padding-block: 48px 45px;
   padding-inline: var(--pad-left) var(--pad-right);
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 22px;
+  gap: 0;
   background: #f9f5ea;
 }
 
@@ -604,6 +604,7 @@
   flex-direction: column;
   gap: 12px;
   width: 100%;
+  margin-bottom: 31px;
 }
 
 .beyond__title {
@@ -633,8 +634,8 @@
   color: inherit;
 }
 
-.beyond__card--yacht {
-  margin-top: 8px;
+.beyond__card--jet {
+  margin-bottom: 28px;
 }
 
 .beyond__image-wrap {
