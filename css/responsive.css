@@ -1,4 +1,4 @@
-/* Mobile / narrow viewport — design frame 378px, scales down to ~320px */
+/* Fluid width on all phones — design cap 378px via --max-width in tokens.css */
 
 html {
   overflow-x: hidden;
@@ -9,39 +9,19 @@ body {
   padding-bottom: var(--dock-safe);
 }
 
-.page {
+.page,
+.menu {
   width: 100%;
-  max-width: min(var(--max-width), 100%);
+  max-width: var(--max-width);
 }
 
-/* Full-width frame sections */
-:is(
-  .hero,
-  .ecosystem,
-  .opening__sticky,
-  .beyond,
-  .days,
-  .cta-final,
-  .footer
-) {
-  width: 100%;
-  max-width: min(var(--max-width), 100%);
-}
-
-.heading-hero {
-  width: 100%;
-  max-width: 100%;
-  padding-left: var(--space-page);
-  padding-right: var(--space-page);
-  box-sizing: border-box;
-}
-
-/* Inset content blocks (was fixed 314px @ 32px) */
+/* Inset blocks: was 32px + 314px fixed */
 :is(
   .days__intro,
   .beyond__intro,
   .opening__content,
   .opening__copy,
+  .opening__footer,
   .cta-final__content,
   .footer__inner
 ) {
@@ -62,11 +42,13 @@ body {
   .opening__title,
   .opening__body,
   .cta-final__title,
+  .cta-final__content,
   .footer__label,
   .footer__dest-list,
   .footer__links,
   .footer__destinations,
-  .footer__legal
+  .footer__legal,
+  .footer__links a
 ) {
   width: 100%;
   max-width: none;
@@ -78,51 +60,26 @@ body {
   width: auto;
 }
 
-.beyond__image-wrap,
-.beyond__image {
+.beyond__image-wrap {
   width: 100%;
-  max-width: none;
 }
 
-.ecosystem__tabs-block,
-.ecosystem__tabs-line {
+.beyond__image {
   width: 100%;
+  height: auto;
+  aspect-ratio: 314 / 200;
 }
 
 .ecosystem__tabs {
   width: calc(100% - var(--space-page) * 2);
-  max-width: 314px;
-}
-
-.ecosystem__title,
-.ecosystem__body {
-  max-width: none;
-}
-
-.days {
-  overflow-x: clip;
-  min-height: 621px;
-  height: auto;
-  padding-bottom: calc(var(--dock-safe) + 24px);
-}
-
-.days__carousel {
   left: var(--space-page);
-  right: var(--space-page);
-  width: auto;
-  max-width: var(--days-stage-max);
-  height: auto;
-  min-height: 290px;
-}
-
-.days__stage,
-.days__track {
-  width: 100%;
-  max-width: var(--days-stage-max);
+  right: auto;
+  max-width: none;
 }
 
 .days__progress {
   left: 50%;
+  right: auto;
   transform: translateX(-50%);
 }
 
@@ -143,21 +100,37 @@ body {
 }
 
 .footer {
-  min-height: 510px;
-  height: auto;
   padding-bottom: calc(var(--dock-safe) + 32px);
 }
 
-.location-card {
-  flex: 0 0 min(314px, var(--content-width));
+.days {
+  padding-bottom: calc(var(--dock-safe) + 24px);
 }
 
-.cta-final__content {
-  max-width: var(--content-width);
+/* Opening photos — center and fill sticky frame on narrow viewports */
+@media (max-width: 420px) {
+  .opening__bg-media,
+  .opening__bg-stack {
+    left: 50% !important;
+    right: auto !important;
+    width: 130% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    transform: translateX(-50%) !important;
+    height: 100% !important;
+    top: 0;
+    object-fit: cover;
+  }
+
+  .opening__bg-stack img {
+    object-fit: cover;
+  }
 }
 
-.opening__footer {
-  left: var(--space-page);
-  right: var(--space-page);
-  width: auto;
+.cta-final__bg {
+  left: 50%;
+  right: auto;
+  width: 200%;
+  max-width: none;
+  margin-left: -100%;
 }

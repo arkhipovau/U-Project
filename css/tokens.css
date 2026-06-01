@@ -23,9 +23,9 @@
 
   --space-page: clamp(16px, 8.47vw, 32px);
   --space-gutter: 10px;
-  --max-width: 378px;
+  --max-width: min(378px, 100vw);
   --content-width: min(314px, calc(100vw - var(--space-page) * 2));
-  --days-stage-max: 412px;
+  --days-stage-max: min(412px, calc(100vw - var(--space-page) * 2));
 
   --dock-height: 40px;
   --dock-offset: 10px;

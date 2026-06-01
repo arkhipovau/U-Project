@@ -3,7 +3,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 378px;
+  max-width: var(--max-width);
   height: 794px;
   margin: 0 auto;
   overflow: hidden;
@@ -76,7 +76,8 @@
   display: flex;
   gap: 22px;
   height: 100%;
-  padding: 0 calc((100% - 314px) / 2);
+  padding: 0 var(--space-page);
+  scroll-padding: 0 var(--space-page);
   overflow-x: auto;
   overflow-y: clip;
   scroll-snap-type: x mandatory;
@@ -115,7 +116,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 378px;
+  max-width: var(--max-width);
   min-height: 706px;
   margin: 0 auto;
   background: #f9f5ea;
@@ -135,7 +136,8 @@
 
 .ecosystem__title {
   margin: 0;
-  max-width: 314px;
+  width: 100%;
+  max-width: none;
   font-family: var(--font-serif);
   font-weight: 300;
   font-size: 26px;
@@ -146,7 +148,8 @@
 
 .ecosystem__body {
   margin: 0;
-  max-width: 314px;
+  width: 100%;
+  max-width: none;
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 16px;
@@ -178,8 +181,9 @@
 .ecosystem__tabs-block {
   position: absolute;
   left: 0;
+  right: 0;
   top: 32px;
-  width: 378px;
+  width: 100%;
   height: 29px;
   z-index: 2;
 }
@@ -187,8 +191,9 @@
 .ecosystem__tabs-line {
   position: absolute;
   left: 0;
+  right: 0;
   top: 29px;
-  width: 378px;
+  width: 100%;
   height: 0;
   margin: 0;
   border: none;
@@ -329,7 +334,7 @@
   position: sticky;
   top: 0;
   width: 100%;
-  max-width: 378px;
+  max-width: var(--max-width);
   height: 682px;
   margin: 0 auto;
   overflow: hidden;
@@ -564,7 +569,7 @@
 .beyond {
   position: relative;
   width: 100%;
-  max-width: 378px;
+  max-width: var(--max-width);
   height: 861px;
   margin: 0 auto;
   background: #f9f5ea;
@@ -675,11 +680,12 @@
 .days {
   position: relative;
   width: 100%;
-  max-width: 378px;
-  height: 621px;
+  max-width: var(--max-width);
+  min-height: 621px;
+  height: auto;
   margin: 0 auto;
   background: #f9f5ea;
-  overflow: visible;
+  overflow-x: clip;
 }
 
 .days__intro {
@@ -714,10 +720,13 @@
 
 .days__carousel {
   position: absolute;
-  left: 32px;
+  left: var(--space-page);
+  right: var(--space-page);
   top: 263px;
-  width: 412px;
-  height: 294px;
+  width: auto;
+  max-width: var(--days-stage-max);
+  height: auto;
+  min-height: 290px;
 }
 
 /* Viewport 412×274; track 559×274 slides like Figma */
@@ -726,7 +735,8 @@
   --days-duration: 350ms;
 
   position: relative;
-  width: 412px;
+  width: 100%;
+  max-width: var(--days-stage-max);
   height: 274px;
   overflow: hidden;
   touch-action: pan-y;
@@ -744,14 +754,14 @@
 
 .days__track {
   position: relative;
-  width: 412px;
+  width: 100%;
+  max-width: var(--days-stage-max);
   height: 274px;
 }
 
 .days__card {
   position: absolute;
   top: 0;
-  width: 205px;
   height: 274px;
   overflow: hidden;
   transform: translate3d(0, 0, 0) scale(1);
@@ -903,7 +913,7 @@
 .cta-final {
   position: relative;
   width: 100%;
-  max-width: 378px;
+  max-width: var(--max-width);
   height: 387px;
   margin: 0 auto;
   background: #e6dccd;
@@ -972,8 +982,9 @@
 .footer {
   position: relative;
   width: 100%;
-  max-width: 378px;
-  height: 510px;
+  max-width: var(--max-width);
+  min-height: 510px;
+  height: auto;
   margin: 0 auto;
   background: #f9f5ea;
 }
