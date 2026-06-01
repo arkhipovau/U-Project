@@ -62,10 +62,9 @@ export function initOpening() {
     if (label) label.textContent = OPENING_SLIDES[index].label;
     if (progressEl) {
       progressEl.dataset.active = String(index);
-      const pillOffsets = [0, 14, 28];
-      const next = pillOffsets[Math.min(index + 1, pillOffsets.length - 1)];
-      const x = pillOffsets[index] + (next - pillOffsets[index]) * local;
-      progressEl.style.setProperty("--pill-x", `${x}px`);
+      progressEl.querySelectorAll(".opening__progress-item").forEach((dot, i) => {
+        dot.setAttribute("aria-current", i === index ? "true" : "false");
+      });
     }
   }
 
@@ -85,7 +84,8 @@ export function initOpening() {
       sticky.style.width = "";
     } else {
       sticky.classList.add("is-pinned");
-      sticky.style.width = `${section.offsetWidth}px`;
+      const pinW = section.getBoundingClientRect().width;
+      sticky.style.width = `${pinW}px`;
     }
   }
 

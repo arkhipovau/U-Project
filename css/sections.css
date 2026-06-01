@@ -346,7 +346,7 @@
 .opening {
   position: relative;
   height: 300vh;
-  background: #ffffff;
+  background: #f9f5ea;
 }
 
 .opening__sticky {
@@ -357,7 +357,7 @@
   height: min(682px, 100dvh);
   margin: 0 auto;
   overflow: hidden;
-  background: #ffffff;
+  background: transparent;
   z-index: 2;
 }
 
@@ -460,7 +460,7 @@
   flex-direction: column;
   gap: 12px;
   width: 100%;
-  max-width: 100%;
+  max-width: min(314px, 100%);
   box-sizing: border-box;
 }
 
@@ -542,78 +542,49 @@
   color: #ffffff;
 }
 
-/* Progress rail (Figma 693:2988 — 69×2, pill 39px at x=2|16|30) */
+/* Same pattern as .days__progress — white on photo (Figma 693:2988) */
 .opening__progress {
-  width: 69px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  width: 63px;
   height: 4px;
-  padding: 0 0 2px 2px;
+  padding: 0;
 }
 
-.opening__progress-rail {
-  position: relative;
-  width: 69px;
+.opening__progress-item {
+  flex-shrink: 0;
+  width: 4px;
   height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  padding: 0;
+  cursor: default;
+  appearance: none;
+  pointer-events: none;
 }
 
-.opening__progress-pill {
-  position: absolute;
-  top: 0;
-  left: 0;
+.opening__progress[data-active="0"] .opening__progress-item:nth-child(1) {
   width: 39px;
   height: 4px;
   border-radius: 2px;
   background: #ffffff;
-  transform: translateX(var(--pill-x, 0px));
-  transition: transform 0.2s linear;
 }
 
-.opening__progress[data-active="1"] .opening__progress-pill {
-  --pill-x: 14px;
-}
-
-.opening__progress[data-active="2"] .opening__progress-pill {
-  --pill-x: 28px;
-}
-
-.opening__progress-marker {
-  position: absolute;
-  top: 0;
-  width: 4px;
+.opening__progress[data-active="1"] .opening__progress-item:nth-child(2) {
+  width: 39px;
   height: 4px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
-  display: none;
+  border-radius: 2px;
+  background: #ffffff;
 }
 
-.opening__progress-marker--p2 {
-  left: 0;
-}
-
-.opening__progress-marker--p16 {
-  left: 14px;
-}
-
-.opening__progress-marker--p55 {
-  left: 53px;
-}
-
-.opening__progress-marker--p69 {
-  left: 67px;
-}
-
-.opening__progress[data-active="0"] .opening__progress-marker--p55,
-.opening__progress[data-active="0"] .opening__progress-marker--p69 {
-  display: block;
-}
-
-.opening__progress[data-active="1"] .opening__progress-marker--p2,
-.opening__progress[data-active="1"] .opening__progress-marker--p69 {
-  display: block;
-}
-
-.opening__progress[data-active="2"] .opening__progress-marker--p2,
-.opening__progress[data-active="2"] .opening__progress-marker--p16 {
-  display: block;
+.opening__progress[data-active="2"] .opening__progress-item:nth-child(3) {
+  width: 39px;
+  height: 4px;
+  border-radius: 2px;
+  background: #ffffff;
 }
 
 /* —— Beyond villas (Figma 614:2783 — 378×861) —— */
