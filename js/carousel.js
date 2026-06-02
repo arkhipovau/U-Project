@@ -42,6 +42,9 @@ export function initCarousel(track, options = {}) {
   let moved = false;
   let jumping = false;
   let touchSnapTimer = null;
+  const SNAP_IDLE_MS = 70;
+  const SNAP_NEAR_PX = 10;
+  const SNAP_SMOOTH_MIN_PX = 28;
 
   track.classList.add("carousel-track");
 
@@ -181,16 +184,38 @@ export function initCarousel(track, options = {}) {
     scheduleAutoplay();
   }
 
-  function snapNearest(smooth = true) {
-    if (jumpIfOnClone()) return;
-    setActive(readActiveIndex(), { smooth, emit: true });
+  function snapOffset() {
+    const scrollIndex = readScrollIndex();
+    const target = scrollTarget(scrollItems[scrollIndex]);
+    return {
+      scrollIndex,
+      target,
+      distance: Math.abs(track.scrollLeft - target),
+    };
   }
 
-  function scheduleTouchSnap(delay = 180) {
+  function snapNearest(smooth = true) {
+    if (jumpIfOnClone()) return;
+
+    const { scrollIndex, distance } = snapOffset();
+    if (distance < SNAP_NEAR_PX) {
+      const logical = scrollIndexToLogical(scrollIndex);
+      if (logical !== activeIndex) {
+        activeIndex = logical;
+        onActive?.(logical, logicalItems[logical]);
+      }
+      return;
+    }
+
+    const useSmooth = smooth && distance > SNAP_SMOOTH_MIN_PX;
+    setActive(scrollIndexToLogical(scrollIndex), { smooth: useSmooth, emit: true });
+  }
+
+  function scheduleTouchSnap(delay = SNAP_IDLE_MS) {
     clearTimeout(touchSnapTimer);
     touchSnapTimer = setTimeout(() => {
       if (dragging || jumping) return;
-      if (!jumpIfOnClone()) snapNearest(true);
+      snapNearest(true);
     }, delay);
   }
 
@@ -204,8 +229,8 @@ export function initCarousel(track, options = {}) {
       if (!("onscrollend" in window)) {
         clearTimeout(scrollIdleTimer);
         scrollIdleTimer = setTimeout(() => {
-          if (!jumpIfOnClone()) snapNearest(true);
-        }, 180);
+          snapNearest(true);
+        }, SNAP_IDLE_MS);
       }
     },
     { passive: true }
@@ -216,7 +241,7 @@ export function initCarousel(track, options = {}) {
       "scrollend",
       () => {
         if (dragging || jumping) return;
-        if (!jumpIfOnClone()) snapNearest(true);
+        snapNearest(true);
       },
       { passive: true }
     );
@@ -235,7 +260,7 @@ export function initCarousel(track, options = {}) {
     () => {
       scheduleAutoplay();
       // iOS may stop between snap points; enforce a final snap.
-      scheduleTouchSnap(180);
+      scheduleTouchSnap(SNAP_IDLE_MS);
     },
     { passive: true }
   );
@@ -243,7 +268,7 @@ export function initCarousel(track, options = {}) {
     "touchcancel",
     () => {
       scheduleAutoplay();
-      scheduleTouchSnap(120);
+      scheduleTouchSnap(40);
     },
     { passive: true }
   );
