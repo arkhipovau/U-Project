@@ -102,8 +102,7 @@
   scroll-behavior: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  /* Vertical page scroll first; horizontal swipe still scrolls this track. */
-  touch-action: pan-y;
+  touch-action: pan-x pinch-zoom;
   overscroll-behavior-x: contain;
   overscroll-behavior-y: auto;
   cursor: grab;
