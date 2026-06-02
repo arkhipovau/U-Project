@@ -19,7 +19,7 @@ body {
   }
 
   .hero {
-    --hero-content-top: max(154px, calc(env(safe-area-inset-top, 0px) + 142px));
+    --hero-content-top: max(160px, calc(env(safe-area-inset-top, 0px) + 148px));
     --hero-content-bottom: calc(var(--dock-safe) - 8px);
 
     width: var(--app-width);
@@ -47,6 +47,7 @@ body {
   }
 
   .heading-hero {
+    margin: 0 0 36px;
     font-size: 22px;
     line-height: 1.15;
     letter-spacing: -0.5px;
@@ -54,7 +55,7 @@ body {
   }
 
   .hero__cards-wrap {
-    margin-top: var(--hero-title-cards-gap);
+    margin-top: 0;
     height: 420px;
     max-height: 420px;
   }
