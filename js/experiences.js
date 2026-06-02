@@ -17,7 +17,6 @@ export function initExperiences() {
   const DESIGN_ACTIVE_H = 274;
   const DESIGN_INACTIVE_W = 163.2;
   const DESIGN_INACTIVE_H = 219.2;
-  const DESIGN_INACTIVE_Y = 0;
   const DESIGN_PROGRESS_X = 65;
   const PEEK_LEFT = -107.2;
   const SWIPE_THRESHOLD = 40;
@@ -69,9 +68,7 @@ export function initExperiences() {
 
     card.classList.toggle("is-teleport", shouldTeleport);
     card.style.left = `${left}px`;
-    card.style.transform = isActive
-      ? "translate3d(0, 0, 0)"
-      : `translate3d(0, ${DESIGN_INACTIVE_Y * scale}px, 0)`;
+    card.style.transform = "translate3d(0, 0, 0)";
     card.classList.toggle("is-active", isActive);
 
     card.style.opacity = "1";
