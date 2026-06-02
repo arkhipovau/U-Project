@@ -786,6 +786,11 @@
   cursor: grabbing;
 }
 
+.days__stage.is-instant .days__card,
+.days__stage.is-instant .days__track {
+  transition: none !important;
+}
+
 .days__track {
   position: relative;
   width: 100%;
@@ -946,18 +951,17 @@
   max-width: var(--max-width);
   height: 387px;
   margin: 0 auto;
-  background: #e6dccd;
+  background: var(--color-cream-warm, #e6dccd);
   overflow: hidden;
 }
 
+/* Figma 614:2853 — 773×435 at (-191, 188); frame fill #E6DCCD shows above */
 .cta-final__bg {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
+  left: -191px;
+  top: 188px;
+  width: 773px;
+  height: 435px;
   filter: none;
   pointer-events: none;
   overflow: hidden;
@@ -965,15 +969,10 @@
 
 .cta-final__bg img {
   display: block;
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
-  max-width: none;
-  transform: none;
   object-fit: cover;
-  object-position: center 82%;
+  object-position: center center;
 }
 
 .cta-final__content {

@@ -41,7 +41,20 @@ export function initExperiences() {
     ],
   ];
 
+  /** Seamless loop: last → first (forward) / first → last (backward) */
+  const WRAP_FORWARD_LAYOUT = [
+    { x: 0, active: true },
+    { x: 219, active: false },
+    { x: PEEK_LEFT, active: false },
+  ];
+  const WRAP_BACKWARD_LAYOUT = [
+    { x: 219, active: false },
+    { x: PEEK_LEFT, active: false },
+    { x: 0, active: true },
+  ];
+
   let active = 0;
+  let isWrapping = false;
   let dragging = false;
   let dragX = 0;
   let startX = 0;
@@ -99,18 +112,32 @@ export function initExperiences() {
     stage.style.setProperty("--days-progress-x", `${DESIGN_PROGRESS_X * scale}px`);
   }
 
-  function layoutCards() {
-    const scale = layoutScale();
-    const layout = LAYOUTS[active];
+  function syncProgress() {
+    progress.dataset.active = String(active);
+    dots.forEach((dot, i) => {
+      dot.setAttribute("aria-current", i === active ? "true" : "false");
+    });
+  }
 
+  function setInstant(on) {
+    stage.classList.toggle("is-instant", on);
+  }
+
+  function slideDirection(from, to) {
+    const delta = (to - from + count) % count;
+    if (delta === 0) return 0;
+    return delta <= count / 2 ? 1 : -1;
+  }
+
+  function applyLayout(layout, activeIndex) {
+    const scale = layoutScale();
     syncLayoutMetrics(scale);
 
     slides.forEach((card, i) => {
-      const slot = layout[i];
-      applyCard(card, slot, scale);
+      applyCard(card, layout[i], scale);
       card.classList.remove("is-prev", "is-next");
 
-      const rel = (i - active + count) % count;
+      const rel = (i - activeIndex + count) % count;
       if (rel === count - 1) card.classList.add("is-prev");
       if (rel === 1) card.classList.add("is-next");
     });
@@ -119,15 +146,65 @@ export function initExperiences() {
     applyDragOpacity();
   }
 
-  function goTo(index) {
-    active = ((index % count) + count) % count;
-    dragX = 0;
-    layoutCards();
+  function layoutCards() {
+    applyLayout(LAYOUTS[active], active);
+  }
 
-    progress.dataset.active = String(active);
-    dots.forEach((dot, i) => {
-      dot.setAttribute("aria-current", i === active ? "true" : "false");
-    });
+  function afterWrapTransition(done) {
+    let pending = slides.length;
+    const handler = (e) => {
+      if (e.propertyName !== "left") return;
+      pending -= 1;
+      if (pending > 0) return;
+      slides.forEach((card) => card.removeEventListener("transitionend", handler));
+      done();
+    };
+    slides.forEach((card) => card.addEventListener("transitionend", handler));
+  }
+
+  function finishWrap(nextIndex) {
+    setInstant(true);
+    active = nextIndex;
+    layoutCards();
+    syncProgress();
+    void stage.offsetHeight;
+    setInstant(false);
+    isWrapping = false;
+  }
+
+  function runWrapForward(nextIndex) {
+    isWrapping = true;
+    applyLayout(WRAP_FORWARD_LAYOUT, nextIndex);
+    afterWrapTransition(() => finishWrap(nextIndex));
+  }
+
+  function runWrapBackward(nextIndex) {
+    isWrapping = true;
+    applyLayout(WRAP_BACKWARD_LAYOUT, nextIndex);
+    afterWrapTransition(() => finishWrap(nextIndex));
+  }
+
+  function goTo(index) {
+    if (isWrapping) return;
+
+    const next = ((index % count) + count) % count;
+    if (next === active) return;
+
+    const dir = slideDirection(active, next);
+    dragX = 0;
+
+    if (dir === 1 && active === count - 1 && next === 0) {
+      runWrapForward(next);
+      return;
+    }
+    if (dir === -1 && active === 0 && next === count - 1) {
+      runWrapBackward(next);
+      return;
+    }
+
+    active = next;
+    layoutCards();
+    syncProgress();
   }
 
   function endDrag(pointerId) {
