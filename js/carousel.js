@@ -1,5 +1,5 @@
 /**
- * Horizontal carousel: touch scroll, pointer drag, snap, autoplay, optional infinite loop.
+ * Horizontal carousel: native touch scroll + optional loop, autoplay, desktop drag.
  */
 export function initCarousel(track, options = {}) {
   const {
@@ -7,7 +7,7 @@ export function initCarousel(track, options = {}) {
     snap = "center",
     autoplayMs = 0,
     loop = false,
-    lightTouch = false,
+    nativeScroll = false,
     onActive,
   } = options;
 
@@ -42,11 +42,9 @@ export function initCarousel(track, options = {}) {
   let startScroll = 0;
   let moved = false;
   let jumping = false;
-  let touchSnapTimer = null;
-  let touching = false;
-  const SNAP_IDLE_MS = lightTouch ? 50 : 70;
-  const SNAP_NEAR_PX = 10;
-  const SNAP_SMOOTH_MIN_PX = lightTouch ? 36 : 28;
+  let scrollIdleTimer = null;
+
+  const STUCK_SNAP_PX = 36;
 
   track.classList.add("carousel-track");
 
@@ -93,6 +91,15 @@ export function initCarousel(track, options = {}) {
 
   function readActiveIndex() {
     return scrollIndexToLogical(readScrollIndex());
+  }
+
+  function snapDistance() {
+    const scrollIndex = readScrollIndex();
+    const target = scrollTarget(scrollItems[scrollIndex]);
+    return {
+      scrollIndex,
+      distance: Math.abs(track.scrollLeft - target),
+    };
   }
 
   function jumpIfOnClone() {
@@ -186,59 +193,46 @@ export function initCarousel(track, options = {}) {
     scheduleAutoplay();
   }
 
-  function snapOffset() {
-    const scrollIndex = readScrollIndex();
-    const target = scrollTarget(scrollItems[scrollIndex]);
-    return {
-      scrollIndex,
-      target,
-      distance: Math.abs(track.scrollLeft - target),
-    };
-  }
-
+  /** Programmatic snap — desktop drag / autoplay only when nativeScroll is on. */
   function snapNearest(smooth = true) {
     if (jumpIfOnClone()) return;
 
-    const { scrollIndex, distance } = snapOffset();
-    if (distance < SNAP_NEAR_PX) {
-      const logical = scrollIndexToLogical(scrollIndex);
-      if (logical !== activeIndex) {
-        activeIndex = logical;
-        onActive?.(logical, logicalItems[logical]);
-      }
-      return;
-    }
+    const { scrollIndex, distance } = snapDistance();
+    if (distance < 8) return;
 
-    const useSmooth = smooth && distance > SNAP_SMOOTH_MIN_PX;
+    const useSmooth = smooth && distance > 28;
     setActive(scrollIndexToLogical(scrollIndex), { smooth: useSmooth, emit: true });
   }
 
-  function canSnapNow() {
-    return !dragging && !jumping && !touching;
+  function settleAfterScroll() {
+    if (dragging || jumping) return;
+    if (jumpIfOnClone()) return;
+
+    const { scrollIndex, distance } = snapDistance();
+    if (distance > STUCK_SNAP_PX) {
+      setActive(scrollIndexToLogical(scrollIndex), { smooth: false, emit: true });
+    }
   }
 
-  function scheduleTouchSnap(delay = SNAP_IDLE_MS, smooth = true) {
-    clearTimeout(touchSnapTimer);
-    touchSnapTimer = setTimeout(() => {
-      if (!canSnapNow()) return;
-      snapNearest(smooth);
-    }, delay);
+  function onScrollSettled() {
+    clearTimeout(scrollIdleTimer);
+    if (nativeScroll) {
+      settleAfterScroll();
+      return;
+    }
+    scrollIdleTimer = setTimeout(() => snapNearest(true), 120);
   }
-
-  let scrollIdleTimer;
 
   track.addEventListener(
     "scroll",
     () => {
       if (jumping) return;
-      if (!dragging) onScroll();
-      if (touching || dragging) return;
+      onScroll();
+      if (dragging) return;
+
       if (!("onscrollend" in window)) {
         clearTimeout(scrollIdleTimer);
-        scrollIdleTimer = setTimeout(() => {
-          if (!canSnapNow()) return;
-          snapNearest(!lightTouch);
-        }, SNAP_IDLE_MS);
+        scrollIdleTimer = setTimeout(onScrollSettled, nativeScroll ? 140 : 120);
       }
     },
     { passive: true }
@@ -248,38 +242,16 @@ export function initCarousel(track, options = {}) {
     track.addEventListener(
       "scrollend",
       () => {
-        if (!canSnapNow()) return;
-        snapNearest(!lightTouch);
+        if (dragging || jumping) return;
+        onScrollSettled();
       },
       { passive: true }
     );
   }
 
-  track.addEventListener(
-    "touchstart",
-    () => {
-      touching = true;
-      track.classList.add("is-touching");
-      clearTimeout(touchSnapTimer);
-      pauseAutoplay();
-    },
-    { passive: true }
-  );
-
-  function endTouch() {
-    touching = false;
-    track.classList.remove("is-touching");
-    scheduleAutoplay();
-    if (lightTouch) {
-      // One quick settle after finger lift; avoid fighting inertial scroll.
-      scheduleTouchSnap(40, false);
-      return;
-    }
-    scheduleTouchSnap(SNAP_IDLE_MS, true);
-  }
-
-  track.addEventListener("touchend", endTouch, { passive: true });
-  track.addEventListener("touchcancel", endTouch, { passive: true });
+  track.addEventListener("touchstart", () => pauseAutoplay(), { passive: true });
+  track.addEventListener("touchend", () => scheduleAutoplay(), { passive: true });
+  track.addEventListener("touchcancel", () => scheduleAutoplay(), { passive: true });
 
   track.addEventListener("pointerdown", (e) => {
     if (e.button !== 0 || e.pointerType === "touch") return;
@@ -308,7 +280,7 @@ export function initCarousel(track, options = {}) {
     }
     if (moved) {
       suppressClick = true;
-      if (!jumpIfOnClone()) snapNearest(true);
+      snapNearest(true);
     }
     scheduleAutoplay();
   }

@@ -97,19 +97,17 @@
   scroll-padding: 0 var(--pad-right) 0 var(--pad-left);
   overflow-x: auto;
   overflow-y: clip;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: x mandatory;
   scroll-behavior: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x pinch-zoom;
-  overscroll-behavior-x: contain;
-  overscroll-behavior-y: auto;
+  touch-action: pan-x;
+  overscroll-behavior: contain;
   cursor: grab;
   user-select: none;
 }
 
-.hero__cards.is-dragging,
-.hero__cards.is-touching {
+.hero__cards.is-dragging {
   cursor: grabbing;
   scroll-snap-type: none;
 }
