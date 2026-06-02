@@ -23,6 +23,19 @@
 
   --app-width: 100%;
   --space-page: 32px;
+  --space-xxs: 8px;
+  --space-xs: 12px;
+  --space-sm: 16px;
+  --space-md: 20px;
+  --space-lg: 28px;
+  --space-xl: 30px;
+  --space-section-top-lg: 48px;
+  --space-section-top-md: 32px;
+  --space-section-top-sm: 24px;
+  --space-section-bottom-lg: 48px;
+  --space-section-bottom-md: 45px;
+  --space-section-gap-lg: 64px;
+
   --pad-left: max(var(--space-page), env(safe-area-inset-left, 0px));
   --pad-right: max(var(--space-page), env(safe-area-inset-right, 0px));
   --space-gutter: 10px;

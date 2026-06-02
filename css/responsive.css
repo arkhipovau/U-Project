@@ -19,6 +19,9 @@ body {
   }
 
   .hero {
+    --hero-content-top: max(142px, calc(env(safe-area-inset-top, 0px) + 130px));
+    --hero-content-bottom: calc(var(--dock-safe) + 12px);
+
     width: var(--app-width);
     max-width: none;
     height: 100dvh;
@@ -35,12 +38,11 @@ body {
   .hero__fade {
     top: auto;
     bottom: 0;
-    height: min(62px, 10vh);
+    height: 0;
+    display: none;
   }
 
   .hero__content {
-    top: max(142px, calc(env(safe-area-inset-top, 0px) + 130px));
-    bottom: calc(var(--dock-safe) + 12px);
     gap: 12px;
   }
 

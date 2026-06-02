@@ -1,5 +1,8 @@
 /* —— Hero (Figma 711:1216 — 378×794) —— */
 .hero {
+  --hero-content-top: 148px;
+  --hero-content-bottom: 62px;
+
   position: relative;
   z-index: 1;
   width: 100%;
@@ -60,9 +63,12 @@
   z-index: 3;
   left: 0;
   right: 0;
-  top: 148px;
-  bottom: 62px;
+  top: 0;
+  bottom: 0;
   width: 100%;
+  padding-top: var(--hero-content-top);
+  padding-bottom: var(--hero-content-bottom);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -136,11 +142,11 @@
   flex: 0 0 auto;
   box-sizing: border-box;
   width: 100%;
-  padding: 32px var(--pad-right) 0 var(--pad-left);
+  padding: var(--space-section-top-md) var(--pad-right) 0 var(--pad-left);
   background: #f9f5ea;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-xs);
 }
 
 .ecosystem__title {
@@ -441,19 +447,19 @@
   z-index: 2;
   left: var(--pad-left);
   right: var(--pad-right);
-  top: 48px;
+  top: var(--space-section-top-lg);
   width: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 30px;
+  gap: var(--space-lg);
 }
 
 .opening__copy {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-xs);
   width: 100%;
   max-width: min(314px, 100%);
   box-sizing: border-box;
@@ -525,7 +531,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
+  gap: var(--space-sm);
 }
 
 .opening__caption-label {
@@ -542,7 +548,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xxs);
   width: 63px;
   height: 4px;
   padding: 0;
@@ -590,7 +596,7 @@
   max-width: var(--max-width);
   min-height: 861px;
   margin: 0 auto;
-  padding-block: 48px 45px;
+  padding-block: var(--space-section-top-lg) var(--space-section-bottom-md);
   padding-inline: var(--pad-left) var(--pad-right);
   display: flex;
   flex-direction: column;
@@ -602,7 +608,7 @@
 .beyond__intro {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-xs);
   width: 100%;
   margin-bottom: 31px;
 }
@@ -657,7 +663,7 @@
 .beyond__meta {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-xs);
   width: 100%;
 }
 
@@ -665,7 +671,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-xs);
 }
 
 .beyond__card-title {
@@ -698,12 +704,12 @@
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding-block: 48px 64px;
+  padding-block: var(--space-section-top-sm) var(--space-section-bottom-lg);
   padding-inline: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 28px;
+  gap: var(--space-lg);
   background: #f9f5ea;
   overflow-x: clip;
 }
@@ -711,7 +717,7 @@
 .days__intro {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-xs);
   width: 100%;
   padding-inline: var(--pad-left) var(--pad-right);
   box-sizing: border-box;
@@ -749,7 +755,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 16px;
+  gap: var(--space-sm);
   width: 412px;
   max-width: none;
 }
@@ -891,7 +897,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xxs);
   width: 63px;
   height: 4px;
   margin-left: var(--days-progress-x, 65px);
@@ -974,13 +980,13 @@
   z-index: 1;
   left: var(--pad-left);
   right: var(--pad-right);
-  top: 48px;
+  top: var(--space-section-top-lg);
   width: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 30px;
+  gap: var(--space-xl);
 }
 
 .cta-final__title {
@@ -1029,13 +1035,13 @@
   position: absolute;
   left: var(--pad-left);
   right: var(--pad-right);
-  top: 48px;
+  top: var(--space-section-top-lg);
   width: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 64px;
+  gap: var(--space-section-gap-lg);
 }
 
 .footer__destinations {
