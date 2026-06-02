@@ -90,7 +90,7 @@ export function initHero(parallax) {
   initHeroTouchPan(track, carousel);
 }
 
-/** Touch: vertical scrolls the page; horizontal swipes move the carousel. */
+/** Touch: quick swipe scrolls the page; brief hold then drag moves the carousel. */
 function initHeroTouchPan(track, carousel) {
   let pointerId = null;
   let startX = 0;
@@ -99,13 +99,24 @@ function initHeroTouchPan(track, carousel) {
   let active = false;
   let gestureLocked = false;
   let horizontalGesture = false;
+  let holdReady = false;
+  let holdTimer = null;
 
+  const HOLD_MS = 220;
   const SWIPE_LOCK_X = 8;
   const SWIPE_LOCK_Y = 8;
+
+  function clearHoldTimer() {
+    if (holdTimer !== null) {
+      clearTimeout(holdTimer);
+      holdTimer = null;
+    }
+  }
 
   track.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "mouse" || e.button !== 0) return;
 
+    clearHoldTimer();
     pointerId = e.pointerId;
     startX = e.clientX;
     startY = e.clientY;
@@ -113,10 +124,13 @@ function initHeroTouchPan(track, carousel) {
     active = true;
     gestureLocked = false;
     horizontalGesture = false;
+    holdReady = false;
 
-    if (track.setPointerCapture && !track.hasPointerCapture(e.pointerId)) {
-      track.setPointerCapture(e.pointerId);
-    }
+    holdTimer = setTimeout(() => {
+      holdTimer = null;
+      holdReady = true;
+    }, HOLD_MS);
+
     carousel?.pauseAutoplay?.();
   });
 
@@ -130,12 +144,33 @@ function initHeroTouchPan(track, carousel) {
       const absX = Math.abs(dx);
       const absY = Math.abs(dy);
 
-      if (!gestureLocked && (absX > SWIPE_LOCK_X || absY > SWIPE_LOCK_Y)) {
-        gestureLocked = true;
-        horizontalGesture = absX > absY * 1.1;
+      if (horizontalGesture) {
+        e.preventDefault();
+        track.classList.add("is-dragging");
+        track.scrollLeft = startScroll - dx;
+        return;
       }
 
+      if (gestureLocked) return;
+
+      const moved = absX > SWIPE_LOCK_X || absY > SWIPE_LOCK_Y;
+      if (!moved) return;
+
+      if (!holdReady) {
+        if (absY > absX * 1.15) {
+          gestureLocked = true;
+          horizontalGesture = false;
+        }
+        return;
+      }
+
+      gestureLocked = true;
+      horizontalGesture = absX >= absY * 0.55;
+
       if (horizontalGesture) {
+        if (track.setPointerCapture && !track.hasPointerCapture(e.pointerId)) {
+          track.setPointerCapture(e.pointerId);
+        }
         e.preventDefault();
         track.classList.add("is-dragging");
         track.scrollLeft = startScroll - dx;
@@ -147,6 +182,8 @@ function initHeroTouchPan(track, carousel) {
   function endPan(e) {
     if (!active || e.pointerId !== pointerId) return;
 
+    clearHoldTimer();
+    holdReady = false;
     track.classList.remove("is-dragging");
     if (track.hasPointerCapture?.(e.pointerId)) {
       track.releasePointerCapture(e.pointerId);
