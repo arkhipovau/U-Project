@@ -19,7 +19,7 @@ body {
   }
 
   .hero {
-    --hero-content-top: max(156px, calc(env(safe-area-inset-top, 0px) + 144px));
+    --hero-content-top: max(144px, calc(env(safe-area-inset-top, 0px) + 132px));
     --hero-content-bottom: calc(var(--dock-safe) + 12px);
 
     width: var(--app-width);
