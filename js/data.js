@@ -2,7 +2,7 @@ export const HERO_LOCATIONS = [
   {
     id: "jericoacoara",
     label: "Jericoacoara, Brazil",
-    bg: "assets/hero-bg-jericoacoara.jpg",
+    bg: "assets/hero-bg-jericoacoara.png?v=20260602-1251",
     href: "#destinations",
   },
   {
@@ -35,7 +35,7 @@ export const LOCATION_GROUPS = {
   tropical: [
     { name: "Jericoacoara", country: "Brazil", image: "assets/ecosystem-bg-1.jpg" },
     { name: "Flora", country: "Costa Rica", image: "assets/ecosystem-bg-2.jpg" },
-    { name: "Prea", country: "Brazil", image: "assets/hero-bg-jericoacoara.jpg" },
+    { name: "Prea", country: "Brazil", image: "assets/hero-bg-jericoacoara.png?v=20260602-1251" },
     { name: "Roca", country: "Costa Rica", image: "assets/hero-bg-roca.png?v=20260602-1243" },
     { name: "Cabarete", country: "Dominican Republic", image: "assets/opening-kite.jpg" },
   ],
