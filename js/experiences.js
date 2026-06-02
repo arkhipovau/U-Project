@@ -22,7 +22,7 @@ export function initExperiences() {
   const PEEK_LEFT = -107.2;
   const SWIPE_THRESHOLD = 40;
   const count = slides.length;
-  const TELEPORT_DISTANCE = 220;
+  const TELEPORT_DISTANCE = 280;
   const prevLeftByCard = new WeakMap();
 
   const LAYOUTS = [
@@ -74,8 +74,9 @@ export function initExperiences() {
       : `translate3d(0, ${DESIGN_INACTIVE_Y * scale}px, 0)`;
     card.classList.toggle("is-active", isActive);
 
-    // Fade the card that exits to the left for a softer handoff.
-    const baseOpacity = slot.x < 0 ? 0.45 : 1;
+    // Card exiting on the left should fully disappear.
+    let baseOpacity = slot.x < 0 ? 0 : 1;
+    if (shouldTeleport) baseOpacity = 0;
     card.dataset.baseOpacity = String(baseOpacity);
     card.style.opacity = String(baseOpacity);
 
@@ -93,9 +94,9 @@ export function initExperiences() {
 
     if (!dragging || dragX === 0) return;
 
-    const progress = Math.min(Math.abs(dragX) / 140, 1);
+    const progress = Math.min(Math.abs(dragX) / 120, 1);
     const leavingIndex = active;
-    const leavingOpacity = Math.max(0.35, 1 - progress * 0.65);
+    const leavingOpacity = Math.max(0, 1 - progress);
 
     slides[leavingIndex].style.opacity = String(leavingOpacity);
   }

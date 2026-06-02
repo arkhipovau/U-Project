@@ -12,7 +12,6 @@ export function initHero(parallax) {
   HERO_LOCATIONS.forEach((loc, i) => {
     const layer = document.createElement("div");
     layer.className = "hero__bg-layer";
-    layer.dataset.parallax = "bg";
     layer.style.backgroundImage = `url("${loc.bg}")`;
     layer.dataset.index = String(i);
     layer.style.opacity = "0";
@@ -32,7 +31,6 @@ export function initHero(parallax) {
   });
 
   const layers = [...bgRoot.querySelectorAll(".hero__bg-layer")];
-  layers.forEach((layer) => parallax?.register(layer));
   const cards = [...track.querySelectorAll(".location-card")];
 
   function syncVisuals(activeIndex) {

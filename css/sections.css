@@ -115,6 +115,11 @@
   display: none;
 }
 
+.hero .location-card,
+.hero .location-card.is-center {
+  box-shadow: none;
+}
+
 .hero__fade {
   position: absolute;
   left: 0;
@@ -765,7 +770,7 @@
 /* Viewport up to 412×274; positions scaled in experiences.js */
 .days__stage {
   --days-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --days-duration: 520ms;
+  --days-duration: 620ms;
   --days-scale: 1;
 
   position: relative;
@@ -965,7 +970,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  filter: blur(10px);
+  filter: none;
   pointer-events: none;
   overflow: hidden;
 }
