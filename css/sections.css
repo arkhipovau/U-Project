@@ -92,8 +92,7 @@
 }
 
 .hero__cards {
-  display: flex;
-  gap: 22px;
+  display: block;
   width: 100%;
   min-width: 0;
   height: 100%;
@@ -106,12 +105,23 @@
   scroll-behavior: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  /* Vertical page scroll first; horizontal carousel via hero.js on clear swipe. */
   touch-action: pan-y;
   overscroll-behavior-x: contain;
   overscroll-behavior-y: auto;
   cursor: grab;
   user-select: none;
+}
+
+.hero__cards--safari-touch {
+  touch-action: pan-y pinch-zoom;
+}
+
+.hero__cards-track {
+  display: flex;
+  gap: 22px;
+  width: max-content;
+  height: 100%;
+  min-height: inherit;
 }
 
 .hero__cards.is-dragging {

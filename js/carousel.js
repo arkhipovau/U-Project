@@ -4,12 +4,16 @@
 export function initCarousel(track, options = {}) {
   const {
     items: itemsOption,
+    scrollEl: scrollElOption,
     snap = "center",
     autoplayMs = 0,
     loop = false,
     nativeScroll = false,
     onActive,
   } = options;
+
+  const scrollEl = scrollElOption || track;
+  const splitScroll = scrollEl !== track;
 
   const logicalItems = itemsOption ? [...itemsOption] : [...track.children];
   if (!track || logicalItems.length === 0) return null;
@@ -48,11 +52,23 @@ export function initCarousel(track, options = {}) {
 
   track.classList.add("carousel-track");
 
+  function itemScrollLeft(item) {
+    if (!splitScroll) return item.offsetLeft;
+    const scrollRect = scrollEl.getBoundingClientRect();
+    const itemRect = item.getBoundingClientRect();
+    return itemRect.left - scrollRect.left + scrollEl.scrollLeft;
+  }
+
+  function itemScrollCenter(item) {
+    return itemScrollLeft(item) + item.offsetWidth / 2;
+  }
+
   function scrollTarget(item) {
+    const left = itemScrollLeft(item);
     if (snap === "center") {
-      return item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2;
+      return left - (scrollEl.clientWidth - item.offsetWidth) / 2;
     }
-    return item.offsetLeft;
+    return left;
   }
 
   function scrollIndexToLogical(scrollIndex) {
@@ -70,15 +86,14 @@ export function initCarousel(track, options = {}) {
   function readScrollIndex() {
     const probe =
       snap === "center"
-        ? track.scrollLeft + track.clientWidth / 2
-        : track.scrollLeft + 8;
+        ? scrollEl.scrollLeft + scrollEl.clientWidth / 2
+        : scrollEl.scrollLeft + 8;
 
     let best = 0;
     let minDist = Infinity;
 
     scrollItems.forEach((item, i) => {
-      const point =
-        snap === "center" ? item.offsetLeft + item.offsetWidth / 2 : item.offsetLeft;
+      const point = snap === "center" ? itemScrollCenter(item) : itemScrollLeft(item);
       const dist = Math.abs(probe - point);
       if (dist < minDist) {
         minDist = dist;
@@ -98,7 +113,7 @@ export function initCarousel(track, options = {}) {
     const target = scrollTarget(scrollItems[scrollIndex]);
     return {
       scrollIndex,
-      distance: Math.abs(track.scrollLeft - target),
+      distance: Math.abs(scrollEl.scrollLeft - target),
     };
   }
 
@@ -110,7 +125,7 @@ export function initCarousel(track, options = {}) {
 
     if (scrollIndex === 0) {
       jumping = true;
-      track.scrollTo({
+      scrollEl.scrollTo({
         left: scrollTarget(scrollItems[n]),
         behavior: "auto",
       });
@@ -122,13 +137,13 @@ export function initCarousel(track, options = {}) {
 
     if (scrollIndex === n + 1) {
       jumping = true;
-      track.scrollTo({
+      scrollEl.scrollTo({
         left: scrollTarget(scrollItems[1]),
         behavior: "auto",
       });
       activeIndex = 0;
       jumping = false;
-      onActive?.(activeIndex, logicalItems[activeIndex]);
+      onActive?.(activeIndex, logicalItems[0]);
       return true;
     }
 
@@ -141,7 +156,7 @@ export function initCarousel(track, options = {}) {
     activeIndex = i;
     const scrollIndex = logicalToScrollIndex(i);
 
-    track.scrollTo({
+    scrollEl.scrollTo({
       left: scrollTarget(scrollItems[scrollIndex]),
       behavior: smooth ? "smooth" : "auto",
     });
@@ -158,7 +173,7 @@ export function initCarousel(track, options = {}) {
 
     if (activeIndex === n - 1) {
       activeIndex = 0;
-      track.scrollTo({
+      scrollEl.scrollTo({
         left: scrollTarget(scrollItems[n + 1]),
         behavior: smooth ? "smooth" : "auto",
       });
@@ -193,7 +208,6 @@ export function initCarousel(track, options = {}) {
     scheduleAutoplay();
   }
 
-  /** Programmatic snap — desktop drag / autoplay only when nativeScroll is on. */
   function snapNearest(smooth = true) {
     if (jumpIfOnClone()) return;
 
@@ -223,7 +237,7 @@ export function initCarousel(track, options = {}) {
     scrollIdleTimer = setTimeout(() => snapNearest(true), 120);
   }
 
-  track.addEventListener(
+  scrollEl.addEventListener(
     "scroll",
     () => {
       if (jumping) return;
@@ -239,7 +253,7 @@ export function initCarousel(track, options = {}) {
   );
 
   if ("onscrollend" in window) {
-    track.addEventListener(
+    scrollEl.addEventListener(
       "scrollend",
       () => {
         if (dragging || jumping) return;
@@ -249,34 +263,34 @@ export function initCarousel(track, options = {}) {
     );
   }
 
-  track.addEventListener("touchstart", () => pauseAutoplay(), { passive: true });
-  track.addEventListener("touchend", () => scheduleAutoplay(), { passive: true });
-  track.addEventListener("touchcancel", () => scheduleAutoplay(), { passive: true });
+  scrollEl.addEventListener("touchstart", () => pauseAutoplay(), { passive: true });
+  scrollEl.addEventListener("touchend", () => scheduleAutoplay(), { passive: true });
+  scrollEl.addEventListener("touchcancel", () => scheduleAutoplay(), { passive: true });
 
-  track.addEventListener("pointerdown", (e) => {
+  scrollEl.addEventListener("pointerdown", (e) => {
     if (e.button !== 0 || e.pointerType === "touch") return;
     dragging = true;
     moved = false;
     startX = e.clientX;
-    startScroll = track.scrollLeft;
-    track.classList.add("is-dragging");
-    track.setPointerCapture(e.pointerId);
+    startScroll = scrollEl.scrollLeft;
+    scrollEl.classList.add("is-dragging");
+    scrollEl.setPointerCapture(e.pointerId);
     pauseAutoplay();
   });
 
-  track.addEventListener("pointermove", (e) => {
+  scrollEl.addEventListener("pointermove", (e) => {
     if (!dragging) return;
     const dx = e.clientX - startX;
     if (Math.abs(dx) > 5) moved = true;
-    track.scrollLeft = startScroll - dx;
+    scrollEl.scrollLeft = startScroll - dx;
   });
 
   function endDrag(e) {
     if (!dragging) return;
     dragging = false;
-    track.classList.remove("is-dragging");
-    if (track.hasPointerCapture(e.pointerId)) {
-      track.releasePointerCapture(e.pointerId);
+    scrollEl.classList.remove("is-dragging");
+    if (scrollEl.hasPointerCapture(e.pointerId)) {
+      scrollEl.releasePointerCapture(e.pointerId);
     }
     if (moved) {
       suppressClick = true;
@@ -285,8 +299,8 @@ export function initCarousel(track, options = {}) {
     scheduleAutoplay();
   }
 
-  track.addEventListener("pointerup", endDrag);
-  track.addEventListener("pointercancel", endDrag);
+  scrollEl.addEventListener("pointerup", endDrag);
+  scrollEl.addEventListener("pointercancel", endDrag);
 
   scrollItems.forEach((item) => {
     item.addEventListener(

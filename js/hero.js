@@ -1,13 +1,25 @@
 import { HERO_LOCATIONS } from "./data.js";
 import { initCarousel } from "./carousel.js";
 
+export function isSafariBrowser() {
+  const ua = navigator.userAgent;
+  return /Safari/i.test(ua) && !/Chrome|CriOS|Chromium|Edg|EdgiOS|FxiOS|OPiOS|Android/i.test(ua);
+}
+
+function cardCenterInScroller(card, scroller) {
+  const scrollRect = scroller.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  return cardRect.left - scrollRect.left + scroller.scrollLeft + cardRect.width / 2;
+}
+
 export function initHero(parallax) {
   const section = document.querySelector(".hero");
   if (!section) return;
 
   const bgRoot = section.querySelector(".hero__bg");
-  const track = section.querySelector(".hero__cards");
-  if (!bgRoot || !track) return;
+  const scroller = section.querySelector(".hero__cards");
+  const track = section.querySelector(".hero__cards-track");
+  if (!bgRoot || !scroller || !track) return;
 
   HERO_LOCATIONS.forEach((loc, i) => {
     const layer = document.createElement("div");
@@ -34,15 +46,15 @@ export function initHero(parallax) {
   const cards = [...track.querySelectorAll(".location-card")];
 
   function syncVisuals(activeIndex) {
-    const center = track.scrollLeft + track.clientWidth / 2;
-    const influenceRadius = track.clientWidth * 0.55;
+    const center = scroller.scrollLeft + scroller.clientWidth / 2;
+    const influenceRadius = scroller.clientWidth * 0.55;
     let strongest = activeIndex;
     let strongestVal = 0;
     const influences = [];
     let totalInfluence = 0;
 
     cards.forEach((card, i) => {
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const cardCenter = cardCenterInScroller(card, scroller);
       const dist = Math.abs(center - cardCenter);
       const influence = Math.max(0, 1 - dist / influenceRadius);
       influences[i] = influence;
@@ -54,7 +66,6 @@ export function initHero(parallax) {
       }
     });
 
-    // Normalize cumulative opacity to avoid bright flash during crossfade in Safari.
     cards.forEach((_, i) => {
       const normalized = totalInfluence > 0 ? influences[i] / totalInfluence : 0;
       layers[i].style.opacity = String(normalized);
@@ -68,6 +79,7 @@ export function initHero(parallax) {
 
   const carousel = initCarousel(track, {
     items: cards,
+    scrollEl: scroller,
     snap: "center",
     loop: true,
     nativeScroll: true,
@@ -79,7 +91,7 @@ export function initHero(parallax) {
 
   carousel.setActive(defaultIndex, { smooth: false });
 
-  track.addEventListener(
+  scroller.addEventListener(
     "scroll",
     () => {
       syncVisuals(carousel.getActiveIndex());
@@ -87,11 +99,93 @@ export function initHero(parallax) {
     { passive: true }
   );
 
-  initHeroTouchPan(track, carousel);
+  if (isSafariBrowser()) {
+    scroller.classList.add("hero__cards--safari-touch");
+    initSafariHeroSwipe(scroller, carousel);
+  } else {
+    initHeroTouchPan(scroller, carousel);
+  }
 }
 
-/** Touch: quick swipe scrolls the page; brief hold then drag moves the carousel. */
-function initHeroTouchPan(track, carousel) {
+/** iOS/macOS Safari: touch axis lock + manual scroll (WebKit flex scroll is unreliable). */
+function initSafariHeroSwipe(scroller, carousel) {
+  let startX = 0;
+  let startY = 0;
+  let startScroll = 0;
+  let tracking = false;
+  let axis = null;
+  let dragged = false;
+
+  const AXIS_LOCK = 5;
+
+  scroller.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.touches.length !== 1) return;
+      tracking = true;
+      axis = null;
+      dragged = false;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      startScroll = scroller.scrollLeft;
+      carousel?.pauseAutoplay?.();
+    },
+    { passive: true }
+  );
+
+  scroller.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!tracking || e.touches.length !== 1) return;
+
+      const x = e.touches[0].clientX;
+      const y = e.touches[0].clientY;
+      const dx = x - startX;
+      const dy = y - startY;
+      const absX = Math.abs(dx);
+      const absY = Math.abs(dy);
+
+      if (!axis && (absX > AXIS_LOCK || absY > AXIS_LOCK)) {
+        axis = absX >= absY * 0.85 ? "x" : "y";
+      }
+
+      if (axis === "x") {
+        if (absX > 8) dragged = true;
+        e.preventDefault();
+        scroller.classList.add("is-dragging");
+        scroller.scrollLeft = startScroll - dx;
+      }
+    },
+    { passive: false }
+  );
+
+  function endTouch() {
+    if (!tracking) return;
+    const wasDrag = dragged;
+    tracking = false;
+    axis = null;
+    dragged = false;
+    scroller.classList.remove("is-dragging");
+    carousel?.scheduleAutoplay?.();
+
+    if (wasDrag) {
+      scroller.addEventListener(
+        "click",
+        (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        },
+        { capture: true, once: true }
+      );
+    }
+  }
+
+  scroller.addEventListener("touchend", endTouch, { passive: true });
+  scroller.addEventListener("touchcancel", endTouch, { passive: true });
+}
+
+/** Other browsers: quick vertical swipe vs brief hold + horizontal drag. */
+function initHeroTouchPan(scroller, carousel) {
   let pointerId = null;
   let startX = 0;
   let startY = 0;
@@ -113,14 +207,14 @@ function initHeroTouchPan(track, carousel) {
     }
   }
 
-  track.addEventListener("pointerdown", (e) => {
+  scroller.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "mouse" || e.button !== 0) return;
 
     clearHoldTimer();
     pointerId = e.pointerId;
     startX = e.clientX;
     startY = e.clientY;
-    startScroll = track.scrollLeft;
+    startScroll = scroller.scrollLeft;
     active = true;
     gestureLocked = false;
     horizontalGesture = false;
@@ -134,7 +228,7 @@ function initHeroTouchPan(track, carousel) {
     carousel?.pauseAutoplay?.();
   });
 
-  track.addEventListener(
+  scroller.addEventListener(
     "pointermove",
     (e) => {
       if (!active || e.pointerId !== pointerId) return;
@@ -146,8 +240,8 @@ function initHeroTouchPan(track, carousel) {
 
       if (horizontalGesture) {
         e.preventDefault();
-        track.classList.add("is-dragging");
-        track.scrollLeft = startScroll - dx;
+        scroller.classList.add("is-dragging");
+        scroller.scrollLeft = startScroll - dx;
         return;
       }
 
@@ -168,12 +262,12 @@ function initHeroTouchPan(track, carousel) {
       horizontalGesture = absX >= absY * 0.55;
 
       if (horizontalGesture) {
-        if (track.setPointerCapture && !track.hasPointerCapture(e.pointerId)) {
-          track.setPointerCapture(e.pointerId);
+        if (scroller.setPointerCapture && !scroller.hasPointerCapture(e.pointerId)) {
+          scroller.setPointerCapture(e.pointerId);
         }
         e.preventDefault();
-        track.classList.add("is-dragging");
-        track.scrollLeft = startScroll - dx;
+        scroller.classList.add("is-dragging");
+        scroller.scrollLeft = startScroll - dx;
       }
     },
     { passive: false }
@@ -184,9 +278,9 @@ function initHeroTouchPan(track, carousel) {
 
     clearHoldTimer();
     holdReady = false;
-    track.classList.remove("is-dragging");
-    if (track.hasPointerCapture?.(e.pointerId)) {
-      track.releasePointerCapture(e.pointerId);
+    scroller.classList.remove("is-dragging");
+    if (scroller.hasPointerCapture?.(e.pointerId)) {
+      scroller.releasePointerCapture(e.pointerId);
     }
 
     active = false;
@@ -196,6 +290,6 @@ function initHeroTouchPan(track, carousel) {
     carousel?.scheduleAutoplay?.();
   }
 
-  track.addEventListener("pointerup", endPan);
-  track.addEventListener("pointercancel", endPan);
+  scroller.addEventListener("pointerup", endPan);
+  scroller.addEventListener("pointercancel", endPan);
 }
