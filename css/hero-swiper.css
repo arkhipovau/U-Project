@@ -72,3 +72,11 @@
 .hero__cards-swiper.swiper-grabbing {
   cursor: grabbing;
 }
+
+/* Optional Swiper chrome — hidden until needed in design */
+.hero__cards-swiper .swiper-pagination,
+.hero__cards-swiper .swiper-button-prev,
+.hero__cards-swiper .swiper-button-next,
+.hero__cards-swiper .swiper-scrollbar {
+  display: none;
+}

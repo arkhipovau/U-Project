@@ -76,6 +76,18 @@ export function initHero(parallax) {
     threshold: 6,
     touchStartPreventDefault: false,
     resistanceRatio: 0.72,
+    pagination: {
+      el: cardsSwiperEl.querySelector(".swiper-pagination"),
+      clickable: true,
+    },
+    navigation: {
+      nextEl: cardsSwiperEl.querySelector(".swiper-button-next"),
+      prevEl: cardsSwiperEl.querySelector(".swiper-button-prev"),
+    },
+    scrollbar: {
+      el: cardsSwiperEl.querySelector(".swiper-scrollbar"),
+      draggable: true,
+    },
     ...(reducedMotion
       ? {}
       : {

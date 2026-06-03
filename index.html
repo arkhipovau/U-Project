@@ -20,13 +20,14 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="css/hero-swiper.css?v=20260603-1600" />
+    <link rel="stylesheet" href="css/hero-swiper.css?v=20260603-1630" />
   </head>
   <body>
     <div class="page">
       <!-- Screen 1: Hero (378×794) -->
       <section class="hero" id="top" aria-label="Hero">
-        <div class="hero__bg swiper hero__bg-swiper" aria-hidden="true">
+        <!-- Background swiper (controlled by cards swiper) -->
+        <div class="swiper hero__bg-swiper" aria-hidden="true">
           <div class="swiper-wrapper"></div>
         </div>
 
@@ -37,8 +38,13 @@
         <div class="hero__content">
           <h1 class="heading-hero">Ecosystem of Retreats</h1>
           <div class="hero__cards-wrap">
+            <!-- Cards swiper (master) -->
             <div class="swiper hero__cards-swiper" aria-label="Destinations">
               <div class="swiper-wrapper" role="list"></div>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-prev" aria-label="Previous destination"></div>
+              <div class="swiper-button-next" aria-label="Next destination"></div>
+              <div class="swiper-scrollbar"></div>
             </div>
           </div>
         </div>
@@ -321,6 +327,6 @@
       </button>
     </nav>
 
-    <script type="module" src="js/main.js?v=20260603-1600"></script>
+    <script type="module" src="js/main.js?v=20260603-1630"></script>
   </body>
 </html>
