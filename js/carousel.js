@@ -9,6 +9,7 @@ export function initCarousel(track, options = {}) {
     autoplayMs = 0,
     loop = false,
     nativeScroll = false,
+    settleNative = true,
     onActive,
   } = options;
 
@@ -54,9 +55,7 @@ export function initCarousel(track, options = {}) {
 
   function itemScrollLeft(item) {
     if (!splitScroll) return item.offsetLeft;
-    const scrollRect = scrollEl.getBoundingClientRect();
-    const itemRect = item.getBoundingClientRect();
-    return itemRect.left - scrollRect.left + scrollEl.scrollLeft;
+    return track.offsetLeft + item.offsetLeft;
   }
 
   function itemScrollCenter(item) {
@@ -219,7 +218,7 @@ export function initCarousel(track, options = {}) {
   }
 
   function settleAfterScroll() {
-    if (dragging || jumping) return;
+    if (!settleNative || dragging || jumping) return;
     if (jumpIfOnClone()) return;
 
     const { scrollIndex, distance } = snapDistance();
@@ -235,6 +234,11 @@ export function initCarousel(track, options = {}) {
       return;
     }
     scrollIdleTimer = setTimeout(() => snapNearest(true), 120);
+  }
+
+  function snapToNearest({ smooth = true } = {}) {
+    if (jumpIfOnClone()) return;
+    snapNearest(smooth);
   }
 
   scrollEl.addEventListener(
@@ -294,7 +298,7 @@ export function initCarousel(track, options = {}) {
     }
     if (moved) {
       suppressClick = true;
-      snapNearest(true);
+      snapToNearest({ smooth: !nativeScroll || !settleNative });
     }
     scheduleAutoplay();
   }
@@ -322,6 +326,7 @@ export function initCarousel(track, options = {}) {
   const api = {
     setActive,
     getActiveIndex: () => activeIndex,
+    snapToNearest,
     pauseAutoplay,
     scheduleAutoplay,
   };

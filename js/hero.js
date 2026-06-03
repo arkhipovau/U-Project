@@ -72,7 +72,13 @@ export function initHero(parallax) {
       layers[i].classList.toggle("is-active", normalized > 0.03);
     });
 
-    cards.forEach((card, i) => card.classList.toggle("is-center", i === strongest));
+    const isDragging = scroller.classList.contains("is-dragging");
+    cards.forEach((card, i) => {
+      card.classList.toggle(
+        "is-center",
+        !isDragging && i === strongest && strongestVal > 0.42
+      );
+    });
   }
 
   const defaultIndex = Math.min(1, cards.length - 1);
@@ -83,6 +89,7 @@ export function initHero(parallax) {
     snap: "center",
     loop: true,
     nativeScroll: true,
+    settleNative: false,
     autoplayMs: 12000,
     onActive: (index) => syncVisuals(index),
   });
@@ -91,10 +98,15 @@ export function initHero(parallax) {
 
   carousel.setActive(defaultIndex, { smooth: false });
 
+  let syncRaf = 0;
   scroller.addEventListener(
     "scroll",
     () => {
-      syncVisuals(carousel.getActiveIndex());
+      if (syncRaf) return;
+      syncRaf = requestAnimationFrame(() => {
+        syncRaf = 0;
+        syncVisuals(carousel.getActiveIndex());
+      });
     },
     { passive: true }
   );
@@ -162,10 +174,16 @@ function initSafariHeroSwipe(scroller, carousel) {
   function endTouch() {
     if (!tracking) return;
     const wasDrag = dragged;
+    const wasHorizontal = axis === "x";
     tracking = false;
     axis = null;
     dragged = false;
     scroller.classList.remove("is-dragging");
+
+    if (wasDrag && wasHorizontal) {
+      carousel?.snapToNearest?.({ smooth: true });
+    }
+
     carousel?.scheduleAutoplay?.();
 
     if (wasDrag) {
@@ -283,10 +301,16 @@ function initHeroTouchPan(scroller, carousel) {
       scroller.releasePointerCapture(e.pointerId);
     }
 
+    const didHorizontal = horizontalGesture;
     active = false;
     gestureLocked = false;
     horizontalGesture = false;
     pointerId = null;
+
+    if (didHorizontal) {
+      carousel?.snapToNearest?.({ smooth: true });
+    }
+
     carousel?.scheduleAutoplay?.();
   }
 

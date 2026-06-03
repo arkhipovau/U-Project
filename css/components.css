@@ -192,6 +192,10 @@
   text-decoration: none;
 }
 
+.hero .location-card {
+  scroll-snap-stop: always;
+}
+
 .location-card.is-center {
   background: transparent;
   box-shadow:

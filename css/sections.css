@@ -102,7 +102,7 @@
   overflow-x: scroll;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
@@ -127,6 +127,7 @@
 .hero__cards.is-dragging {
   cursor: grabbing;
   scroll-snap-type: none;
+  scroll-behavior: auto;
 }
 
 .hero__cards::-webkit-scrollbar {
