@@ -61,10 +61,6 @@ body {
     min-height: 420px;
   }
 
-  .hero__cards-swiper .swiper-slide {
-    width: 314px;
-  }
-
   .hero__cards-swiper .location-card {
     height: 420px;
     min-height: 420px;

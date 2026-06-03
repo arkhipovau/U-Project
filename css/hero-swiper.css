@@ -54,7 +54,6 @@
 }
 
 .hero__cards-swiper .swiper-slide {
-  width: var(--content-width);
   height: auto;
   box-sizing: border-box;
 }

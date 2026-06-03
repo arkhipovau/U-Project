@@ -5,6 +5,14 @@
 import Swiper from "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs";
 import { HERO_LOCATIONS } from "./data.js";
 
+/** Hero cards swiper — main slider (background follows via controller). */
+const HERO_SWIPER = {
+  slidesPerView: 1,
+  loop: true,
+  speed: 400,
+  spaceBetween: 100,
+};
+
 export function initHero(parallax) {
   const section = document.querySelector(".hero");
   if (!section) return;
@@ -53,21 +61,20 @@ export function initHero(parallax) {
   }
 
   const bgSwiper = new Swiper(bgSwiperEl, {
-    loop: true,
+    slidesPerView: HERO_SWIPER.slidesPerView,
+    loop: HERO_SWIPER.loop,
     allowTouchMove: false,
     effect: "fade",
     fadeEffect: { crossFade: true },
-    speed: reducedMotion ? 0 : 1100,
-    slidesPerView: 1,
+    speed: reducedMotion ? 0 : HERO_SWIPER.speed,
     watchSlidesProgress: true,
   });
 
   const cardsSwiper = new Swiper(cardsSwiperEl, {
-    loop: true,
-    slidesPerView: "auto",
-    centeredSlides: true,
-    spaceBetween: 22,
-    speed: reducedMotion ? 0 : 480,
+    slidesPerView: HERO_SWIPER.slidesPerView,
+    loop: HERO_SWIPER.loop,
+    spaceBetween: HERO_SWIPER.spaceBetween,
+    speed: reducedMotion ? 0 : HERO_SWIPER.speed,
     slideToClickedSlide: true,
     grabCursor: true,
     initialSlide: Math.min(1, HERO_LOCATIONS.length - 1),
