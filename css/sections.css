@@ -284,7 +284,6 @@
 /* —— Opening (Figma 693:2955 — 378×682, scroll-pinned) —— */
 .opening {
   position: relative;
-  height: 300vh;
   background: #f9f5ea;
 }
 
@@ -300,41 +299,27 @@
   z-index: 2;
 }
 
-/* Scroll-pin via opening.js (sticky breaks under overflow-x on ancestors) */
-.opening__sticky.is-pinned {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-}
-
-.opening__sticky.is-ended {
-  position: absolute;
-  top: auto;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  transform: none;
-  margin-inline: auto;
-}
-
-.opening__bg {
+.opening__media {
   position: absolute;
   inset: 0;
   z-index: 0;
 }
 
-.opening__bg-slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity var(--duration-crossfade) var(--ease-cinematic);
-  pointer-events: none;
+.opening__slider {
+  width: 100%;
+  height: 100%;
 }
 
-.opening__bg-slide.is-active {
-  opacity: 1;
+.opening__slider .swiper-wrapper,
+.opening__slider .swiper-slide {
+  height: 100%;
+}
+
+.opening__bg-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .opening__bg-slide--0 .opening__bg-media {
