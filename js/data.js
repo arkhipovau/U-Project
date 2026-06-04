@@ -8,13 +8,13 @@ export const HERO_LOCATIONS = [
   {
     id: "roca",
     label: "Roca, Costa Rica",
-    bg: "assets/hero-bg-roca.png?v=20260602-1243",
+    bg: "assets/enhanced_hero-bg-roca.png?v=20260604-1735",
     href: "#destinations",
   },
   {
     id: "cabarete",
     label: "Cabarete, Dominican Republic",
-    bg: "assets/enhanced_hero-bg-cabarete.png?v=20260604-1732",
+    bg: "assets/enhanced_hero-bg-cabarete.png?v=20260604-1735",
     href: "#destinations",
   },
   {
