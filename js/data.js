@@ -84,7 +84,7 @@ export const LOCATION_GROUPS = {
 export const OPENING_SLIDES = [
   {
     label: "Kite surfing",
-    video: "assets/kitesurf.mp4?v=20260602-1446",
+    video: "assets/kitesurf.mp4?v=20260604-1346",
     layers: [
       "assets/opening-slide-1a.jpg",
       "assets/opening-slide-1b.jpg",
