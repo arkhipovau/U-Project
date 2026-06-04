@@ -14,7 +14,7 @@ export const HERO_LOCATIONS = [
   {
     id: "cabarete",
     label: "Cabarete, Dominican Republic",
-    bg: "assets/hero-bg-cabarete.png?v=20260602-1410",
+    bg: "assets/enhanced_hero-bg-cabarete.png?v=20260604-1732",
     href: "#destinations",
   },
   {
