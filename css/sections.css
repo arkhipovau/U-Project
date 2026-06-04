@@ -144,6 +144,12 @@
   transition: opacity 0.8s var(--ease-cinematic);
 }
 
+.ecosystem--coming-soon .ecosystem__bg {
+  background-image:
+    linear-gradient(180deg, rgba(51, 47, 46, 0) 86.13%, #332f2e 108.21%),
+    url("../assets/ecosystem-bg-alpine.png?v=20260602-1746");
+}
+
 .ecosystem__tabs-block {
   position: absolute;
   left: 0;

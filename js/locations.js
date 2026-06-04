@@ -69,7 +69,12 @@ export function initLocations() {
         pill.removeAttribute("href");
         pill.setAttribute("aria-disabled", "true");
       }
-      if (bg) bg.style.backgroundImage = "";
+      if (bg) {
+        bg.style.backgroundImage = `
+        linear-gradient(180deg, rgba(51, 47, 46, 0) 86.13%, #332f2e 108.21%),
+        url("assets/ecosystem-bg-alpine.png?v=20260602-1746")
+      `;
+      }
     } else {
       const item = list[index];
       const label = `${item.name}, ${item.country}`;
