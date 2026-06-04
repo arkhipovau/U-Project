@@ -58,7 +58,7 @@ export const LOCATION_GROUPS = {
     {
       name: "Cabarete",
       country: "Dominican Republic",
-      image: "assets/ecosystem-bg-cabarete-tropical.png?v=20260602-1756",
+      image: "assets/enhanced_ecosystem-bg-cabarete-tropical.png?v=20260604-1800",
     },
   ],
   urban: [
