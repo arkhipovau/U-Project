@@ -1,7 +1,7 @@
 const ECOSYSTEM_GRADIENT =
   "linear-gradient(180deg, rgba(51, 47, 46, 0) 86.13%, #332f2e 108.21%)";
 
-export const MEDIA_VERSION = "20260604-1945";
+export const MEDIA_VERSION = "20260604-2000";
 
 const loaded = new Map();
 
@@ -9,7 +9,7 @@ function cacheKey(url) {
   return url;
 }
 
-/** Mobile delivery — 840px JPEG in assets/opt/ (see scripts/optimize-media.sh). */
+/** Mobile delivery — high-res JPEG in assets/opt/ (see scripts/optimize-media.sh). */
 export function resolveImageUrl(url) {
   if (!url) return url;
   const [path, query] = url.split("?");
