@@ -53,7 +53,7 @@ export const LOCATION_GROUPS = {
     {
       name: "Roca",
       country: "Costa Rica",
-      image: "assets/ecosystem-bg-roca-tropical.png?v=20260602-1741",
+      image: "assets/enhanced_ecosystem-bg-roca-tropical.png?v=20260604-1758",
     },
     {
       name: "Cabarete",
