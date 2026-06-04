@@ -97,7 +97,7 @@ export const OPENING_SLIDES = [
   },
   {
     label: "Tropics exploration",
-    video: "assets/tropics.mp4?v=20260602-1804",
+    video: "assets/tropics.mp4?v=20260604-1410",
     image: "assets/opening-slide-2.png?v=20260602-1430",
     mediaWidth: 394,
     mediaLeft: "calc(50% - 197px - 8px)",
