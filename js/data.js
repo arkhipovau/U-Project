@@ -96,7 +96,7 @@ export const OPENING_SLIDES = [
   },
   {
     label: "Wellness",
-    video: "assets/wellness.mp4?v=20260604-1555",
+    video: "assets/wellness.mp4",
     mediaWidth: 408,
     mediaLeft: "calc(50% - 204px - 1px)",
   },
