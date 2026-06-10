@@ -42,6 +42,17 @@
   cursor: pointer;
 }
 
+.hero__chrome-btn img {
+  display: block;
+  width: 21px;
+  height: 21px;
+}
+
+.hero__chrome-btn--search img {
+  width: 17px;
+  height: 17px;
+}
+
 .hero__chrome-btn--search {
   justify-self: end;
 }
@@ -118,6 +129,17 @@
   color: inherit;
   text-decoration: none;
   cursor: pointer;
+}
+
+.site-chrome__btn img {
+  display: block;
+  width: 21px;
+  height: 21px;
+}
+
+.site-chrome__search img {
+  width: 17px;
+  height: 17px;
 }
 
 .site-chrome__search {
