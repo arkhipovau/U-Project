@@ -266,16 +266,10 @@ body.menu-open .site-chrome {
   text-decoration: none;
 }
 
-.site-menu-toggle__close {
-  display: none;
-}
-
-body.menu-open .site-menu-toggle__open {
-  display: none;
-}
-
-body.menu-open .site-menu-toggle__close {
-  display: block;
+body.menu-open .hero__chrome .site-menu-open,
+body.menu-open .hero__chrome-btn--search {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* Liquid glass — Figma backdrop-blur 16px on pills / dock */

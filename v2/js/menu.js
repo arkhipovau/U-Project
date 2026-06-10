@@ -3,18 +3,21 @@ import { setSiteLogoMenuOpen } from "./site-logo.js";
 
 export function initMenu() {
   const menu = document.getElementById("site-menu");
-  const toggles = document.querySelectorAll(".site-menu-toggle");
-  if (!menu || toggles.length === 0) return;
+  const openToggles = document.querySelectorAll(".site-menu-open");
+  const closeToggles = document.querySelectorAll(".site-menu-close");
+  if (!menu || openToggles.length === 0 || closeToggles.length === 0) return;
 
   const destContainer = menu.querySelector("[data-destinations-nav]");
   const menuScroll = menu.querySelector(".menu__scroll");
+  const menuToolbar = menu.querySelector(".menu__toolbar");
   let savedScrollY = 0;
 
   function setTogglesExpanded(open) {
-    toggles.forEach((toggle) => {
+    openToggles.forEach((toggle) => {
       toggle.setAttribute("aria-expanded", String(open));
-      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      toggle.setAttribute("aria-label", open ? "Open menu" : "Open menu");
     });
+    menuToolbar?.setAttribute("aria-hidden", String(!open));
   }
 
   function lockBodyScroll() {
@@ -94,10 +97,15 @@ export function initMenu() {
     });
   }
 
-  toggles.forEach((toggle) => {
+  openToggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      if (!isOpen()) openMenu();
+    });
+  });
+
+  closeToggles.forEach((toggle) => {
     toggle.addEventListener("click", () => {
       if (isOpen()) closeMenu();
-      else openMenu();
     });
   });
 
@@ -116,7 +124,9 @@ export function initMenu() {
   });
 
   menu
-    .querySelectorAll(".menu__dest-property--active, .menu__links a, .menu__destinations-label")
+    .querySelectorAll(
+      ".menu__dest-property--active, .menu__links a, .menu__destinations-label, .menu__toolbar-search"
+    )
     .forEach((link) => {
       link.addEventListener("click", () => closeMenu());
     });

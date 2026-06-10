@@ -21,6 +21,62 @@
   visibility: visible;
 }
 
+.menu__toolbar {
+  position: fixed;
+  z-index: 100;
+  top: max(10px, env(safe-area-inset-top, 0px));
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: start;
+  padding: 8px 8px 0;
+  box-sizing: border-box;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.menu.is-open .menu__toolbar {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.menu__toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-dock);
+  background: transparent;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menu__toolbar-btn img {
+  display: block;
+}
+
+.menu__toolbar-close img {
+  width: 21px;
+  height: 21px;
+}
+
+.menu__toolbar-search {
+  grid-column: 3;
+  justify-self: end;
+}
+
+.menu__toolbar-search img {
+  width: 17px;
+  height: 17px;
+}
+
 .menu__surface {
   position: absolute;
   inset: 0;
