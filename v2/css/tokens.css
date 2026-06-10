@@ -1,0 +1,56 @@
+:root {
+  --color-cream: #f9f5ea;
+  --color-cream-warm: #e6dccd;
+  --color-text: #161514;
+  --color-text-muted: rgba(22, 21, 20, 0.6);
+  --color-white: #ffffff;
+  --color-border: rgba(229, 218, 203, 0.7);
+  --color-dock: rgba(229, 218, 203, 0.8);
+  --color-glass: rgba(249, 245, 234, 0.6);
+  --color-glass-strong: rgba(249, 245, 234, 0.8);
+
+  --glass-blur: 16px;
+  --glass-saturate: 1.65;
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --color-overlay: rgba(51, 47, 46, 0.55);
+
+  --font-serif: "GT Ultra Median", "Times New Roman", serif;
+  --font-sans: "NB International", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --radius-card: 16px;
+  --radius-dock: 16px;
+  --radius-pill: 160px;
+
+  --app-width: 100%;
+  --space-page: 32px;
+  --space-xxs: 8px;
+  --space-xs: 12px;
+  --space-sm: 16px;
+  --space-md: 20px;
+  --space-lg: 28px;
+  --space-xl: 30px;
+  --space-section-top-lg: 48px;
+  --space-section-top-md: 32px;
+  --space-section-top-sm: 24px;
+  --space-section-bottom-lg: 48px;
+  --space-section-bottom-md: 45px;
+  --space-section-gap-lg: 64px;
+
+  --pad-left: max(var(--space-page), env(safe-area-inset-left, 0px));
+  --pad-right: max(var(--space-page), env(safe-area-inset-right, 0px));
+  --space-gutter: 10px;
+  --max-width: min(378px, var(--app-width));
+  --content-width: min(314px, calc(var(--app-width) - var(--pad-left) - var(--pad-right)));
+  /* Hero cards: Figma 314×420, narrower than copy for side peek (Safari) */
+  --hero-card-peek: 36px;
+  --hero-card-width: min(314px, calc(var(--app-width) - var(--hero-card-peek) * 2));
+  --hero-card-height: calc(var(--hero-card-width) * 420 / 314);
+  --days-stage-max: min(412px, var(--app-width));
+
+  --dock-height: 40px;
+  --dock-offset: 10px;
+  --dock-safe: calc(var(--dock-height) + var(--dock-offset) * 2 + env(safe-area-inset-bottom, 0px));
+
+  --ease-cinematic: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-crossfade: 1.1s;
+}

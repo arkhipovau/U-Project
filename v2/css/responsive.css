@@ -1,0 +1,113 @@
+/* Phones & tablets — full device width (iPhone 17 ≈ 393px logical) */
+
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+  padding-bottom: var(--dock-safe);
+}
+
+@media (max-width: 520px) {
+  :root {
+    --max-width: 100%;
+    /* Full inner width on phones — no 314px cap that pins blocks to the left */
+    --content-width: calc(var(--app-width) - var(--pad-left) - var(--pad-right));
+  }
+
+  .hero {
+    --hero-content-top: max(160px, calc(env(safe-area-inset-top, 0px) + 148px));
+    --hero-content-bottom: calc(var(--dock-safe) - 8px);
+
+    width: var(--app-width);
+    max-width: none;
+    height: 100dvh;
+    height: 100svh;
+    min-height: 680px;
+    max-height: 100dvh;
+  }
+
+  .hero__fade {
+    top: auto;
+    bottom: 0;
+    height: 0;
+    display: none;
+  }
+
+  .hero__content {
+    gap: 0;
+    overflow: visible;
+  }
+
+  .heading-hero {
+    margin: 0 0 26px;
+    flex-shrink: 0;
+  }
+
+  .hero__cards-wrap {
+    position: relative;
+    margin-top: 0;
+    flex: 0 0 var(--hero-card-height);
+    height: var(--hero-card-height);
+    max-height: var(--hero-card-height);
+    overflow: visible;
+  }
+
+  .hero__cards-swiper {
+    height: var(--hero-card-height);
+    min-height: var(--hero-card-height);
+    overflow: visible;
+  }
+
+  .hero__bg-swiper .hero__bg-layer {
+    left: -12%;
+    width: 124%;
+  }
+
+  .opening__sticky {
+    width: var(--app-width);
+    max-width: none;
+  }
+
+  .ecosystem {
+    width: var(--app-width);
+    max-width: none;
+    margin-inline: auto;
+  }
+}
+
+.page,
+.menu,
+:is(.hero, .ecosystem, .opening__sticky, .beyond, .days, .cta-final, .footer) {
+  width: 100%;
+  max-width: var(--max-width);
+}
+
+.opening__bg-media {
+  left: 52% !important;
+  right: auto !important;
+  width: 112% !important;
+  max-width: none !important;
+  height: 100% !important;
+  margin: 0 !important;
+  transform: translateX(-50%) !important;
+  top: 0 !important;
+  object-fit: cover;
+  object-position: center;
+}
+
+.footer__dest {
+  white-space: normal;
+}
+
+/* 48px under legal; body already has padding-bottom: var(--dock-safe) for the dock */
+.footer {
+  padding-bottom: 48px;
+}
+
+.days {
+  padding-bottom: calc(var(--dock-safe) + 24px);
+}

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f9f5ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#f9f5ea" media="(prefers-color-scheme: dark)" />
+    <title>Utopia — An Ecosystem of Retreats (v2)</title>
+    <link rel="icon" href="../assets/LOGO.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/fonts.css?v=20260602-1430" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260604-1755" />
+    <link rel="stylesheet" href="css/base.css?v=20260602-1430" />
+    <link rel="stylesheet" href="css/components.css?v=20260610-2430" />
+    <link rel="stylesheet" href="css/sections.css?v=20260610-2440" />
+    <link rel="stylesheet" href="css/menu.css?v=20260610-2420" />
+    <link rel="stylesheet" href="css/parallax.css?v=20260610-1310" />
+    <link rel="stylesheet" href="css/responsive.css?v=20260610-2210" />
+    <link rel="stylesheet" href="css/reveal.css?v=20260604-1700" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/hero-swiper.css?v=20260604-1755" />
+    <link
+      rel="preload"
+      as="image"
+      href="../assets/opt/enhanced_hero-bg-roca.jpg?v=20260610-1330"
+      fetchpriority="high"
+    />
+  </head>
+  <body data-page-version="v2">
+    <header class="site-logo-bar" id="site-logo-bar" hidden aria-hidden="true">
+      <a class="site-logo-bar__link" href="#top" aria-label="Utopia home">
+        <img
+          class="site-logo-bar__mark"
+          src="../assets/logo-wordmark-dark.svg"
+          alt=""
+          width="87"
+          height="14"
+        />
+      </a>
+    </header>
+
+    <div class="page">
+      <!-- Screen 1: Hero (378×794) -->
+      <section class="hero" id="top" aria-label="Hero">
+        <div class="hero__logo" aria-hidden="true">
+          <img class="hero__logo-mark" src="../assets/LOGO.svg" alt="" width="100" height="114" />
+        </div>
+
+        <!-- Background swiper (controlled by cards swiper) -->
+        <div class="swiper hero__bg-swiper" aria-hidden="true">
+          <div class="swiper-wrapper"></div>
+        </div>
+
+        <div class="hero__content">
+          <h1 class="heading-hero" data-reveal>An Ecosystem of Retreats</h1>
+          <div class="hero__cards-wrap" data-reveal>
+            <!-- Cards swiper (master) -->
+            <div class="swiper hero__cards-swiper" aria-label="Destinations">
+              <div class="swiper-wrapper" role="list"></div>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-prev" aria-label="Previous destination"></div>
+              <div class="swiper-button-next" aria-label="Next destination"></div>
+              <div class="swiper-scrollbar"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__fade" aria-hidden="true"></div>
+      </section>
+
+      <!-- Screen 2: Ecosystem (378×706) -->
+      <section class="ecosystem" id="destinations" aria-label="Destinations" data-reveal-group>
+        <div class="ecosystem__copy">
+          <h2 class="ecosystem__title" data-reveal>
+            Different destinations.<br />
+            Consistent experience.
+          </h2>
+          <p class="ecosystem__body" data-reveal>
+            Each property combines thoughtful service, curated experiences, and distinctive design
+            across every destination.
+          </p>
+        </div>
+
+        <div class="ecosystem__media" data-reveal>
+          <div class="ecosystem__bg" role="img" aria-label="Destination preview"></div>
+
+          <div class="ecosystem__tabs-block">
+            <div class="ecosystem__tabs-line" aria-hidden="true"></div>
+            <nav class="ecosystem__tabs" aria-label="Location types">
+              <button type="button" class="ecosystem__tab is-active" data-group="tropical">Tropical</button>
+              <button type="button" class="ecosystem__tab" data-group="urban">Urban</button>
+              <button type="button" class="ecosystem__tab" data-group="alpine">Alpine</button>
+            </nav>
+          </div>
+
+          <button type="button" class="ecosystem__nav-btn ecosystem__nav-btn--prev" aria-label="Previous location">
+            <img src="../assets/chevron-nav.svg" alt="" width="12" height="12" />
+          </button>
+          <a class="ecosystem__location-pill" href="#opening">
+            <span class="ecosystem__location-pill__label">Jericoacoara, Brazil</span>
+          </a>
+          <button type="button" class="ecosystem__nav-btn ecosystem__nav-btn--next" aria-label="Next location">
+            <img src="../assets/chevron-nav.svg" alt="" width="12" height="12" />
+          </button>
+        </div>
+      </section>
+
+      <!-- Screen 3: Opening (378×682, scroll-pinned) -->
+      <section class="opening" id="opening" aria-label="Opening announcement" data-reveal-group>
+        <div class="opening__sticky">
+          <div class="opening__media">
+            <div class="opening__slider" aria-label="Opening experiences">
+              <div class="opening__slides"></div>
+            </div>
+            <button
+              type="button"
+              class="ecosystem__nav-btn ecosystem__nav-btn--prev opening__nav-btn--prev"
+              aria-label="Previous slide"
+            >
+              <img src="../assets/chevron-nav.svg" alt="" width="12" height="12" />
+            </button>
+            <div
+              class="ecosystem__location-pill ecosystem__location-pill--static opening__location-pill"
+              aria-live="polite"
+            >
+              <span class="ecosystem__location-pill__label">Kite surfing</span>
+            </div>
+            <button
+              type="button"
+              class="ecosystem__nav-btn ecosystem__nav-btn--next opening__nav-btn--next"
+              aria-label="Next slide"
+            >
+              <img src="../assets/chevron-nav.svg" alt="" width="12" height="12" />
+            </button>
+          </div>
+
+          <div class="opening__content">
+            <div class="opening__copy">
+              <p class="opening__eyebrow" data-reveal>Opening in 2027</p>
+              <h2 class="opening__title" data-reveal>Unveil Utopia Jericoacoara</h2>
+              <p class="opening__body" data-reveal>
+                Atlantic coast setting with steady winds for kite-surfing and open water for both
+                active days and relaxed ocean living.
+              </p>
+            </div>
+            <a class="opening__cta" href="#request" data-reveal>Be Among First</a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Screen 4: Beyond villas (Figma 899:1370) -->
+      <section class="beyond" id="experiences" aria-label="Beyond villas" data-reveal-group>
+        <div class="beyond__intro">
+          <h2 class="beyond__title" data-reveal>Beyond villas</h2>
+          <p class="beyond__lead" data-reveal>
+            Ultra-luxury experiences, available independently of a villa stay.
+          </p>
+        </div>
+
+        <div class="beyond__cards">
+          <a class="beyond__card" id="jet" href="../coming-soon.html" data-coming-soon data-reveal>
+            <div class="parallax-media beyond__card-media">
+              <video
+                class="beyond__image beyond__video"
+                data-src="../assets/jet.mp4?v=20260604-1527"
+                poster="assets/opt/beyond-jet.jpg?v=20260610-1330"
+                width="314"
+                height="200"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Private jet over mountains"
+              ></video>
+            </div>
+            <div class="beyond__card-body">
+              <div class="beyond__head">
+                <span class="beyond__card-title">Private Jet</span>
+                <img class="beyond__chevron" src="../assets/chevron-dark.svg" alt="" width="12" height="12" />
+              </div>
+              <p class="beyond__desc">
+                For seamless inter-destination travel or independent private charter.
+              </p>
+            </div>
+          </a>
+
+          <a class="beyond__card" id="yacht" href="../coming-soon.html" data-coming-soon data-reveal>
+            <div class="parallax-media beyond__card-media">
+              <video
+                class="beyond__image beyond__video"
+                data-src="../assets/yacht.mp4?v=20260604-1525"
+                poster="assets/opt/beyond-yacht.jpg?v=20260610-1330"
+                width="314"
+                height="200"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Superyacht at sea"
+              ></video>
+            </div>
+            <div class="beyond__card-body">
+              <div class="beyond__head">
+                <span class="beyond__card-title">Superyacht</span>
+                <img class="beyond__chevron" src="../assets/chevron-dark.svg" alt="" width="12" height="12" />
+              </div>
+              <p class="beyond__desc">
+                A superyacht experience with high-level service and a unique, complete user experience.
+              </p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Screen 5: Days designed (378×621) -->
+      <section class="days" aria-label="A stay designed around the place" data-reveal-group>
+        <div class="days__intro">
+          <h2 class="days__title" data-reveal>A Stay Designed<br />Around the Place</h2>
+          <p class="days__body" data-reveal>
+            From kitesurfing and ocean expeditions to private dining, recovery, and cultural experiences,
+            Utopia properties are designed for people who prefer their time away to feel full rather than
+            scheduled.
+          </p>
+        </div>
+
+        <div class="days__viewport" data-reveal>
+          <div class="days__carousel">
+            <div class="days__stage" aria-roledescription="carousel" aria-label="Experience highlights">
+              <div class="days__track">
+                <article class="days__card" data-index="0">
+                  <img src="../assets/opt/days-water.jpg?v=20260610-1330" alt="" width="205" height="274" loading="lazy" decoding="async" />
+                  <span class="days__label">Water sports</span>
+                </article>
+                <article class="days__card" data-index="1">
+                  <img src="../assets/opt/days-dining.jpg?v=20260610-1330" alt="" width="205" height="274" loading="lazy" decoding="async" />
+                  <span class="days__label">Fine dining</span>
+                </article>
+                <article class="days__card" data-index="2">
+                  <img src="../assets/opt/days-wellness.jpg?v=20260610-1330" alt="" width="205" height="274" loading="lazy" decoding="async" />
+                  <span class="days__label">Wellness</span>
+                </article>
+              </div>
+              <button type="button" class="days__hit days__hit--prev" aria-label="Previous slide"></button>
+              <button type="button" class="days__hit days__hit--next" aria-label="Next slide"></button>
+            </div>
+          <div class="days__progress" data-active="0" role="tablist" aria-label="Carousel pagination">
+            <button type="button" class="days__progress-item" role="tab" aria-current="true" aria-label="Water sports"></button>
+            <button type="button" class="days__progress-item" role="tab" aria-current="false" aria-label="Fine dining"></button>
+            <button type="button" class="days__progress-item" role="tab" aria-current="false" aria-label="Wellness"></button>
+          </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screen 6: Final CTA (378×387) -->
+      <section class="cta-final" id="request" aria-label="Discover" data-reveal-group>
+        <div class="cta-final__bg" aria-hidden="true">
+          <video
+            class="cta-final__video"
+            data-src="../assets/footer.mp4"
+            poster="assets/opt/cta-footer-poster.jpg?v=20260610-1330"
+            width="2052"
+            height="1008"
+            muted
+            loop
+            playsinline
+            preload="none"
+          ></video>
+        </div>
+
+        <div class="cta-final__content">
+          <h2 class="cta-final__title" data-reveal>Discover Utopia&rsquo;s<br />private world</h2>
+          <a class="cta-final__cta" href="#request" data-reveal>Start personalization</a>
+        </div>
+      </section>
+
+      <!-- Footer (378×510) -->
+      <footer class="footer" aria-label="Footer" data-reveal-group>
+        <div class="footer__inner">
+          <div class="footer__destinations">
+            <a class="footer__label" href="../coming-soon.html" data-coming-soon data-reveal>Destinations</a>
+            <div data-destinations-nav data-destinations-id-prefix="footer-dest"></div>
+          </div>
+
+          <nav class="footer__links" aria-label="Site" data-reveal>
+            <a class="footer__link" href="../coming-soon.html" data-coming-soon>Experiences</a>
+            <a class="footer__link" href="../coming-soon.html" id="about" data-coming-soon>About</a>
+            <a class="footer__link" href="../coming-soon.html" id="careers" data-coming-soon>Careers</a>
+          </nav>
+
+          <div class="footer__legal" data-reveal>
+            <a class="footer__legal-copy footer__link" href="../coming-soon.html" data-coming-soon>Copyright © 2026 Utopia. All Rights Reserved</a>
+            <a class="footer__link" href="../coming-soon.html" data-coming-soon>Terms and conditions</a>
+            <a class="footer__link" href="../coming-soon.html" data-coming-soon>Privacy policy</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Full-screen menu (Figma 722:1218) -->
+    <aside class="menu" id="site-menu" aria-hidden="true" aria-label="Site menu">
+      <div class="menu__surface">
+        <div class="menu__scroll">
+          <header class="menu__header">
+            <a class="logo menu__brand" href="#top" aria-label="Utopia home">
+              <img class="logo__full" src="../assets/LOGO-dark.svg" alt="Utopia" width="100" height="114" />
+            </a>
+          </header>
+          <div class="menu__rule" role="presentation" aria-hidden="true"></div>
+
+          <nav class="menu__nav" aria-label="Main">
+            <div class="footer__destinations menu__destinations">
+              <a class="footer__label menu__destinations-label" href="../coming-soon.html" data-coming-soon>Destinations</a>
+              <div data-destinations-nav data-destinations-id-prefix="menu-dest"></div>
+            </div>
+
+            <div class="footer__links menu__links" aria-label="Site">
+              <div class="menu__link-group">
+                <a class="menu__link" href="../coming-soon.html" data-coming-soon>Private Jet</a>
+                <a class="menu__link" href="../coming-soon.html" data-coming-soon>Superyacht</a>
+              </div>
+              <div class="menu__link-group">
+                <a class="menu__link" href="../coming-soon.html" data-coming-soon>About</a>
+                <a class="menu__link" href="../coming-soon.html" data-coming-soon>Careers</a>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Fixed dock -->
+    <nav class="dock" aria-label="Primary navigation">
+      <a class="dock__icon-btn dock__home" href="#top" aria-label="Utopia home">
+        <img class="dock__home-mark" src="../assets/logo-mark-dark.svg" alt="" width="18" height="18" />
+      </a>
+      <a class="dock__cta" href="#request">Request a stay</a>
+      <button
+        type="button"
+        class="dock__icon-btn dock__menu-toggle"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        aria-label="Open menu"
+      >
+        <img class="dock__icon-menu" src="../assets/menu.svg" alt="" width="16" height="16" />
+        <img class="dock__icon-close" src="../assets/close.svg" alt="" width="16" height="16" />
+      </button>
+    </nav>
+
+    <script type="module" src="js/main.js?v=20260610-v2"></script>
+  </body>
+</html>

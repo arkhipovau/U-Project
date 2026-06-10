@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f9f5ea" />
+    <title>Utopia — Preview versions</title>
+    <link rel="icon" href="assets/LOGO.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/fonts.css?v=20260602-1430" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260604-1755" />
+    <link rel="stylesheet" href="css/base.css?v=20260602-1430" />
+    <link rel="stylesheet" href="css/preview.css?v=20260610-2500" />
+  </head>
+  <body class="preview-page">
+    <main class="preview" aria-label="Preview versions">
+      <div class="preview__brand" aria-hidden="true">
+        <img src="assets/LOGO-dark.svg" alt="" width="72" height="82" />
+      </div>
+
+      <div class="preview__intro">
+        <h1 class="preview__title">Utopia preview</h1>
+        <p class="preview__lead">Two live versions of the homepage. Open or copy links to share.</p>
+      </div>
+
+      <div class="preview__versions">
+        <article class="preview__card">
+          <div class="preview__card-head">
+            <p class="preview__card-title">Version 1</p>
+            <h2 class="preview__card-name">Current homepage</h2>
+          </div>
+          <p class="preview__url" id="preview-url-v1"></p>
+          <div class="preview__actions">
+            <a class="preview__btn preview__btn--primary" id="preview-open-v1" href="index.html">Open</a>
+            <button type="button" class="preview__btn preview__btn--secondary" data-copy-target="preview-url-v1">
+              Copy link
+            </button>
+          </div>
+        </article>
+
+        <article class="preview__card">
+          <div class="preview__card-head">
+            <p class="preview__card-title">Version 2</p>
+            <h2 class="preview__card-name">With minor updates</h2>
+          </div>
+          <p class="preview__url" id="preview-url-v2"></p>
+          <div class="preview__actions">
+            <a class="preview__btn preview__btn--primary" id="preview-open-v2" href="v2/">Open</a>
+            <button type="button" class="preview__btn preview__btn--secondary" data-copy-target="preview-url-v2">
+              Copy link
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <button type="button" class="preview__btn preview__btn--primary preview__copy-all" id="preview-copy-both">
+        Copy both links
+      </button>
+
+      <p class="preview__note">Send this page, or copy individual links for Version 1 and Version 2.</p>
+    </main>
+
+    <script type="module">
+      const pageBase = new URL(".", window.location.href);
+      const v1Url = new URL("index.html", pageBase).href;
+      const v2Url = new URL("v2/", pageBase).href;
+      const hubUrl = new URL("preview.html", pageBase).href;
+
+      document.getElementById("preview-url-v1").textContent = v1Url;
+      document.getElementById("preview-url-v2").textContent = v2Url;
+      document.getElementById("preview-open-v1").href = v1Url;
+      document.getElementById("preview-open-v2").href = v2Url;
+
+      async function copyText(text, button) {
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const area = document.createElement("textarea");
+          area.value = text;
+          area.setAttribute("readonly", "");
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand("copy");
+          area.remove();
+        }
+
+        if (!button) return;
+        const original = button.textContent;
+        button.textContent = "Copied";
+        button.classList.add("is-copied");
+        window.setTimeout(() => {
+          button.textContent = original;
+          button.classList.remove("is-copied");
+        }, 1600);
+      }
+
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          copyText(target?.textContent?.trim() ?? "", button);
+        });
+      });
+
+      document.getElementById("preview-copy-both").addEventListener("click", (event) => {
+        const text = `Version 1 (current): ${v1Url}\nVersion 2 (updates): ${v2Url}\nPreview hub: ${hubUrl}`;
+        copyText(text, event.currentTarget);
+      });
+    </script>
+  </body>
+</html>

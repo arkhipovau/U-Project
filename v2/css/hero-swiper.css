@@ -1,0 +1,91 @@
+/* Hero — Swiper (cards master, background controlled) */
+
+.hero__bg-swiper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__bg-swiper .swiper-wrapper,
+.hero__bg-swiper .swiper-slide {
+  height: 100%;
+}
+
+.hero__bg-swiper .hero__bg-layer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -14%;
+  width: 128%;
+  background-size: cover;
+  background-position: center;
+  transform-origin: center center;
+  opacity: 1;
+  transition: none;
+}
+
+.hero__bg-swiper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    transparent 35%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+}
+
+.hero__cards-swiper {
+  width: 100%;
+  height: var(--hero-card-height, 420px);
+  min-height: var(--hero-card-height, 280px);
+  overflow: visible;
+  box-sizing: border-box;
+  padding-inline: 0;
+  /* Safari: don't let backface-hidden cull adjacent slide edges */
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+}
+
+.hero__cards-swiper .swiper-wrapper {
+  align-items: stretch;
+}
+
+.hero__cards-swiper .swiper-slide {
+  width: var(--hero-card-width, var(--content-width));
+  height: var(--hero-card-height, 420px);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+}
+
+.hero__cards-swiper .location-card {
+  display: block;
+  width: 100%;
+  height: 100%;
+  flex: none;
+  max-width: none;
+  max-height: none;
+}
+
+.hero__cards-swiper.swiper-grab {
+  cursor: grab;
+}
+
+.hero__cards-swiper.swiper-grabbing {
+  cursor: grabbing;
+}
+
+/* Optional Swiper chrome — hidden until needed in design */
+.hero__cards-swiper .swiper-pagination,
+.hero__cards-swiper .swiper-button-prev,
+.hero__cards-swiper .swiper-button-next,
+.hero__cards-swiper .swiper-scrollbar {
+  display: none;
+}
