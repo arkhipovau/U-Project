@@ -1,7 +1,7 @@
 const ECOSYSTEM_GRADIENT =
   "linear-gradient(180deg, rgba(51, 47, 46, 0) 86.13%, #332f2e 108.21%)";
 
-export const MEDIA_VERSION = "20260610-1240";
+export const MEDIA_VERSION = "20260610-1330";
 
 /** No re-encode — keeps full source bitrate (footer CTA). */
 const SOURCE_ONLY_VIDEOS = new Set(["footer"]);
