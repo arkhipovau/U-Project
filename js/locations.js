@@ -10,7 +10,7 @@ const ALPINE_PLACEHOLDER = "assets/ecosystem-bg-alpine.png";
 
 let ecosystemNavigate = null;
 
-/** Jump to a destination group + property index (menu / deep links). */
+/** Jump to a destination group + property index (ecosystem carousel). */
 export function goToEcosystemLocation(group, index = 0) {
   ecosystemNavigate?.(group, index);
 }
@@ -132,7 +132,7 @@ export function initLocations() {
       else if (pill) pill.textContent = label;
       if (pill) pill.classList.remove("ecosystem__location-pill--static");
       if (pillIsLink) {
-        pill.href = `#${item.name.toLowerCase().replace(/\s+/g, "-")}`;
+        pill.href = "coming-soon.html";
         pill.title = label;
         pill.removeAttribute("aria-disabled");
       }

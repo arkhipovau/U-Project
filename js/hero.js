@@ -2,6 +2,7 @@
  * Hero uses Swiper (swiper@11): cards swiper is master; background follows realIndex.
  */
 import Swiper from "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs";
+import { COMING_SOON_PAGE } from "./coming-soon.js";
 import { HERO_LOCATIONS } from "./data.js";
 import { loadBackgroundImage, prefetchImage } from "./lazy-media.js";
 
@@ -92,7 +93,7 @@ export function initHero(parallax) {
 
     const card = document.createElement("a");
     card.className = "location-card";
-    card.href = loc.href;
+    card.href = COMING_SOON_PAGE;
     card.innerHTML = `
       <div class="location-card__label">
         <span>${loc.label}</span>

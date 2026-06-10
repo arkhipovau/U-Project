@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f9f5ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#f9f5ea" media="(prefers-color-scheme: dark)" />
+    <title>Utopia — Coming soon</title>
+    <link rel="icon" href="assets/LOGO.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/fonts.css?v=20260602-1430" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260604-1755" />
+    <link rel="stylesheet" href="css/base.css?v=20260602-1430" />
+    <link rel="stylesheet" href="css/components.css?v=20260610-1940" />
+    <link rel="stylesheet" href="css/coming-soon.css?v=20260610-2010" />
+    <link rel="stylesheet" href="css/responsive.css?v=20260604-1960" />
+  </head>
+  <body class="coming-soon-page">
+    <header class="site-logo-bar is-visible" aria-hidden="false">
+      <a class="site-logo-bar__link" href="index.html" aria-label="Utopia home">
+        <img
+          class="site-logo-bar__mark"
+          src="assets/logo-wordmark-dark.svg"
+          alt=""
+          width="87"
+          height="14"
+        />
+      </a>
+    </header>
+
+    <main class="coming-soon" aria-label="Coming soon">
+      <div class="coming-soon__bg" role="img" aria-label="Destination preview"></div>
+      <div class="coming-soon__content">
+        <p class="coming-soon__pill">Coming soon</p>
+      </div>
+    </main>
+
+    <nav class="dock" aria-label="Primary navigation">
+      <a class="dock__icon-btn dock__icon-btn--ghost" href="index.html" aria-label="Back to home">
+        <img src="assets/chevron-nav.svg" alt="" width="16" height="16" style="transform: rotate(180deg)" />
+      </a>
+      <a class="dock__cta" href="index.html#request">Request a stay</a>
+      <span class="dock__icon-btn dock__icon-btn--ghost" aria-hidden="true"></span>
+    </nav>
+
+    <script type="module">
+      import { initViewport } from "./js/viewport.js";
+      initViewport();
+    </script>
+  </body>
+</html>

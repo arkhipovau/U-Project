@@ -1,11 +1,5 @@
 import { DESTINATION_GROUPS, LOCATION_GROUPS } from "./data.js";
-import { goToEcosystemLocation } from "./locations.js";
-
-function scrollToDestinations() {
-  const section = document.getElementById("destinations");
-  if (!section) return;
-  section.scrollIntoView({ behavior: "smooth", block: "start" });
-}
+import { COMING_SOON_PAGE } from "./coming-soon.js";
 
 function collapseMenuDestinations(container) {
   if (!container) return;
@@ -18,7 +12,7 @@ function collapseMenuDestinations(container) {
   });
 }
 
-function buildMenuDestinations(container, onNavigateGroup) {
+function buildMenuDestinations(container, onNavigateComingSoon) {
   container.innerHTML = "";
   container.className = "menu__dest-list";
 
@@ -45,7 +39,7 @@ function buildMenuDestinations(container, onNavigateGroup) {
       navBtn.className = "menu__dest-toggle menu__dest-nav";
       navBtn.textContent = label;
       navBtn.setAttribute("aria-label", `Go to ${label} — coming soon`);
-      navBtn.addEventListener("click", () => onNavigateGroup(id));
+      navBtn.addEventListener("click", onNavigateComingSoon);
       row.append(navBtn, chevron);
       group.append(row);
       container.appendChild(group);
@@ -64,13 +58,11 @@ function buildMenuDestinations(container, onNavigateGroup) {
     list.id = `menu-dest-${id}`;
     list.hidden = true;
 
-    locations.forEach((loc, index) => {
+    locations.forEach((loc) => {
       const item = document.createElement("li");
       const link = document.createElement("a");
       link.className = "menu__dest-property";
-      link.href = "#destinations";
-      link.dataset.ecosystemGroup = id;
-      link.dataset.ecosystemIndex = String(index);
+      link.href = COMING_SOON_PAGE;
       link.textContent = `${loc.name}, ${loc.country}`;
       item.appendChild(link);
       list.appendChild(item);
@@ -120,19 +112,12 @@ export function initMenu() {
     return menu.classList.contains("is-open");
   }
 
-  function navigateToProperty(group, index) {
-    goToEcosystemLocation(group, index);
-    scrollToDestinations();
+  function navigateToComingSoon() {
     closeMenu();
+    window.location.assign(COMING_SOON_PAGE);
   }
 
-  function navigateToGroup(group) {
-    goToEcosystemLocation(group, 0);
-    scrollToDestinations();
-    closeMenu();
-  }
-
-  if (destContainer) buildMenuDestinations(destContainer, navigateToGroup);
+  if (destContainer) buildMenuDestinations(destContainer, navigateToComingSoon);
 
   toggle.addEventListener("click", () => {
     if (isOpen()) closeMenu();
@@ -144,17 +129,8 @@ export function initMenu() {
   });
 
   menu.querySelectorAll(".menu__links a").forEach((link) => {
+    link.href = COMING_SOON_PAGE;
     link.addEventListener("click", () => closeMenu());
-  });
-
-  menu.querySelectorAll("[data-ecosystem-group][data-ecosystem-index]").forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const group = link.dataset.ecosystemGroup;
-      const index = Number.parseInt(link.dataset.ecosystemIndex, 10) || 0;
-      if (!group) return;
-      navigateToProperty(group, index);
-    });
   });
 
   document.addEventListener("keydown", (e) => {

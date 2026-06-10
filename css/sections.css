@@ -532,6 +532,15 @@ video.opening__bg-media {
   color: inherit;
   overflow: hidden;
   scroll-margin-top: calc(max(10px, env(safe-area-inset-top, 0px)) + 8px);
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+  outline: none;
+}
+
+.beyond__card:focus,
+.beyond__card:active {
+  outline: none;
+  color: inherit;
 }
 
 .beyond__card-media {
