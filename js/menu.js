@@ -1,11 +1,11 @@
-import { buildDestinationsList, collapseDestinations } from "./destinations-nav.js";
+import { collapseDestinations } from "./destinations-nav.js";
 
 export function initMenu() {
   const menu = document.getElementById("site-menu");
   const toggle = document.querySelector(".dock__menu-toggle");
   if (!menu || !toggle) return;
 
-  const destContainer = menu.querySelector("[data-menu-destinations]");
+  const destContainer = menu.querySelector("[data-destinations-nav]");
   const menuScroll = menu.querySelector(".menu__scroll");
   let savedScrollY = 0;
 
@@ -52,8 +52,6 @@ export function initMenu() {
     return menu.classList.contains("is-open");
   }
 
-  if (destContainer) buildDestinationsList(destContainer, { idPrefix: "menu-dest" });
-
   toggle.addEventListener("click", () => {
     if (isOpen()) closeMenu();
     else openMenu();
@@ -63,7 +61,7 @@ export function initMenu() {
     link.addEventListener("click", () => closeMenu());
   });
 
-  menu.querySelectorAll(".menu__dest-property--active").forEach((link) => {
+  menu.querySelectorAll(".menu__dest-property--active, .menu__links a").forEach((link) => {
     link.addEventListener("click", () => closeMenu());
   });
 

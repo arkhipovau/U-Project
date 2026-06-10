@@ -14,6 +14,13 @@ export function collapseDestinations(container) {
   });
 }
 
+export function initDestinationsNav() {
+  document.querySelectorAll("[data-destinations-nav]").forEach((container) => {
+    const idPrefix = container.dataset.destinationsIdPrefix || "dest";
+    buildDestinationsList(container, { idPrefix });
+  });
+}
+
 export function buildDestinationsList(container, { idPrefix = "dest" } = {}) {
   if (!container) return;
 
@@ -41,9 +48,13 @@ export function buildDestinationsList(container, { idPrefix = "dest" } = {}) {
     const toggleBtn = document.createElement("button");
     toggleBtn.type = "button";
     toggleBtn.className = "menu__dest-toggle";
-    toggleBtn.textContent = label;
     toggleBtn.setAttribute("aria-expanded", "false");
     toggleBtn.setAttribute("aria-controls", `${idPrefix}-${id}`);
+
+    const toggleLabel = document.createElement("span");
+    toggleLabel.className = "menu__dest-toggle-label";
+    toggleLabel.textContent = label;
+    toggleBtn.append(toggleLabel, chevron);
 
     const list = document.createElement("ul");
     list.className = "menu__dest-properties";
@@ -70,7 +81,7 @@ export function buildDestinationsList(container, { idPrefix = "dest" } = {}) {
       list.appendChild(item);
     });
 
-    toggleBtn.addEventListener("click", () => {
+    const toggleGroup = () => {
       const open = !group.classList.contains("is-open");
       collapseDestinations(container);
       if (open) {
@@ -78,9 +89,14 @@ export function buildDestinationsList(container, { idPrefix = "dest" } = {}) {
         list.hidden = false;
         toggleBtn.setAttribute("aria-expanded", "true");
       }
+    };
+
+    toggleBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      toggleGroup();
     });
 
-    row.append(toggleBtn, chevron);
+    row.append(toggleBtn);
     group.append(row, list);
     container.appendChild(group);
   });

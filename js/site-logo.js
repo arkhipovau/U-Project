@@ -1,14 +1,15 @@
-/** Hero emblem stays fixed on the first screen; compact bar slides in after hero. */
+/** Hero emblem stays fixed while hero is on screen; compact bar replaces it after. */
 export function initSiteLogo() {
   const hero = document.querySelector(".hero");
   const bar = document.getElementById("site-logo-bar");
+  const heroLogo = document.getElementById("hero-logo");
   if (!hero || !bar) return;
 
   if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual";
   }
 
-  let ticking = false;
+  let onHero = null;
 
   const setBarVisible = (visible) => {
     const isVisible = bar.classList.contains("is-visible");
@@ -28,24 +29,32 @@ export function initSiteLogo() {
     });
   };
 
-  const sync = () => {
-    const { bottom } = hero.getBoundingClientRect();
-    // Show only after the full hero section has scrolled off-screen.
-    setBarVisible(bottom <= 0.5);
-    ticking = false;
+  const setOnHero = (visible) => {
+    if (onHero === visible) return;
+    onHero = visible;
+
+    document.body.classList.toggle("is-past-hero", !visible);
+
+    if (heroLogo) {
+      heroLogo.hidden = !visible;
+      heroLogo.setAttribute("aria-hidden", visible ? "false" : "true");
+    }
+
+    setBarVisible(!visible);
   };
 
-  const onScroll = () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(sync);
-  };
+  const heroObserver = new IntersectionObserver(
+    ([entry]) => {
+      setOnHero(entry.isIntersecting);
+    },
+    { threshold: 0 }
+  );
+
+  heroObserver.observe(hero);
 
   setBarVisible(false);
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", sync, { passive: true });
-  window.addEventListener("load", sync, { passive: true });
-  window.addEventListener("hashchange", sync, { passive: true });
-  requestAnimationFrame(sync);
+  requestAnimationFrame(() => {
+    const rect = hero.getBoundingClientRect();
+    setOnHero(rect.bottom > 0 && rect.top < window.innerHeight);
+  });
 }

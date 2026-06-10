@@ -1010,7 +1010,8 @@ video.opening__bg-media {
   color: #161514;
 }
 
-.footer__links a {
+.footer__links a,
+.footer__link {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;

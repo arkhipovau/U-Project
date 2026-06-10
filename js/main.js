@@ -6,7 +6,7 @@ import { initBeyond } from "./beyond.js";
 import { initCtaFinal } from "./cta-final.js";
 import { initExperiences } from "./experiences.js";
 import { initComingSoonLinks } from "./coming-soon.js";
-import { initFooter } from "./footer.js";
+import { initDestinationsNav } from "./destinations-nav.js";
 import { initMenu } from "./menu.js";
 import { initParallax } from "./parallax.js";
 import { initReveal } from "./reveal.js";
@@ -25,6 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initBeyond();
   initExperiences();
   initCtaFinal();
-  initFooter();
+  initDestinationsNav();
   initMenu();
 });
