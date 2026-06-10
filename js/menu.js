@@ -7,7 +7,7 @@ function scrollToDestinations() {
   section.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function buildMenuDestinations(container) {
+function buildMenuDestinations(container, onNavigateGroup) {
   container.innerHTML = "";
   container.className = "menu__dest-list";
 
@@ -17,45 +17,64 @@ function buildMenuDestinations(container) {
     group.className = "menu__dest-group";
     group.dataset.group = id;
 
-    const toggle = document.createElement("button");
-    toggle.type = "button";
-    toggle.className = "footer__dest menu__dest-toggle";
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.innerHTML = `
-      <span>${label}</span>
-      <img class="menu__dest-chevron" src="assets/chevron-dark.svg" alt="" width="12" height="12" />
-    `;
+    const row = document.createElement("div");
+    row.className = "menu__dest-row";
+
+    const title = document.createElement("span");
+    title.className = "menu__dest-label";
+    title.textContent = label;
+
+    const chevronBtn = document.createElement("button");
+    chevronBtn.type = "button";
+    chevronBtn.className = "menu__dest-chevron-btn";
+    chevronBtn.setAttribute("aria-expanded", "false");
+    chevronBtn.innerHTML =
+      '<img class="menu__dest-chevron" src="assets/chevron-dark.svg" alt="" width="12" height="12" />';
+
+    row.append(title, chevronBtn);
+
+    if (locations.length === 0) {
+      chevronBtn.setAttribute("aria-label", `Go to ${label} — coming soon`);
+      row.classList.add("menu__dest-row--nav");
+      row.addEventListener("click", () => onNavigateGroup(id));
+      group.append(row);
+      container.appendChild(group);
+      return;
+    }
+
+    chevronBtn.setAttribute("aria-label", `Show ${label} destinations`);
+    title.classList.add("menu__dest-label--toggle");
 
     const list = document.createElement("ul");
     list.className = "menu__dest-properties";
     list.hidden = true;
 
-    if (locations.length === 0) {
+    locations.forEach((loc, index) => {
       const item = document.createElement("li");
-      item.className = "menu__dest-property menu__dest-property--static";
-      item.textContent = "Coming soon";
+      const link = document.createElement("a");
+      link.className = "menu__dest-property";
+      link.href = "#destinations";
+      link.dataset.ecosystemGroup = id;
+      link.dataset.ecosystemIndex = String(index);
+      link.textContent = `${loc.name}, ${loc.country}`;
+      item.appendChild(link);
       list.appendChild(item);
-    } else {
-      locations.forEach((loc, index) => {
-        const item = document.createElement("li");
-        const link = document.createElement("a");
-        link.className = "menu__dest-property";
-        link.href = `#destinations`;
-        link.dataset.ecosystemGroup = id;
-        link.dataset.ecosystemIndex = String(index);
-        link.textContent = `${loc.name}, ${loc.country}`;
-        item.appendChild(link);
-        list.appendChild(item);
-      });
-    }
-
-    toggle.addEventListener("click", () => {
-      const open = group.classList.toggle("is-open");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      list.hidden = !open;
     });
 
-    group.append(toggle, list);
+    const toggleList = () => {
+      const open = group.classList.toggle("is-open");
+      chevronBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      list.hidden = !open;
+    };
+
+    chevronBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleList();
+    });
+
+    title.addEventListener("click", toggleList);
+
+    group.append(row, list);
     container.appendChild(group);
   });
 }
@@ -66,7 +85,6 @@ export function initMenu() {
   if (!menu || !toggle) return;
 
   const destContainer = menu.querySelector("[data-menu-destinations]");
-  if (destContainer) buildMenuDestinations(destContainer);
 
   function openMenu() {
     menu.classList.add("is-open");
@@ -93,6 +111,14 @@ export function initMenu() {
     scrollToDestinations();
     closeMenu();
   }
+
+  function navigateToGroup(group) {
+    goToEcosystemLocation(group, 0);
+    scrollToDestinations();
+    closeMenu();
+  }
+
+  if (destContainer) buildMenuDestinations(destContainer, navigateToGroup);
 
   toggle.addEventListener("click", () => {
     if (isOpen()) closeMenu();

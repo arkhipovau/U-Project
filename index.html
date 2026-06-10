@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="css/tokens.css?v=20260604-1755" />
     <link rel="stylesheet" href="css/base.css?v=20260602-1430" />
     <link rel="stylesheet" href="css/components.css?v=20260610-1320" />
-    <link rel="stylesheet" href="css/sections.css?v=20260610-1310" />
-    <link rel="stylesheet" href="css/menu.css?v=20260610-1310" />
+    <link rel="stylesheet" href="css/sections.css?v=20260610-1415" />
+    <link rel="stylesheet" href="css/menu.css?v=20260610-1500" />
     <link rel="stylesheet" href="css/parallax.css?v=20260610-1310" />
     <link rel="stylesheet" href="css/responsive.css?v=20260604-1960" />
     <link rel="stylesheet" href="css/reveal.css?v=20260604-1700" />
@@ -149,57 +149,59 @@
           </p>
         </div>
 
-        <a class="beyond__card beyond__card--jet" id="jet" href="#jet" data-reveal>
-          <div class="parallax-media beyond__card-media">
-            <video
-              class="beyond__image beyond__video"
-              data-src="assets/jet.mp4?v=20260604-1527"
-              poster="assets/opt/beyond-jet.jpg?v=20260610-1240"
-              width="314"
-              height="200"
-              muted
-              loop
-              playsinline
-              preload="none"
-              aria-label="Private jet over mountains"
-            ></video>
-          </div>
-          <div class="beyond__card-body">
-            <div class="beyond__head">
-              <span class="beyond__card-title">Private Jet</span>
-              <img class="beyond__chevron" src="assets/chevron-dark.svg" alt="" width="10" height="10" />
+        <div class="beyond__cards">
+          <a class="beyond__card" id="jet" href="#jet" data-reveal>
+            <div class="parallax-media beyond__card-media">
+              <video
+                class="beyond__image beyond__video"
+                data-src="assets/jet.mp4?v=20260604-1527"
+                poster="assets/opt/beyond-jet.jpg?v=20260610-1240"
+                width="314"
+                height="188"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Private jet over mountains"
+              ></video>
             </div>
-            <p class="beyond__desc">
-              For seamless inter-destination travel or independent private charter.
-            </p>
-          </div>
-        </a>
+            <div class="beyond__card-body">
+              <div class="beyond__head">
+                <span class="beyond__card-title">Private Jet</span>
+                <img class="beyond__chevron" src="assets/chevron-dark.svg" alt="" width="10" height="10" />
+              </div>
+              <p class="beyond__desc">
+                For seamless inter-destination travel or independent private charter.
+              </p>
+            </div>
+          </a>
 
-        <a class="beyond__card beyond__card--yacht" id="yacht" href="#yacht" data-reveal>
-          <div class="parallax-media beyond__card-media">
-            <video
-              class="beyond__image beyond__video"
-              data-src="assets/yacht.mp4?v=20260604-1525"
-              poster="assets/opt/beyond-yacht.jpg?v=20260610-1240"
-              width="314"
-              height="200"
-              muted
-              loop
-              playsinline
-              preload="none"
-              aria-label="Superyacht at sea"
-            ></video>
-          </div>
-          <div class="beyond__card-body">
-            <div class="beyond__head">
-              <span class="beyond__card-title">Superyacht</span>
-              <img class="beyond__chevron" src="assets/chevron-dark.svg" alt="" width="10" height="10" />
+          <a class="beyond__card" id="yacht" href="#yacht" data-reveal>
+            <div class="parallax-media beyond__card-media">
+              <video
+                class="beyond__image beyond__video"
+                data-src="assets/yacht.mp4?v=20260604-1525"
+                poster="assets/opt/beyond-yacht.jpg?v=20260610-1240"
+                width="314"
+                height="188"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Superyacht at sea"
+              ></video>
             </div>
-            <p class="beyond__desc">
-              A superyacht experience with high-level service and a unique, complete user experience.
-            </p>
-          </div>
-        </a>
+            <div class="beyond__card-body">
+              <div class="beyond__head">
+                <span class="beyond__card-title">Superyacht</span>
+                <img class="beyond__chevron" src="assets/chevron-dark.svg" alt="" width="10" height="10" />
+              </div>
+              <p class="beyond__desc">
+                A superyacht experience with high-level service and a unique, complete user experience.
+              </p>
+            </div>
+          </a>
+        </div>
       </section>
 
       <!-- Screen 5: Days designed (378×621) -->
@@ -315,15 +317,11 @@
             <div data-menu-destinations></div>
           </div>
 
-          <div class="footer__links menu__links" aria-label="Experiences and company">
-            <div class="menu__link-group">
-              <a href="#experiences">Private Jet</a>
-              <a href="#experiences">Superyacht</a>
-            </div>
-            <div class="menu__link-group">
-              <a href="#about">About</a>
-              <a href="#careers">Careers</a>
-            </div>
+          <div class="footer__links menu__links" aria-label="Site">
+            <a href="#jet">Private Jet</a>
+            <a href="#yacht">Superyacht</a>
+            <a href="#about">About</a>
+            <a href="#careers">Careers</a>
           </div>
         </nav>
       </div>
@@ -347,6 +345,6 @@
       </button>
     </nav>
 
-    <script type="module" src="js/main.js?v=20260610-1240"></script>
+    <script type="module" src="js/main.js?v=20260610-1500"></script>
   </body>
 </html>
