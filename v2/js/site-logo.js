@@ -1,4 +1,4 @@
-/** Compact wordmark bar slides in after the hero section leaves the viewport. */
+/** Fixed top chrome slides in after the hero section leaves the viewport. */
 let setSiteLogoMenuOpenFn = null;
 
 export function setSiteLogoMenuOpen(open) {
@@ -7,7 +7,7 @@ export function setSiteLogoMenuOpen(open) {
 
 export function initSiteLogo() {
   const hero = document.querySelector(".hero");
-  const bar = document.getElementById("site-logo-bar");
+  const bar = document.getElementById("site-chrome");
   if (!hero || !bar) return;
 
   if ("scrollRestoration" in history) {
@@ -20,6 +20,8 @@ export function initSiteLogo() {
   const setBarVisible = (visible) => {
     const isVisible = bar.classList.contains("is-visible");
     if (isVisible === visible) return;
+
+    document.body.classList.toggle("is-past-hero", visible);
 
     if (!visible) {
       bar.classList.remove("is-visible");
@@ -46,7 +48,7 @@ export function initSiteLogo() {
     return bottom <= 0.5;
   }
 
-  function syncSiteLogoBar() {
+  function syncSiteChrome() {
     setPastHero(readPastHero());
   }
 
@@ -62,9 +64,9 @@ export function initSiteLogo() {
 
   setSiteLogoMenuOpenFn = (open) => {
     menuPaused = open;
-    if (!open) syncSiteLogoBar();
+    if (!open) syncSiteChrome();
   };
 
   setBarVisible(false);
-  requestAnimationFrame(syncSiteLogoBar);
+  requestAnimationFrame(syncSiteChrome);
 }

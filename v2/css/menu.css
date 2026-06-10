@@ -209,14 +209,3 @@ body.menu-open {
   width: 100%;
 }
 
-body.menu-open .dock__icon-menu {
-  display: none;
-}
-
-body.menu-open .dock__icon-close {
-  display: block;
-}
-
-.dock__icon-close {
-  display: none;
-}

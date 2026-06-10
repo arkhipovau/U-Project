@@ -47,9 +47,10 @@
   --hero-card-height: calc(var(--hero-card-width) * 420 / 314);
   --days-stage-max: min(412px, var(--app-width));
 
-  --dock-height: 40px;
-  --dock-offset: 10px;
-  --dock-safe: calc(var(--dock-height) + var(--dock-offset) * 2 + env(safe-area-inset-bottom, 0px));
+  --chrome-bar-height: 56px;
+  --site-chrome-height: calc(var(--chrome-bar-height) + env(safe-area-inset-top, 0px));
+  --dock-bar-height: calc(var(--chrome-bar-height) + env(safe-area-inset-bottom, 0px));
+  --dock-safe: var(--dock-bar-height);
 
   --ease-cinematic: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-crossfade: 1.1s;

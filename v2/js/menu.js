@@ -3,12 +3,19 @@ import { setSiteLogoMenuOpen } from "./site-logo.js";
 
 export function initMenu() {
   const menu = document.getElementById("site-menu");
-  const toggle = document.querySelector(".dock__menu-toggle");
-  if (!menu || !toggle) return;
+  const toggles = document.querySelectorAll(".site-menu-toggle");
+  if (!menu || toggles.length === 0) return;
 
   const destContainer = menu.querySelector("[data-destinations-nav]");
   const menuScroll = menu.querySelector(".menu__scroll");
   let savedScrollY = 0;
+
+  function setTogglesExpanded(open) {
+    toggles.forEach((toggle) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    });
+  }
 
   function lockBodyScroll() {
     savedScrollY = window.scrollY;
@@ -42,8 +49,7 @@ export function initMenu() {
     setSiteLogoMenuOpen(true);
     menu.classList.add("is-open");
     menu.setAttribute("aria-hidden", "false");
-    toggle.setAttribute("aria-expanded", "true");
-    toggle.setAttribute("aria-label", "Close menu");
+    setTogglesExpanded(true);
     document.body.classList.add("menu-open");
     menuScroll?.scrollTo(0, 0);
   }
@@ -51,8 +57,7 @@ export function initMenu() {
   function closeMenu() {
     menu.classList.remove("is-open");
     menu.setAttribute("aria-hidden", "true");
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "Open menu");
+    setTogglesExpanded(false);
     unlockBodyScroll();
     setSiteLogoMenuOpen(false);
     document.body.classList.remove("menu-open");
@@ -89,12 +94,14 @@ export function initMenu() {
     });
   }
 
-  toggle.addEventListener("click", () => {
-    if (isOpen()) closeMenu();
-    else openMenu();
+  toggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      if (isOpen()) closeMenu();
+      else openMenu();
+    });
   });
 
-  document.querySelectorAll(".dock__home").forEach((link) => {
+  document.querySelectorAll(".site-chrome__logo").forEach((link) => {
     link.addEventListener("click", (e) => {
       if (!isOpen()) return;
       e.preventDefault();

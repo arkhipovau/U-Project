@@ -10,15 +10,47 @@
   height: auto;
 }
 
-.hero__logo {
+.hero__chrome {
   position: absolute;
   z-index: 4;
   top: max(10px, env(safe-area-inset-top, 0px));
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: start;
+  padding: 8px 8px 0;
+  pointer-events: none;
+}
+
+.hero__chrome > * {
+  pointer-events: auto;
+}
+
+.hero__chrome-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-dock);
+  background: transparent;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hero__chrome-btn--search {
+  justify-self: end;
+}
+
+.hero__logo {
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-self: center;
   pointer-events: none;
   user-select: none;
 }
@@ -29,24 +61,20 @@
   height: auto;
 }
 
-.site-logo-bar {
-  --site-logo-bar-height: calc(56px + env(safe-area-inset-top, 0px));
+.site-chrome {
   position: fixed;
   z-index: 95;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  height: var(--site-logo-bar-height);
+  height: var(--site-chrome-height);
   box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding: env(safe-area-inset-top, 0px) 0 0;
+  padding-top: env(safe-area-inset-top, 0px);
   background: var(--color-glass);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  transform: translate3d(0, calc(-1 * var(--site-logo-bar-height)), 0);
+  transform: translate3d(0, calc(-1 * var(--site-chrome-height)), 0);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -57,39 +85,67 @@
     visibility 0.45s var(--ease-cinematic);
 }
 
-.site-logo-bar[hidden] {
+.site-chrome[hidden] {
   display: none !important;
 }
 
-.site-logo-bar.is-visible {
+.site-chrome.is-visible {
   transform: translate3d(0, 0, 0);
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-.site-logo-bar__link {
+.site-chrome__row {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  height: var(--chrome-bar-height);
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.site-chrome__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-dock);
+  background: transparent;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.site-chrome__search {
+  justify-self: end;
+}
+
+.site-chrome__logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 56px;
-  flex-shrink: 0;
+  justify-self: center;
+  height: var(--chrome-bar-height);
   text-decoration: none;
 }
 
-.site-logo-bar__mark {
+.site-chrome__mark {
   display: block;
   width: 87.14px;
   height: auto;
 }
 
-body.menu-open .site-logo-bar {
+body.menu-open .site-chrome {
   visibility: hidden;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-logo-bar {
+  .site-chrome {
     transition: none;
   }
 }
@@ -151,55 +207,58 @@ body.menu-open .site-logo-bar {
   line-height: 1.3;
 }
 
-/* Dock */
-.dock {
+/* Bottom bar — Figma 916:1821 */
+.dock-bar {
   position: fixed;
   z-index: 100;
   left: 0;
   right: 0;
-  bottom: calc(var(--dock-offset) + env(safe-area-inset-bottom, 0px));
-  width: min(calc(100% - 20px), calc(var(--max-width) - 20px));
-  margin-left: auto;
-  margin-right: auto;
+  bottom: 0;
+  box-sizing: border-box;
   display: flex;
-  gap: 8px;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  height: var(--dock-bar-height);
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  background: var(--color-glass);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   pointer-events: none;
 }
 
-.dock > * {
+.dock-bar__cta {
   pointer-events: auto;
-}
-
-.dock__cta {
-  flex: 1;
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
-  min-height: var(--dock-height);
+  min-height: 40px;
+  max-width: var(--max-width);
   padding: 11px 12px;
   border-radius: var(--radius-dock);
   background: var(--color-dock);
   font-size: 16px;
   line-height: 18px;
   color: var(--color-text);
+  text-decoration: none;
 }
 
-.dock__icon-btn {
-  flex-shrink: 0;
-  width: var(--dock-height);
-  height: var(--dock-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-dock);
-  background: var(--color-dock);
+.site-menu-toggle__close {
+  display: none;
+}
+
+body.menu-open .site-menu-toggle__open {
+  display: none;
+}
+
+body.menu-open .site-menu-toggle__close {
+  display: block;
 }
 
 /* Liquid glass — Figma backdrop-blur 16px on pills / dock */
 :is(
-  .dock__cta,
-  .dock__icon-btn:not(.dock__icon-btn--ghost),
+  .dock-bar__cta,
   .opening__cta,
   .ecosystem__location-pill,
   .ecosystem__nav-btn,
@@ -213,8 +272,7 @@ body.menu-open .site-logo-bar {
 }
 
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .dock__cta,
-  .dock__icon-btn:not(.dock__icon-btn--ghost) {
+  .dock-bar__cta {
     background: rgba(229, 218, 203, 0.95);
   }
 
@@ -228,28 +286,6 @@ body.menu-open .site-logo-bar {
   .cta-final__cta {
     background: rgba(249, 245, 234, 0.95);
   }
-}
-
-.dock__icon-btn--ghost {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.dock__icon-btn img {
-  width: 16px;
-  height: 16px;
-}
-
-.dock__home {
-  text-decoration: none;
-  color: inherit;
-}
-
-.dock__home-mark {
-  display: block;
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
 }
 
 /* Buttons */
