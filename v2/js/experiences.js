@@ -110,9 +110,7 @@ export function initExperiences() {
     stage.style.height = `${h}px`;
     track.style.height = `${h}px`;
     stage.style.setProperty("--days-scale", String(scale));
-    stage
-      .closest(".days__carousel")
-      ?.style.setProperty("--days-footer-width", `${DESIGN_ACTIVE_W * scale}px`);
+    stage.closest(".days__carousel")?.style.setProperty("--days-scale", String(scale));
   }
 
   function syncProgress() {

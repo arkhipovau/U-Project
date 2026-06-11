@@ -8,8 +8,8 @@ export function collapseDestinations(container) {
   container.querySelectorAll(".menu__dest-group.is-open").forEach((group) => {
     group.classList.remove("is-open");
     const list = group.querySelector(".menu__dest-properties");
-    const toggle = group.querySelector(".menu__dest-toggle");
-    if (list) list.hidden = true;
+    const toggle = group.querySelector(".menu__dest-chevron-btn");
+    if (list) list.setAttribute("aria-hidden", "true");
     if (toggle) toggle.setAttribute("aria-expanded", "false");
   });
 }
@@ -45,21 +45,10 @@ export function buildDestinationsList(container, { idPrefix = "dest" } = {}) {
     chevron.height = 12;
     chevron.setAttribute("aria-hidden", "true");
 
-    const toggleBtn = document.createElement("button");
-    toggleBtn.type = "button";
-    toggleBtn.className = "menu__dest-toggle";
-    toggleBtn.setAttribute("aria-expanded", "false");
-    toggleBtn.setAttribute("aria-controls", `${idPrefix}-${id}`);
-
-    const toggleLabel = document.createElement("span");
-    toggleLabel.className = "menu__dest-toggle-label";
-    toggleLabel.textContent = label;
-    toggleBtn.append(toggleLabel, chevron);
-
     const list = document.createElement("ul");
     list.className = "menu__dest-properties";
     list.id = `${idPrefix}-${id}`;
-    list.hidden = true;
+    list.setAttribute("aria-hidden", "true");
 
     items.forEach((loc) => {
       const item = document.createElement("li");
@@ -81,23 +70,40 @@ export function buildDestinationsList(container, { idPrefix = "dest" } = {}) {
       list.appendChild(item);
     });
 
+    const head = document.createElement("div");
+    head.className = "menu__dest-head";
+
+    const toggleLabel = document.createElement("span");
+    toggleLabel.className = "menu__dest-label";
+    toggleLabel.textContent = label;
+
+    const chevronBtn = document.createElement("button");
+    chevronBtn.type = "button";
+    chevronBtn.className = "menu__dest-chevron-btn";
+    chevronBtn.setAttribute("aria-expanded", "false");
+    chevronBtn.setAttribute("aria-controls", `${idPrefix}-${id}`);
+    chevronBtn.setAttribute("aria-label", `Show ${label} destinations`);
+    chevronBtn.append(chevron);
+
+    head.append(toggleLabel, chevronBtn);
+    row.append(head, list);
+    group.append(row);
+
     const toggleGroup = () => {
       const open = !group.classList.contains("is-open");
       collapseDestinations(container);
       if (open) {
         group.classList.add("is-open");
-        list.hidden = false;
-        toggleBtn.setAttribute("aria-expanded", "true");
+        list.setAttribute("aria-hidden", "false");
+        chevronBtn.setAttribute("aria-expanded", "true");
       }
     };
 
-    toggleBtn.addEventListener("click", (e) => {
+    chevronBtn.addEventListener("click", (e) => {
       e.preventDefault();
       toggleGroup();
     });
 
-    row.append(toggleBtn);
-    group.append(row, list);
     container.appendChild(group);
   });
 }

@@ -16,6 +16,7 @@
 
   --font-serif: "GT Ultra Median", "Times New Roman", serif;
   --font-sans: "NB International", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --leading-sans: 1.5;
 
   --radius-card: 16px;
   --radius-dock: 16px;

@@ -8,11 +8,11 @@
     <title>Utopia — An Ecosystem of Retreats (v2)</title>
     <link rel="icon" href="../assets/LOGO.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="css/fonts.css?v=20260602-1430" />
-    <link rel="stylesheet" href="css/tokens.css?v=20260610-2780" />
-    <link rel="stylesheet" href="css/base.css?v=20260610-2780" />
-    <link rel="stylesheet" href="css/components.css?v=20260611-2840" />
-    <link rel="stylesheet" href="css/sections.css?v=20260611-2860" />
-    <link rel="stylesheet" href="css/menu.css?v=20260611-2870" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260604-2920" />
+    <link rel="stylesheet" href="css/base.css?v=20260604-2920" />
+    <link rel="stylesheet" href="css/components.css?v=20260604-2920" />
+    <link rel="stylesheet" href="css/sections.css?v=20260604-2930" />
+    <link rel="stylesheet" href="css/menu.css?v=20260604-2920" />
     <link rel="stylesheet" href="css/parallax.css?v=20260610-1310" />
     <link rel="stylesheet" href="css/responsive.css?v=20260610-2600" />
     <link rel="stylesheet" href="css/reveal.css?v=20260604-1700" />
@@ -158,13 +158,6 @@
             <div class="opening__slider" aria-label="Opening experiences">
               <div class="opening__slides"></div>
             </div>
-            <button
-              type="button"
-              class="ecosystem__nav-btn ecosystem__nav-btn--prev opening__nav-btn--prev"
-              aria-label="Previous slide"
-            >
-              <img src="../assets/chevron-nav.svg" alt="" width="12" height="12" />
-            </button>
             <div
               class="opening__tabs-block"
               role="progressbar"
@@ -194,13 +187,6 @@
                 </button>
               </nav>
             </div>
-            <button
-              type="button"
-              class="ecosystem__nav-btn ecosystem__nav-btn--next opening__nav-btn--next"
-              aria-label="Next slide"
-            >
-              <img src="../assets/chevron-nav.svg" alt="" width="12" height="12" />
-            </button>
           </div>
 
           <div class="opening__content">
@@ -320,7 +306,11 @@
                 aria-valuemax="3"
                 aria-valuenow="1"
               >
-                <div class="days__progress-fill"></div>
+                <div class="days__progress-track" aria-hidden="true">
+                  <div class="days__progress-fill"></div>
+                </div>
+                <span class="days__progress-dot" aria-hidden="true"></span>
+                <span class="days__progress-dot" aria-hidden="true"></span>
               </div>
             </div>
           </div>
@@ -419,6 +409,6 @@
       <a class="dock-bar__cta" href="#request">Request a stay</a>
     </nav>
 
-    <script type="module" src="js/main.js?v=20260611-2860"></script>
+    <script type="module" src="js/main.js?v=20260604-2930"></script>
   </body>
 </html>

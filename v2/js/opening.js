@@ -76,8 +76,6 @@ export function initOpening() {
   if (!section) return;
 
   const slidesRoot = section.querySelector(".opening__slides");
-  const prevBtn = section.querySelector(".opening__nav-btn--prev");
-  const nextBtn = section.querySelector(".opening__nav-btn--next");
   const mediaEl = section.querySelector(".opening__media");
   if (!slidesRoot) return;
 
@@ -131,16 +129,6 @@ export function initOpening() {
     index = (index - 1 + SLIDE_COUNT) % SLIDE_COUNT;
     render();
   }
-
-  prevBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    stepBackward();
-  });
-
-  nextBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    stepForward();
-  });
 
   section.querySelectorAll(".opening__tab").forEach((tab) => {
     tab.addEventListener("click", () => {
