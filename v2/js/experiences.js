@@ -1,4 +1,5 @@
 export function initExperiences() {
+  const section = document.querySelector(".days");
   const stage = document.querySelector(".days__stage");
   const track = document.querySelector(".days__track");
   const progress = document.querySelector(".days__progress");
@@ -6,6 +7,7 @@ export function initExperiences() {
   if (!stage || !track || !progress || !progressFill) return;
 
   const slides = [...track.querySelectorAll(".days__card")];
+  const progressItems = [...progress.querySelectorAll(".days__progress-item")];
   const hitPrev = stage.querySelector(".days__hit--prev");
   const hitNext = stage.querySelector(".days__hit--next");
 
@@ -22,7 +24,10 @@ export function initExperiences() {
   const PEEK_LEFT = -136;
   const VISIBLE_NEXT_X_MAX = 292;
   const SWIPE_THRESHOLD = 40;
+  const AUTOPLAY_MS = 5000;
   const count = slides.length;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const LAYOUTS = [
     [
@@ -61,6 +66,11 @@ export function initExperiences() {
   let startX = 0;
   let moved = false;
   let suppressHitClick = false;
+  let sectionVisible = false;
+  let autoplayEnabled = !reducedMotion.matches;
+  let onAutoplayEnd = null;
+
+  progress.style.setProperty("--days-autoplay-ms", `${AUTOPLAY_MS}ms`);
 
   function layoutScale() {
     const w = Math.round(stage.getBoundingClientRect().width) || DESIGN_STAGE_W;
@@ -81,7 +91,6 @@ export function initExperiences() {
       : `translate3d(0, ${DESIGN_INACTIVE_Y * scale}px, 0)`;
     card.classList.toggle("is-active", isActive);
 
-    // Show only foreground pair (active + immediate next); hide rear movers.
     const baseOpacity = slot.x < 0 || slot.x > VISIBLE_NEXT_X_MAX ? 0 : 1;
     card.dataset.baseOpacity = String(baseOpacity);
     card.style.opacity = String(baseOpacity);
@@ -98,9 +107,9 @@ export function initExperiences() {
 
     if (!dragging || dragX === 0) return;
 
-    const progress = Math.min(Math.abs(dragX) / 120, 1);
+    const dragProgress = Math.min(Math.abs(dragX) / 120, 1);
     const leavingIndex = active;
-    const leavingOpacity = Math.max(0, 1 - progress);
+    const leavingOpacity = Math.max(0, 1 - dragProgress);
 
     slides[leavingIndex].style.opacity = String(leavingOpacity);
   }
@@ -111,18 +120,75 @@ export function initExperiences() {
     track.style.height = `${h}px`;
     stage.style.setProperty("--days-scale", String(scale));
     stage.closest(".days__carousel")?.style.setProperty("--days-scale", String(scale));
+    stage.closest(".days__carousel")?.style.setProperty(
+      "--days-active-half-w",
+      `${(DESIGN_ACTIVE_W / 2) * scale}px`,
+    );
   }
 
-  function syncProgress() {
+  function syncProgressUI() {
     const label = slides[active]?.dataset.label || "";
-    const pct = count <= 1 ? 100 : ((active + 1) / count) * 100;
-    progressFill.style.width = `${pct}%`;
-    progress.setAttribute("aria-valuenow", String(active + 1));
-    progress.setAttribute("aria-valuemax", String(count));
+
+    progress.dataset.active = String(active);
+    progressItems.forEach((item, i) => {
+      const isActive = i === active;
+      item.classList.toggle("is-active", isActive);
+
+      if (isActive) {
+        const trackEl = item.querySelector(".days__progress-track");
+        if (trackEl && progressFill.parentElement !== trackEl) {
+          trackEl.appendChild(progressFill);
+        }
+      }
+    });
+
     progress.setAttribute(
       "aria-label",
-      label ? `${label}, slide ${active + 1} of ${count}` : `Slide ${active + 1} of ${count}`,
+      label ? `${label}, carousel autoplay` : "Carousel autoplay",
     );
+    progress.setAttribute("aria-valuenow", "0");
+  }
+
+  function stopAutoplay() {
+    if (onAutoplayEnd) {
+      progressFill.removeEventListener("animationend", onAutoplayEnd);
+      onAutoplayEnd = null;
+    }
+    progressFill.classList.remove("is-running");
+    progressFill.style.animation = "none";
+    progressFill.style.width = "0";
+    void progressFill.offsetWidth;
+    progressFill.style.animation = "";
+    progress.setAttribute("aria-valuenow", "0");
+  }
+
+  function pauseAutoplay() {
+    if (!progressFill.classList.contains("is-running")) return;
+    progressFill.style.animationPlayState = "paused";
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    syncProgressUI();
+
+    if (!autoplayEnabled || !sectionVisible || dragging || isWrapping || count <= 1) {
+      if (!autoplayEnabled) {
+        progressFill.style.width = "100%";
+        progress.setAttribute("aria-valuenow", "100");
+      }
+      return;
+    }
+
+    progressFill.style.animationPlayState = "running";
+    progressFill.classList.add("is-running");
+
+    onAutoplayEnd = (event) => {
+      if (event.target !== progressFill) return;
+      stopAutoplay();
+      goTo(active + 1);
+    };
+
+    progressFill.addEventListener("animationend", onAutoplayEnd);
   }
 
   function setInstant(on) {
@@ -172,19 +238,22 @@ export function initExperiences() {
     setInstant(true);
     active = nextIndex;
     layoutCards();
-    syncProgress();
+    syncProgressUI();
     void stage.offsetHeight;
     setInstant(false);
     isWrapping = false;
+    startAutoplay();
   }
 
   function runWrapForward(nextIndex) {
+    stopAutoplay();
     isWrapping = true;
     applyLayout(WRAP_FORWARD_LAYOUT, nextIndex);
     afterWrapTransition(() => finishWrap(nextIndex));
   }
 
   function runWrapBackward(nextIndex) {
+    stopAutoplay();
     isWrapping = true;
     applyLayout(WRAP_BACKWARD_LAYOUT, nextIndex);
     afterWrapTransition(() => finishWrap(nextIndex));
@@ -194,7 +263,12 @@ export function initExperiences() {
     if (isWrapping) return;
 
     const next = ((index % count) + count) % count;
-    if (next === active) return;
+    if (next === active) {
+      startAutoplay();
+      return;
+    }
+
+    stopAutoplay();
 
     const dir = slideDirection(active, next);
     dragX = 0;
@@ -210,7 +284,8 @@ export function initExperiences() {
 
     active = next;
     layoutCards();
-    syncProgress();
+    syncProgressUI();
+    startAutoplay();
   }
 
   function endDrag(pointerId) {
@@ -233,6 +308,7 @@ export function initExperiences() {
     }
 
     layoutCards();
+    startAutoplay();
   }
 
   hitPrev?.addEventListener("click", (e) => {
@@ -260,6 +336,7 @@ export function initExperiences() {
     startX = e.clientX;
     dragX = 0;
     stage.classList.add("is-dragging");
+    pauseAutoplay();
     stage.setPointerCapture(e.pointerId);
   });
 
@@ -281,12 +358,42 @@ export function initExperiences() {
     endDrag(e.pointerId);
   });
 
-  window.addEventListener("resize", () => layoutCards(), { passive: true });
+  window.addEventListener("resize", () => {
+    layoutCards();
+    syncProgressUI();
+    startAutoplay();
+  }, { passive: true });
 
   if (typeof ResizeObserver !== "undefined") {
-    const ro = new ResizeObserver(() => layoutCards());
+    const ro = new ResizeObserver(() => {
+      layoutCards();
+      syncProgressUI();
+      startAutoplay();
+    });
     ro.observe(stage);
   }
 
-  goTo(0);
+  if (section) {
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        sectionVisible = entries.some((entry) => entry.isIntersecting);
+        if (sectionVisible) startAutoplay();
+        else stopAutoplay();
+      },
+      { threshold: 0.35 },
+    );
+    sectionObserver.observe(section);
+  } else {
+    sectionVisible = true;
+  }
+
+  reducedMotion.addEventListener("change", (event) => {
+    autoplayEnabled = !event.matches;
+    if (autoplayEnabled) startAutoplay();
+    else stopAutoplay();
+  });
+
+  layoutCards();
+  syncProgressUI();
+  startAutoplay();
 }

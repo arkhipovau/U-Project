@@ -43,65 +43,10 @@
   cursor: pointer;
 }
 
-.hero__chrome-btn img,
-.hero__chrome-btn .menu-icon {
+.hero__chrome-btn img {
   display: block;
   width: 21px;
   height: 21px;
-}
-
-/* menu.svg / close.svg — exact paths, crossfade (rotate-morph can't match close.svg) */
-.menu-icon {
-  display: block;
-  width: 21px;
-  height: 21px;
-  flex-shrink: 0;
-}
-
-.menu-icon__svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.menu-icon__state path {
-  stroke: #161514;
-  stroke-width: 1;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-  fill: none;
-}
-
-.menu-icon--light .menu-icon__state path {
-  stroke: #ffffff;
-}
-
-.menu-icon__state--menu,
-.menu-icon__state--close {
-  transition: opacity 0.28s var(--ease-cinematic);
-}
-
-.menu-icon__state--close {
-  opacity: 0;
-}
-
-body.menu-open .menu-icon__state--menu,
-.site-menu-open[aria-expanded="true"] .menu-icon__state--menu {
-  opacity: 0;
-}
-
-body.menu-open .menu-icon__state--close,
-.site-menu-open[aria-expanded="true"] .menu-icon__state--close {
-  opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .menu-icon__state--menu,
-  .menu-icon__state--close {
-    transition: none;
-  }
 }
 
 .hero__logo {
@@ -178,8 +123,7 @@ body.menu-open .menu-icon__state--close,
   cursor: pointer;
 }
 
-.site-chrome__btn img,
-.site-chrome__btn .menu-icon {
+.site-chrome__btn img {
   display: block;
   width: 21px;
   height: 21px;
@@ -314,6 +258,7 @@ body.menu-open .hero__chrome .site-menu-open {
 :is(
   .dock-bar__cta,
   .opening__cta,
+  .opening__progress,
   .ecosystem__location-pill,
   .ecosystem__nav-btn,
   .cta-final__cta,
@@ -328,6 +273,10 @@ body.menu-open .hero__chrome .site-menu-open {
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .dock-bar__cta {
     background: rgba(229, 218, 203, 0.95);
+  }
+
+  .opening__progress {
+    background: rgba(255, 255, 255, 0.14);
   }
 
   .opening__cta,

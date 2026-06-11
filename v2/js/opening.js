@@ -1,5 +1,5 @@
 import { OPENING_SLIDES } from "./data.js";
-import { attachLazyVideo, clearVideoSource, ensureVideoSource } from "./lazy-media.js";
+import { clearVideoSource, ensureVideoSource } from "./lazy-media.js";
 
 const SLIDE_COUNT = OPENING_SLIDES.length;
 
@@ -39,21 +39,66 @@ function getVideoBufferedPercent(video) {
   return Math.min(100, Math.round((bufferedEnd / duration) * 100));
 }
 
-function hideVideoLoadPill(section) {
-  const pill = section.querySelector(".opening__load-pill");
-  const fill = section.querySelector(".opening__load-pill-fill");
-  if (!pill) return;
+function getVideoLoadPercent(video) {
+  if (!video?.src) return 0;
 
-  pill.classList.remove("is-visible");
-  pill.hidden = true;
-  pill.setAttribute("aria-valuenow", "0");
-  if (fill) fill.style.width = "0";
+  const buffered = getVideoBufferedPercent(video);
+  if (buffered > 0) return buffered;
+
+  if (video.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) return 100;
+  if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) return 72;
+  if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) return 48;
+  if (video.readyState >= HTMLMediaElement.HAVE_METADATA) return 24;
+
+  return 8;
 }
 
-function bindVideoLoadPill(section, video) {
-  const pill = section.querySelector(".opening__load-pill");
-  const fill = section.querySelector(".opening__load-pill-fill");
-  if (!pill || !fill || !video) return () => {};
+function resetProgressFill(section) {
+  const fill = section.querySelector(".opening__progress-fill");
+  const progress = section.querySelector(".opening__progress");
+  if (fill) fill.style.width = "0%";
+  progress?.setAttribute("aria-valuenow", "0");
+}
+
+function syncProgressUI(section, index) {
+  const progress = section.querySelector(".opening__progress");
+  const fill = section.querySelector(".opening__progress-fill");
+  const items = [...section.querySelectorAll(".opening__progress-item")];
+  const tabs = [...section.querySelectorAll(".opening__tab")];
+  const label = OPENING_SLIDES[index]?.label || "";
+
+  tabs.forEach((tab, tabIndex) => {
+    const isActive = tabIndex === index;
+    tab.classList.toggle("is-active", isActive);
+    tab.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
+
+  if (progress) {
+    progress.dataset.active = String(index);
+    progress.setAttribute(
+      "aria-label",
+      label ? `${label}, video loading` : "Video loading",
+    );
+  }
+
+  items.forEach((item, i) => {
+    const isActive = i === index;
+    item.classList.toggle("is-active", isActive);
+
+    if (isActive && fill) {
+      const track = item.querySelector(".opening__progress-track");
+      if (track && fill.parentElement !== track) {
+        track.appendChild(fill);
+        fill.style.width = "0%";
+      }
+    }
+  });
+}
+
+function bindVideoProgress(section, video) {
+  const progress = section.querySelector(".opening__progress");
+  const fill = section.querySelector(".opening__progress-fill");
+  if (!fill || !video) return () => {};
 
   let rafId = 0;
 
@@ -61,19 +106,14 @@ function bindVideoLoadPill(section, video) {
     rafId = 0;
 
     if (!video.src) {
-      hideVideoLoadPill(section);
+      fill.style.width = "0%";
+      progress?.setAttribute("aria-valuenow", "0");
       return;
     }
 
-    const pct = getVideoBufferedPercent(video);
+    const pct = getVideoLoadPercent(video);
     fill.style.width = `${pct}%`;
-    pill.setAttribute("aria-valuenow", String(pct));
-
-    const isLoading =
-      pct < 100 && video.readyState < HTMLMediaElement.HAVE_ENOUGH_DATA;
-
-    pill.classList.toggle("is-visible", isLoading);
-    pill.hidden = !isLoading;
+    progress?.setAttribute("aria-valuenow", String(pct));
   };
 
   const scheduleUpdate = () => {
@@ -81,58 +121,55 @@ function bindVideoLoadPill(section, video) {
     rafId = requestAnimationFrame(update);
   };
 
-  const onDone = () => {
-    fill.style.width = "100%";
-    pill.setAttribute("aria-valuenow", "100");
-    pill.classList.remove("is-visible");
-    pill.hidden = true;
-  };
+  const events = [
+    "loadstart",
+    "progress",
+    "loadedmetadata",
+    "durationchange",
+    "canplay",
+    "canplaythrough",
+    "waiting",
+    "playing",
+  ];
 
-  video.addEventListener("loadstart", scheduleUpdate);
-  video.addEventListener("progress", scheduleUpdate);
-  video.addEventListener("loadedmetadata", scheduleUpdate);
-  video.addEventListener("durationchange", scheduleUpdate);
-  video.addEventListener("canplay", scheduleUpdate);
-  video.addEventListener("canplaythrough", onDone);
+  events.forEach((eventName) => {
+    video.addEventListener(eventName, scheduleUpdate);
+  });
 
   scheduleUpdate();
 
   return () => {
     if (rafId) cancelAnimationFrame(rafId);
-    video.removeEventListener("loadstart", scheduleUpdate);
-    video.removeEventListener("progress", scheduleUpdate);
-    video.removeEventListener("loadedmetadata", scheduleUpdate);
-    video.removeEventListener("durationchange", scheduleUpdate);
-    video.removeEventListener("canplay", scheduleUpdate);
-    video.removeEventListener("canplaythrough", onDone);
-    hideVideoLoadPill(section);
+    events.forEach((eventName) => {
+      video.removeEventListener(eventName, scheduleUpdate);
+    });
+    resetProgressFill(section);
   };
 }
 
-let unbindVideoLoadPill = null;
+let unbindVideoProgress = null;
 
 function playActiveVideo(section, index) {
   const slides = section.querySelectorAll(".opening__slide");
   const activeSlide = slides[index];
   const activeVideo = activeSlide?.querySelector("video.opening__bg-media");
 
-  if (unbindVideoLoadPill) {
-    unbindVideoLoadPill();
-    unbindVideoLoadPill = null;
+  if (unbindVideoProgress) {
+    unbindVideoProgress();
+    unbindVideoProgress = null;
   }
 
   section.querySelectorAll("video.opening__bg-media").forEach((node) => {
     if (node !== activeVideo) clearVideoSource(node);
   });
 
-  if (!activeVideo) {
-    hideVideoLoadPill(section);
-    return;
-  }
+  resetProgressFill(section);
+
+  if (!activeVideo) return;
 
   const slide = OPENING_SLIDES[index];
   ensureVideoSource(activeVideo, slide?.video);
-  unbindVideoLoadPill = bindVideoLoadPill(section, activeVideo);
+  unbindVideoProgress = bindVideoProgress(section, activeVideo);
 
   const tryPlay = () => {
     const promise = activeVideo.play();
@@ -145,33 +182,6 @@ function playActiveVideo(section, index) {
   }
 
   activeVideo.addEventListener("loadeddata", tryPlay, { once: true });
-}
-
-function syncProgress(section, index) {
-  const progress = section.querySelector(".opening__progress");
-  const progressFill = section.querySelector(".opening__progress-fill");
-  const tabs = [...section.querySelectorAll(".opening__tab")];
-  const label = OPENING_SLIDES[index]?.label || "";
-
-  tabs.forEach((tab, tabIndex) => {
-    const isActive = tabIndex === index;
-    tab.classList.toggle("is-active", isActive);
-    tab.setAttribute("aria-selected", isActive ? "true" : "false");
-  });
-
-  if (progressFill) {
-    const pct = SLIDE_COUNT <= 1 ? 100 : ((index + 1) / SLIDE_COUNT) * 100;
-    progressFill.style.width = `${pct}%`;
-  }
-
-  if (progress) {
-    progress.setAttribute("aria-valuenow", String(index + 1));
-    progress.setAttribute("aria-valuemax", String(SLIDE_COUNT));
-    progress.setAttribute(
-      "aria-label",
-      label ? `${label}, slide ${index + 1} of ${SLIDE_COUNT}` : `Slide ${index + 1} of ${SLIDE_COUNT}`,
-    );
-  }
 }
 
 export function initOpening() {
@@ -206,9 +216,9 @@ export function initOpening() {
       sectionVisible = entries.some((entry) => entry.isIntersecting);
       if (sectionVisible && unlockedPlayback) playActiveVideo(section, index);
       if (!sectionVisible) {
-        if (unbindVideoLoadPill) {
-          unbindVideoLoadPill();
-          unbindVideoLoadPill = null;
+        if (unbindVideoProgress) {
+          unbindVideoProgress();
+          unbindVideoProgress = null;
         }
         section.querySelectorAll("video.opening__bg-media").forEach(clearVideoSource);
       }
@@ -223,7 +233,7 @@ export function initOpening() {
       el.classList.toggle("is-active", active);
       el.setAttribute("aria-hidden", active ? "false" : "true");
     });
-    syncProgress(section, index);
+    syncProgressUI(section, index);
     if (sectionVisible && unlockedPlayback) playActiveVideo(section, index);
   }
 

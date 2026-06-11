@@ -79,8 +79,7 @@
   cursor: pointer;
 }
 
-.menu__toolbar-btn img,
-.menu__toolbar-btn .menu-icon {
+.menu__toolbar-btn img {
   display: block;
   width: 21px;
   height: 21px;

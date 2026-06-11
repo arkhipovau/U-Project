@@ -39,19 +39,7 @@
           aria-controls="site-menu"
           aria-label="Open menu"
         >
-          <span class="menu-icon" aria-hidden="true">
-            <svg class="menu-icon__svg" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g class="menu-icon__state menu-icon__state--menu">
-                <path d="M2.66667 4H13.3333" />
-                <path d="M2.66667 8H13.3333" />
-                <path d="M2.66667 12H13.3333" />
-              </g>
-              <g class="menu-icon__state menu-icon__state--close">
-                <path d="M4 4L12 12" />
-                <path d="M12 4L4 12" />
-              </g>
-            </svg>
-          </span>
+          <img src="../assets/menu.svg" alt="" width="21" height="21" />
         </button>
         <a class="site-chrome__logo" href="#top" aria-label="Utopia home">
           <img
@@ -76,19 +64,7 @@
             aria-controls="site-menu"
             aria-label="Open menu"
           >
-            <span class="menu-icon menu-icon--light" aria-hidden="true">
-              <svg class="menu-icon__svg" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g class="menu-icon__state menu-icon__state--menu">
-                  <path d="M2.66667 4H13.3333" />
-                  <path d="M2.66667 8H13.3333" />
-                  <path d="M2.66667 12H13.3333" />
-                </g>
-                <g class="menu-icon__state menu-icon__state--close">
-                  <path d="M4 4L12 12" />
-                  <path d="M12 4L4 12" />
-                </g>
-              </svg>
-            </span>
+            <img src="../assets/menu-light.svg" alt="" width="21" height="21" />
           </button>
           <div class="hero__logo" aria-hidden="true">
             <img class="hero__logo-mark" src="../assets/LOGO.svg" alt="" width="100" height="114" />
@@ -181,19 +157,6 @@
           <div class="opening__media">
             <div class="opening__slider" aria-label="Opening experiences">
               <div class="opening__slides"></div>
-              <div
-                class="opening__load-pill"
-                role="progressbar"
-                aria-label="Video loading"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                aria-valuenow="0"
-                hidden
-              >
-                <div class="opening__load-pill-track" aria-hidden="true">
-                  <div class="opening__load-pill-fill"></div>
-                </div>
-              </div>
             </div>
             <div class="opening__tabs-block">
               <nav class="opening__tabs" aria-label="Opening experiences">
@@ -210,16 +173,26 @@
               <div
                 class="opening__progress"
                 role="progressbar"
-                aria-label="Opening experience progress"
-                aria-valuemin="1"
-                aria-valuemax="3"
-                aria-valuenow="1"
+                aria-label="Video loading"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+                data-active="0"
               >
-                <div class="opening__progress-track" aria-hidden="true">
-                  <div class="opening__progress-fill"></div>
-                </div>
-                <span class="opening__progress-dot" aria-hidden="true"></span>
-                <span class="opening__progress-dot" aria-hidden="true"></span>
+                <span class="opening__progress-item is-active">
+                  <span class="opening__progress-dot" aria-hidden="true"></span>
+                  <span class="opening__progress-track" aria-hidden="true">
+                    <span class="opening__progress-fill"></span>
+                  </span>
+                </span>
+                <span class="opening__progress-item">
+                  <span class="opening__progress-dot" aria-hidden="true"></span>
+                  <span class="opening__progress-track" aria-hidden="true"></span>
+                </span>
+                <span class="opening__progress-item">
+                  <span class="opening__progress-dot" aria-hidden="true"></span>
+                  <span class="opening__progress-track" aria-hidden="true"></span>
+                </span>
               </div>
             </div>
           </div>
@@ -340,16 +313,26 @@
               <div
                 class="days__progress"
                 role="progressbar"
-                aria-valuemin="1"
-                aria-valuemax="3"
-                aria-valuenow="1"
-                aria-label="Water sports, slide 1 of 3"
+                aria-label="Carousel autoplay"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+                data-active="0"
               >
-                <div class="days__progress-track" aria-hidden="true">
-                  <div class="days__progress-fill"></div>
-                </div>
-                <span class="days__progress-dot" aria-hidden="true"></span>
-                <span class="days__progress-dot" aria-hidden="true"></span>
+                <span class="days__progress-item is-active">
+                  <span class="days__progress-dot" aria-hidden="true"></span>
+                  <span class="days__progress-track" aria-hidden="true">
+                    <span class="days__progress-fill"></span>
+                  </span>
+                </span>
+                <span class="days__progress-item">
+                  <span class="days__progress-dot" aria-hidden="true"></span>
+                  <span class="days__progress-track" aria-hidden="true"></span>
+                </span>
+                <span class="days__progress-item">
+                  <span class="days__progress-dot" aria-hidden="true"></span>
+                  <span class="days__progress-track" aria-hidden="true"></span>
+                </span>
               </div>
             </div>
           </div>
@@ -407,19 +390,7 @@
       <div class="menu__panel">
         <div class="menu__toolbar" aria-hidden="true">
           <button type="button" class="menu__toolbar-btn menu__toolbar-close site-menu-close" aria-label="Close menu">
-            <span class="menu-icon" aria-hidden="true">
-              <svg class="menu-icon__svg" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g class="menu-icon__state menu-icon__state--menu">
-                  <path d="M2.66667 4H13.3333" />
-                  <path d="M2.66667 8H13.3333" />
-                  <path d="M2.66667 12H13.3333" />
-                </g>
-                <g class="menu-icon__state menu-icon__state--close">
-                  <path d="M4 4L12 12" />
-                  <path d="M12 4L4 12" />
-                </g>
-              </svg>
-            </span>
+            <img src="../assets/close.svg" alt="" width="21" height="21" />
           </button>
           <a class="menu__toolbar-logo" href="#top" aria-label="Utopia home">
             <img
