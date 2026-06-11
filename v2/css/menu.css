@@ -1,4 +1,4 @@
-/* Full-screen menu (Figma 722:1218) — typography matches .footer */
+/* Full-screen menu (Figma 722:1218) — open animation 947:6796 */
 .menu {
   position: fixed;
   inset: 0;
@@ -29,31 +29,38 @@
   pointer-events: none;
 }
 
+.menu__panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--color-cream);
+  transform: translate3d(0, -100%, 0);
+  transition: transform 0.45s var(--ease-cinematic);
+  will-change: transform;
+}
+
+.menu.is-open .menu__panel {
+  transform: translate3d(0, 0, 0);
+}
+
 .menu__toolbar {
-  position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
   display: grid;
   grid-template-columns: 40px 1fr 40px;
   align-items: center;
   height: var(--site-chrome-height);
   padding: env(safe-area-inset-top, 0px) 8px 0;
   box-sizing: border-box;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  visibility: hidden;
-  pointer-events: none;
+  width: 100%;
   background: var(--color-cream);
 }
 
 .menu.is-open .menu__toolbar,
 .menu.is-closing .menu__toolbar {
-  visibility: visible;
-}
-
-.menu.is-open .menu__toolbar {
   pointer-events: auto;
 }
 
@@ -101,23 +108,12 @@
 }
 
 .menu__surface {
-  position: absolute;
-  top: var(--site-chrome-height);
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  min-height: 0;
-  background: var(--color-cream);
   overflow: hidden;
-  transform: translate3d(0, -100%, 0);
-  transition: transform 0.45s var(--ease-cinematic);
-  will-change: transform;
-}
-
-.menu.is-open .menu__surface {
-  transform: translate3d(0, 0, 0);
 }
 
 .menu__scroll {
@@ -278,8 +274,7 @@ body.menu-open {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu__surface {
+  .menu__panel {
     transition: none;
   }
 }
-

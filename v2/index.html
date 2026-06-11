@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/base.css?v=20260610-2780" />
     <link rel="stylesheet" href="css/components.css?v=20260611-2840" />
     <link rel="stylesheet" href="css/sections.css?v=20260611-2860" />
-    <link rel="stylesheet" href="css/menu.css?v=20260611-2840" />
+    <link rel="stylesheet" href="css/menu.css?v=20260611-2870" />
     <link rel="stylesheet" href="css/parallax.css?v=20260610-1310" />
     <link rel="stylesheet" href="css/responsive.css?v=20260610-2600" />
     <link rel="stylesheet" href="css/reveal.css?v=20260604-1700" />
@@ -372,23 +372,24 @@
       </footer>
     </div>
 
-    <!-- Full-screen menu (Figma 722:1218) -->
+    <!-- Full-screen menu (Figma 722:1218 / open 947:6796) -->
     <aside class="menu" id="site-menu" aria-hidden="true" aria-label="Site menu">
-      <div class="menu__toolbar" aria-hidden="true">
-        <button type="button" class="menu__toolbar-btn menu__toolbar-close site-menu-close" aria-label="Close menu">
-          <img src="../assets/close.svg" alt="" width="21" height="21" />
-        </button>
-        <a class="menu__toolbar-logo" href="#top" aria-label="Utopia home">
-          <img
-            class="menu__toolbar-mark"
-            src="../assets/logo-wordmark-dark.svg"
-            alt=""
-            width="87"
-            height="14"
-          />
-        </a>
-      </div>
-      <div class="menu__surface">
+      <div class="menu__panel">
+        <div class="menu__toolbar" aria-hidden="true">
+          <button type="button" class="menu__toolbar-btn menu__toolbar-close site-menu-close" aria-label="Close menu">
+            <img src="../assets/close.svg" alt="" width="21" height="21" />
+          </button>
+          <a class="menu__toolbar-logo" href="#top" aria-label="Utopia home">
+            <img
+              class="menu__toolbar-mark"
+              src="../assets/logo-wordmark-dark.svg"
+              alt=""
+              width="87"
+              height="14"
+            />
+          </a>
+        </div>
+        <div class="menu__surface">
         <div class="menu__scroll">
           <div class="menu__rule" role="presentation" aria-hidden="true"></div>
 
@@ -410,6 +411,7 @@
             </div>
           </nav>
         </div>
+      </div>
       </div>
     </aside>
 

@@ -11,7 +11,7 @@ export function initMenu() {
 
   const destContainer = menu.querySelector("[data-destinations-nav]");
   const menuScroll = menu.querySelector(".menu__scroll");
-  const menuSurface = menu.querySelector(".menu__surface");
+  const menuPanel = menu.querySelector(".menu__panel");
   const menuToolbar = menu.querySelector(".menu__toolbar");
   let savedScrollY = 0;
   let closeTimer = null;
@@ -111,14 +111,14 @@ export function initMenu() {
     const complete = () => finishClose(onClosed);
 
     const onTransitionEnd = (event) => {
-      if (event.target !== menuSurface || event.propertyName !== "transform") return;
-      menuSurface.removeEventListener("transitionend", onTransitionEnd);
+      if (event.target !== menuPanel || event.propertyName !== "transform") return;
+      menuPanel.removeEventListener("transitionend", onTransitionEnd);
       complete();
     };
 
-    menuSurface.addEventListener("transitionend", onTransitionEnd);
+    menuPanel.addEventListener("transitionend", onTransitionEnd);
     closeTimer = window.setTimeout(() => {
-      menuSurface.removeEventListener("transitionend", onTransitionEnd);
+      menuPanel.removeEventListener("transitionend", onTransitionEnd);
       complete();
     }, MENU_TRANSITION_MS + 50);
   }
