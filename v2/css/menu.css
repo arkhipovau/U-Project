@@ -97,25 +97,8 @@
   height: 17px;
 }
 
-/* On hero, match menu/search button height (Figma ~18px from top). */
-body.menu-open:not(.is-past-hero) .menu__toolbar {
-  top: max(10px, env(safe-area-inset-top, 0px));
-  height: auto;
-  padding: 0 8px;
-  align-items: start;
-}
-
-body.menu-open:not(.is-past-hero) .menu__toolbar-btn {
-  margin-top: 8px;
-}
-
-body.menu-open:not(.is-past-hero) .menu__toolbar-logo {
-  height: auto;
-  align-self: start;
-}
-
-body.menu-open:not(.is-past-hero) .menu__toolbar-mark {
-  margin-top: 0;
+.menu.is-open .menu__toolbar {
+  background: var(--color-cream);
 }
 
 .menu__surface {

@@ -268,7 +268,8 @@ body.menu-open .site-chrome {
 }
 
 body.menu-open .hero__chrome .site-menu-open,
-body.menu-open .hero__chrome-btn--search {
+body.menu-open .hero__chrome-btn--search,
+body.menu-open .hero__logo {
   visibility: hidden;
   pointer-events: none;
 }
