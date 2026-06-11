@@ -239,7 +239,7 @@
   background: rgba(249, 245, 234, 0.6);
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: var(--text-btn);
+  font-size: var(--text-sans-base);
   line-height: var(--leading-sans);
   color: #000000;
   overflow: hidden;
@@ -455,7 +455,7 @@ video.opening__bg-media {
   background: rgba(249, 245, 234, 0.6);
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: var(--text-btn);
+  font-size: var(--text-sans-base);
   line-height: var(--leading-sans);
   color: #000000;
   text-decoration: none;
@@ -574,7 +574,7 @@ video.opening__bg-media {
   margin: 0;
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: 28px;
+  font-size: 26px;
   line-height: 1.2;
   color: #161514;
 }
@@ -659,7 +659,7 @@ video.opening__bg-media {
 .beyond__card-title {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: var(--text-sans-lg);
+  font-size: var(--text-sans-md);
   line-height: var(--leading-sans);
   color: #161514;
 }
@@ -717,7 +717,7 @@ video.opening__bg-media {
   margin: 0;
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: clamp(26px, 6.9vw, 30px);
+  font-size: 26px;
   line-height: 1.2;
   color: #161514;
 }
@@ -871,8 +871,8 @@ video.opening__bg-media {
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: calc(15px * var(--days-scale, 1));
-  line-height: calc(15px * var(--days-scale, 1));
+  font-size: calc(14px * var(--days-scale, 1));
+  line-height: calc(14px * var(--days-scale, 1));
   color: #000000;
 }
 
@@ -994,7 +994,7 @@ video.opening__bg-media {
   background: rgba(249, 245, 234, 0.8);
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: var(--text-btn);
+  font-size: var(--text-sans-base);
   line-height: var(--leading-sans);
   color: #000000;
   text-decoration: none;

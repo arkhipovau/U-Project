@@ -498,7 +498,7 @@ video.opening__bg-media {
   margin: 0;
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: 28px;
+  font-size: 26px;
   line-height: 1.2;
   color: #161514;
 }
@@ -641,7 +641,7 @@ video.opening__bg-media {
   margin: 0;
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: clamp(26px, 6.9vw, 30px);
+  font-size: 26px;
   line-height: 1.2;
   color: #161514;
 }

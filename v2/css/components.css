@@ -195,7 +195,7 @@ body.menu-open .site-chrome {
 
 .text-eyebrow {
   margin: 0;
-  font-size: var(--text-sans-lg);
+  font-size: var(--text-sans-md);
   line-height: var(--leading-sans);
   color: var(--color-text-muted);
 }
@@ -208,7 +208,7 @@ body.menu-open .site-chrome {
 
 .text-card-title {
   margin: 0;
-  font-size: var(--text-sans-lg);
+  font-size: var(--text-sans-md);
   line-height: var(--leading-sans);
 }
 
@@ -243,7 +243,7 @@ body.menu-open .site-chrome {
   padding: 11px 12px;
   border-radius: var(--radius-dock);
   background: var(--color-dock);
-  font-size: var(--text-btn);
+  font-size: var(--text-sans-base);
   line-height: var(--leading-sans);
   color: var(--color-text);
   text-decoration: none;
@@ -294,7 +294,7 @@ body.menu-open .hero__chrome .site-menu-open {
   padding: 11px 24px;
   border-radius: var(--radius-dock);
   background: var(--color-glass);
-  font-size: var(--text-btn);
+  font-size: var(--text-sans-base);
   line-height: var(--leading-sans);
   color: var(--color-text);
 }
@@ -339,13 +339,9 @@ body.menu-open .hero__chrome .site-menu-open {
   color: #ffffff;
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: var(--text-sans-hero-card);
+  font-size: var(--text-sans-base);
   line-height: normal;
   white-space: nowrap;
-}
-
-.location-card.is-center .location-card__label {
-  font-size: var(--text-sans-base);
 }
 
 .location-card__label img {
