@@ -178,7 +178,7 @@ export function initMenu() {
 
   menu
     .querySelectorAll(
-      ".menu__dest-property--active, .menu__links a, .menu__destinations-label, .menu__toolbar-search"
+      ".menu__dest-property--active, .menu__links a, .menu__destinations-label"
     )
     .forEach((link) => {
       link.addEventListener("click", () => closeMenu());

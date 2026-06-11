@@ -49,15 +49,6 @@
   height: 21px;
 }
 
-.hero__chrome-btn--search img {
-  width: 17px;
-  height: 17px;
-}
-
-.hero__chrome-btn--search {
-  justify-self: end;
-}
-
 .hero__logo {
   display: flex;
   justify-content: center;
@@ -136,15 +127,6 @@
   display: block;
   width: 21px;
   height: 21px;
-}
-
-.site-chrome__search img {
-  width: 17px;
-  height: 17px;
-}
-
-.site-chrome__search {
-  justify-self: end;
 }
 
 .site-chrome__logo {
@@ -267,8 +249,7 @@ body.menu-open .site-chrome {
   text-decoration: none;
 }
 
-body.menu-open .hero__chrome .site-menu-open,
-body.menu-open .hero__chrome-btn--search {
+body.menu-open .hero__chrome .site-menu-open {
   visibility: hidden;
   pointer-events: none;
 }

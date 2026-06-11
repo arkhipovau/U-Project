@@ -100,16 +100,6 @@
   height: auto;
 }
 
-.menu__toolbar-search {
-  grid-column: 3;
-  justify-self: end;
-}
-
-.menu__toolbar-search img {
-  width: 17px;
-  height: 17px;
-}
-
 .menu__surface {
   position: absolute;
   top: var(--site-chrome-height);
