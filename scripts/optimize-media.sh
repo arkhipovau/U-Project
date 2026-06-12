@@ -48,10 +48,17 @@ for f in hero-bg-dubai.jpg hero-bg-cape-town.jpg ecosystem-bg-2.jpg ecosystem-bg
 done
 
 echo "→ Card / poster images (max ${CARD_MAX}px, JPEG q${CARD_Q})"
-for f in days-water.png days-dining.png days-wellness.png beyond-jet.png beyond-yacht.png; do
+for f in days-water.png days-dining.png days-wellness.png beyond-jet.png beyond-yacht.png \
+  opening-kite.jpg opening-tropics.jpg opening-wellness.jpg; do
   [[ -f "$ASSETS/$f" ]] || continue
   base="${f%.*}"
-  sips -Z "$CARD_MAX" "$ASSETS/$f" --out "$OPT/${base}.jpg" -s format jpeg -s formatOptions "$CARD_Q"
+  case "$base" in
+    opening-kite) out="opening-kitesurf" ;;
+    opening-tropics) out="opening-tropics" ;;
+    opening-wellness) out="opening-wellness" ;;
+    *) out="$base" ;;
+  esac
+  sips -Z "$CARD_MAX" "$ASSETS/$f" --out "$OPT/${out}.jpg" -s format jpeg -s formatOptions "$CARD_Q"
 done
 
 echo "→ Videos (max ${VIDEO_MAX_W}px, H.264 CRF ${VIDEO_CRF}, ${VIDEO_PRESET})"

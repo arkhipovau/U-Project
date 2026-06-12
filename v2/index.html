@@ -6,12 +6,12 @@
     <meta name="theme-color" content="#f9f5ea" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#f9f5ea" media="(prefers-color-scheme: dark)" />
     <title>Utopia — An Ecosystem of Retreats (v2)</title>
-    <link rel="icon" href="../assets/LOGO.svg" type="image/svg+xml" />
+    <link rel="icon" href="../assets/logo-mark.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="css/fonts.css?v=20260612-1406" />
-    <link rel="stylesheet" href="css/tokens.css?v=20260604-2940" />
-    <link rel="stylesheet" href="css/base.css?v=20260604-2940" />
-    <link rel="stylesheet" href="css/components.css?v=20260612-1400" />
-    <link rel="stylesheet" href="css/sections.css?v=20260604-3080" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260612-1540" />
+    <link rel="stylesheet" href="css/base.css?v=20260612-1540" />
+    <link rel="stylesheet" href="css/components.css?v=20260612-1500" />
+    <link rel="stylesheet" href="css/sections.css?v=20260612-1540" />
     <link rel="stylesheet" href="css/menu.css?v=20260612-1400" />
     <link rel="stylesheet" href="css/parallax.css?v=20260610-1310" />
     <link rel="stylesheet" href="css/responsive.css?v=20260610-2600" />
@@ -29,7 +29,7 @@
       fetchpriority="high"
     />
   </head>
-  <body class="has-fixed-chrome" data-page-version="v2">
+  <body class="has-fixed-chrome is-past-hero" data-page-version="v2">
     <header class="site-chrome is-visible" id="site-chrome" aria-hidden="false">
       <div class="site-chrome__row">
         <button
@@ -39,33 +39,13 @@
           aria-controls="site-menu"
           aria-label="Open menu"
         >
-          <img
-            class="site-menu-icon site-menu-icon--open site-menu-icon--dark"
-            src="../assets/menu.svg"
-            alt=""
-            width="21"
-            height="21"
-          />
-          <img
-            class="site-menu-icon site-menu-icon--open site-menu-icon--light"
-            src="../assets/menu-light.svg"
-            alt=""
-            width="21"
-            height="21"
-          />
+          <img class="site-menu-icon site-menu-icon--open" src="../assets/menu.svg" alt="" width="21" height="21" />
           <img class="site-menu-icon site-menu-icon--close" src="../assets/close.svg" alt="" width="21" height="21" />
         </button>
         <a class="site-chrome__logo" href="#top" aria-label="Utopia home">
           <img
-            class="site-chrome__mark site-chrome__mark--dark"
+            class="site-chrome__mark"
             src="../assets/logo-wordmark-dark.svg"
-            alt=""
-            width="87"
-            height="14"
-          />
-          <img
-            class="site-chrome__mark site-chrome__mark--light"
-            src="../assets/logo-wordmark.svg"
             alt=""
             width="87"
             height="14"
@@ -78,7 +58,9 @@
       <!-- Screen 1: Hero (378×794) -->
       <section class="hero" id="top" aria-label="Hero">
         <div class="hero__emblem" aria-hidden="true">
-          <img class="hero__emblem-mark" src="../assets/LOGO.svg" alt="" width="100" height="114" />
+          <div class="hero__emblem-glass">
+            <img class="hero__emblem-mark" src="../assets/hero-emblem.svg" alt="" width="100" height="100" />
+          </div>
         </div>
 
         <!-- Background swiper (controlled by cards swiper) -->
@@ -107,17 +89,13 @@
       <section class="ecosystem" id="destinations" aria-label="Destinations" data-reveal-group>
         <div class="ecosystem__copy">
           <h2 class="ecosystem__title" data-reveal>
-            Different destinations.<br />
-            Consistent experience.
+            Different Destinations.<br />
+            Consistent Experience.
           </h2>
           <p class="ecosystem__body" data-reveal>
             Each property combines thoughtful service, curated experiences, and distinctive design
             across every destination.
           </p>
-        </div>
-
-        <div class="ecosystem__media" data-reveal>
-          <div class="ecosystem__bg" role="img" aria-label="Destination preview"></div>
 
           <div
             class="ecosystem__tabs-block"
@@ -126,6 +104,7 @@
             aria-valuemin="1"
             aria-valuemax="1"
             aria-valuenow="1"
+            data-reveal
           >
             <nav class="ecosystem__tabs" aria-label="Location types">
               <button type="button" class="ecosystem__tab is-active" data-group="tropical">
@@ -148,6 +127,10 @@
               </button>
             </nav>
           </div>
+        </div>
+
+        <div class="ecosystem__media" data-reveal>
+          <div class="ecosystem__bg" role="img" aria-label="Destination preview"></div>
 
           <button type="button" class="ecosystem__nav-btn ecosystem__nav-btn--prev" aria-label="Previous location">
             <img src="../assets/chevron-nav.svg" alt="" width="12" height="12" />
@@ -171,10 +154,10 @@
             <div class="opening__tabs-block">
               <nav class="opening__tabs" aria-label="Opening experiences">
                 <button type="button" class="opening__tab is-active" data-index="0" aria-selected="true">
-                  <span class="opening__tab-label">Kite surfing</span>
+                  <span class="opening__tab-label">Kite Surfing</span>
                 </button>
                 <button type="button" class="opening__tab" data-index="1" aria-selected="false">
-                  <span class="opening__tab-label">Tropics exploration</span>
+                  <span class="opening__tab-label">Tropics Exploration</span>
                 </button>
                 <button type="button" class="opening__tab" data-index="2" aria-selected="false">
                   <span class="opening__tab-label">Wellness</span>
@@ -225,7 +208,7 @@
       <!-- Screen 4: Beyond villas (Figma 899:1370) -->
       <section class="beyond" id="experiences" aria-label="Beyond villas" data-reveal-group>
         <div class="beyond__intro">
-          <h2 class="beyond__title" data-reveal>Beyond villas</h2>
+          <h2 class="beyond__title" data-reveal>Beyond Villas</h2>
           <p class="beyond__lead" data-reveal>
             Ultra-luxury experiences, available independently of a villa stay.
           </p>
@@ -238,7 +221,7 @@
                 class="beyond__image beyond__video"
                 data-parallax="img"
                 data-src="../assets/jet.mp4?v=20260604-1527"
-                poster="assets/opt/beyond-jet.jpg?v=20260610-1330"
+                poster="../assets/opt/beyond-jet.jpg?v=20260610-1330"
                 width="314"
                 height="200"
                 muted
@@ -265,7 +248,7 @@
                 class="beyond__image beyond__video"
                 data-parallax="img"
                 data-src="../assets/yacht.mp4?v=20260604-1525"
-                poster="assets/opt/beyond-yacht.jpg?v=20260610-1330"
+                poster="../assets/opt/beyond-yacht.jpg?v=20260610-1330"
                 width="314"
                 height="200"
                 muted
@@ -291,7 +274,7 @@
       <!-- Screen 5: Days designed (378×621) -->
       <section class="days" aria-label="A stay designed around the place" data-reveal-group>
         <div class="days__intro">
-          <h2 class="days__title" data-reveal>A Stay Designed<br />Around the Place</h2>
+          <h2 class="days__title" data-reveal>A Stay Designed<br />around the Place</h2>
           <p class="days__body" data-reveal>
             From kitesurfing and ocean expeditions to private dining, recovery, and cultural experiences,
             Utopia properties are designed for people who prefer their time away to feel full rather than
@@ -303,13 +286,13 @@
           <div class="days__carousel">
             <div class="days__stage" aria-roledescription="carousel" aria-label="Experience highlights">
               <div class="days__track">
-                <article class="days__card" data-index="0" data-label="Water sports">
+                <article class="days__card" data-index="0" data-label="Water Sports">
                   <img src="../assets/opt/days-water.png?v=20260611-1400" alt="" width="260" height="348" loading="lazy" decoding="async" data-parallax="img" />
-                  <p class="days__card-caption">Water sports</p>
+                  <p class="days__card-caption">Water Sports</p>
                 </article>
-                <article class="days__card" data-index="1" data-label="Fine dining">
+                <article class="days__card" data-index="1" data-label="Fine Dining">
                   <img src="../assets/opt/days-dining.jpg?v=20260610-1330" alt="" width="260" height="348" loading="lazy" decoding="async" data-parallax="img" />
-                  <p class="days__card-caption">Fine dining</p>
+                  <p class="days__card-caption">Fine Dining</p>
                 </article>
                 <article class="days__card" data-index="2" data-label="Wellness">
                   <img src="../assets/opt/days-wellness.jpg?v=20260610-1330" alt="" width="260" height="348" loading="lazy" decoding="async" data-parallax="img" />
@@ -367,7 +350,7 @@
         </div>
 
         <div class="cta-final__content">
-          <h2 class="cta-final__title" data-reveal>Discover Utopia&rsquo;s<br />private world</h2>
+          <h2 class="cta-final__title" data-reveal>Discover Utopia&rsquo;s<br />Private World</h2>
           <a class="cta-final__cta" href="#request" data-reveal>Start personalization</a>
         </div>
       </section>

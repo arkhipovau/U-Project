@@ -70,7 +70,7 @@
   scroll-margin-top: calc(max(10px, env(safe-area-inset-top, 0px)) + 8px);
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: var(--space-sm);
   width: 100%;
   max-width: var(--max-width);
   min-height: 0;
@@ -114,9 +114,9 @@
 
 .ecosystem__media {
   position: relative;
-  flex: 0 0 462px;
+  flex: 0 0 var(--stage-media-height);
   width: 100%;
-  height: 462px;
+  height: var(--stage-media-height);
   touch-action: pan-y;
   overflow: hidden;
 }
@@ -140,22 +140,15 @@
 }
 
 .ecosystem__tabs-block {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 32px;
+  position: relative;
   width: 100%;
-  height: 29px;
-  z-index: 2;
+  margin-top: var(--space-sm);
 }
 
 /* Figma 693:2902 — equal segments with gaps under each tab */
 .ecosystem__tabs {
-  position: absolute;
-  left: var(--pad-left);
-  right: var(--pad-right);
-  top: 0;
-  height: 29px;
+  position: relative;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: 14px;
@@ -177,7 +170,7 @@
   font-weight: 400;
   font-size: var(--text-sans-base);
   line-height: var(--leading-sans);
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(22, 21, 20, 0.4);
   cursor: pointer;
   white-space: nowrap;
   text-align: center;
@@ -194,7 +187,7 @@
   width: 100%;
   align-self: stretch;
   height: 1px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(22, 21, 20, 0.2);
   overflow: hidden;
 }
 
@@ -202,7 +195,7 @@
   display: block;
   width: 0;
   height: 100%;
-  background: #ffffff;
+  background: #161514;
   transition: width 0.45s var(--ease-cinematic);
 }
 
@@ -213,7 +206,7 @@
 }
 
 .ecosystem__tab.is-active {
-  color: #ffffff;
+  color: #161514;
 }
 
 .ecosystem__tab:disabled {
@@ -641,7 +634,7 @@ video.opening__bg-media {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding-block: var(--space-section-top-lg) var(--space-section-bottom-md);
+  padding-block: var(--space-section-top-60) var(--space-section-bottom-40);
   padding-inline: var(--pad-left) var(--pad-right);
   display: flex;
   flex-direction: column;
@@ -689,9 +682,11 @@ video.opening__bg-media {
   flex-direction: column;
   gap: 18px;
   width: 100%;
+  height: var(--beyond-card-height);
   box-sizing: border-box;
+  border: 1px solid var(--color-cream-warm);
   border-radius: var(--radius-card);
-  background: rgba(230, 220, 205, 0.8);
+  background: transparent;
   text-decoration: none;
   color: inherit;
   overflow: hidden;
@@ -708,12 +703,14 @@ video.opening__bg-media {
 }
 
 .beyond__card-media {
+  box-sizing: border-box;
   width: 100%;
-  height: 200px;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: var(--space-md) var(--space-md) 0;
   overflow: hidden;
-  flex-shrink: 0;
-  border-radius: var(--radius-card) var(--radius-card) 0 0;
-  background: #d9d9d9;
+  border-radius: calc(var(--radius-card) - 4px);
+  background: transparent;
 }
 
 .beyond__image {
@@ -722,6 +719,11 @@ video.opening__bg-media {
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+.beyond__card-media .beyond__image,
+.beyond__card-media .beyond__video {
+  border-radius: inherit;
 }
 
 .beyond__video {
@@ -733,6 +735,7 @@ video.opening__bg-media {
   display: flex;
   flex-direction: column;
   gap: var(--space-xxs);
+  flex-shrink: 0;
   padding: 0 var(--space-md) var(--space-md);
 }
 
@@ -774,7 +777,7 @@ video.opening__bg-media {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding-block: var(--space-section-top-sm) var(--space-section-bottom-md);
+  padding-block: var(--space-section-top-40) var(--space-section-bottom-md);
   padding-inline: 0;
   display: flex;
   flex-direction: column;
@@ -1065,18 +1068,18 @@ video.opening__bg-media {
   }
 }
 
-/* —— Final CTA (Figma 614:2850 — 378×387) —— */
+/* —— Final CTA — same stage height as ecosystem__media —— */
 .cta-final {
   position: relative;
   width: 100%;
   max-width: var(--max-width);
-  height: 387px;
+  height: var(--stage-media-height);
   margin: 0 auto;
   background: var(--color-cream-warm, #e6dccd);
   overflow: hidden;
 }
 
-/* Full-bleed horizontal video — cover crops left/right, fills 387px section height */
+/* Full-bleed horizontal video — cover crops left/right, fills stage height */
 .cta-final__bg {
   position: absolute;
   z-index: 0;

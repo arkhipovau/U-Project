@@ -18,6 +18,7 @@
   --font-sans: "NB International", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-serif-weight: 400;
   --tracking-serif: -0.03em;
+  --tracking-sans: -0.01em;
   --leading-sans: 1.5;
 
   /* NB International scale (−2px from prior defaults) */
@@ -41,8 +42,11 @@
   --space-section-top-lg: 48px;
   --space-section-top-md: 32px;
   --space-section-top-sm: 24px;
+  --space-section-top-40: 40px;
+  --space-section-top-60: 60px;
   --space-section-bottom-lg: 48px;
   --space-section-bottom-md: 45px;
+  --space-section-bottom-40: 40px;
   --space-section-gap-lg: 64px;
 
   --pad-left: max(var(--space-page), env(safe-area-inset-left, 0px));
@@ -55,6 +59,8 @@
   --hero-card-width: min(314px, calc(var(--app-width) - var(--hero-card-peek) * 2));
   --hero-card-height: calc(var(--hero-card-width) * 420 / 314);
   --days-stage-max: min(412px, var(--app-width));
+  --stage-media-height: 462px;
+  --beyond-card-height: 420px;
 
   --chrome-bar-height: 56px;
   --site-chrome-height: calc(var(--chrome-bar-height) + env(safe-area-inset-top, 0px));

@@ -16,6 +16,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--text-sans-base);
   line-height: var(--leading-sans);
+  letter-spacing: var(--tracking-sans);
   color: var(--color-text);
   background-color: var(--color-cream);
   -webkit-font-smoothing: antialiased;

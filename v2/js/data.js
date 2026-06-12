@@ -99,20 +99,23 @@ export const LOCATION_GROUPS = {
 
 export const OPENING_SLIDES = [
   {
-    label: "Kite surfing",
+    label: "Kite Surfing",
     video: "../assets/kitesurf.mp4?v=20260604-1346",
+    poster: "../assets/opt/opening-kitesurf.jpg?v=20260612-1540",
     mediaWidth: 696,
     mediaLeft: "calc(50% - 348px + 143px)",
   },
   {
-    label: "Tropics exploration",
+    label: "Tropics Exploration",
     video: "../assets/tropics.mp4?v=20260610-2700",
+    poster: "../assets/opt/opening-tropics.jpg?v=20260612-1540",
     mediaWidth: 394,
     mediaLeft: "calc(50% - 197px - 8px)",
   },
   {
     label: "Wellness",
     video: "../assets/wellness.mp4",
+    poster: "../assets/opt/opening-wellness.jpg?v=20260612-1540",
     mediaWidth: 408,
     mediaLeft: "calc(50% - 204px - 1px)",
   },

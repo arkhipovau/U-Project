@@ -49,6 +49,7 @@
   --hero-card-width: min(314px, calc(var(--app-width) - var(--hero-card-peek) * 2));
   --hero-card-height: calc(var(--hero-card-width) * 420 / 314);
   --days-stage-max: min(412px, var(--app-width));
+  --stage-media-height: 462px;
 
   --dock-height: 40px;
   --dock-offset: 10px;

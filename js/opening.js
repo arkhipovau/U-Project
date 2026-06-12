@@ -11,6 +11,7 @@ function appendSlideVideo(slideEl, slide) {
   const video = document.createElement("video");
   video.className = "opening__bg-media";
   video.dataset.src = slide.video;
+  if (slide.poster) video.poster = slide.poster;
   video.muted = true;
   video.defaultMuted = true;
   video.loop = true;

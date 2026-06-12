@@ -17,16 +17,14 @@
     flex-shrink: 0;
   }
 
-  .parallax-media .beyond__image,
-  .parallax-media .beyond__video,
   .beyond__card-media .beyond__image,
   .beyond__card-media .beyond__video {
     display: block;
     width: 100%;
-    height: 120%;
-    margin-top: -10%;
+    height: 100%;
+    margin-top: 0;
     object-fit: cover;
-    border-radius: 0;
+    object-position: center;
   }
 
   .days__card [data-parallax] {
