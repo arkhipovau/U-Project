@@ -1,6 +1,7 @@
 const SHIFT_PX = 16;
 const SCALE_BG = 1.14;
 const SCALE_IMG = 1.14;
+const SCALE_DAYS = 1.08;
 
 /**
  * Light scroll parallax for photos and full-bleed backgrounds.
@@ -38,7 +39,8 @@ export function initParallax() {
     let scale = SCALE_IMG;
     if (kind === "bg") scale = SCALE_BG;
     else if (kind === "opening") scale = 1;
-    else if (el.closest(".days__card") || el.closest(".beyond__card-media")) scale = 1;
+    else if (el.closest(".beyond__card-media")) scale = 1;
+    else if (el.closest(".days__card")) scale = SCALE_DAYS;
 
     el.style.transform = `translate3d(0, ${y}px, 0) scale(${scale})`;
   }
