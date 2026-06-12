@@ -1,6 +1,9 @@
-import { attachLazyVideo } from "./lazy-media.js";
+import { applyVideoPoster, attachLazyVideo } from "./lazy-media.js";
 
 /** Autoplay Beyond card videos when visible (Safari-friendly). */
 export function initBeyond() {
-  document.querySelectorAll(".beyond__video").forEach((video) => attachLazyVideo(video));
+  document.querySelectorAll(".beyond__video").forEach((video) => {
+    applyVideoPoster(video);
+    attachLazyVideo(video);
+  });
 }

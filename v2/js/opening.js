@@ -1,5 +1,5 @@
 import { OPENING_SLIDES } from "./data.js";
-import { clearVideoSource, ensureVideoSource } from "./lazy-media.js";
+import { clearVideoSource, ensureVideoSource, resolvePosterUrl } from "./lazy-media.js";
 
 const SLIDE_COUNT = OPENING_SLIDES.length;
 
@@ -14,7 +14,7 @@ function appendSlideVideo(slideEl, slide) {
   const video = document.createElement("video");
   video.className = "opening__bg-media";
   video.dataset.src = slide.video;
-  if (slide.poster) video.poster = slide.poster;
+  if (slide.poster) video.poster = resolvePosterUrl(slide.poster);
   video.muted = true;
   video.defaultMuted = true;
   video.loop = true;

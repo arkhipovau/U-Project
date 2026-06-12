@@ -29,8 +29,8 @@
 
   .days__card [data-parallax] {
     width: 100%;
-    height: 112%;
-    margin-top: -6%;
+    height: 100%;
+    margin-top: 0;
     max-width: none;
     object-fit: cover;
     object-position: center;

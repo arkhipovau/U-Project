@@ -1,4 +1,4 @@
-import { ensureVideoSource } from "./lazy-media.js";
+import { applyVideoPoster, ensureVideoSource } from "./lazy-media.js";
 
 /** Final CTA background video — load and autoplay when the section is visible. */
 export function initCtaFinal() {
@@ -8,6 +8,8 @@ export function initCtaFinal() {
 
   const rawSrc = video.dataset.src;
   if (!rawSrc) return;
+
+  applyVideoPoster(video);
 
   video.muted = true;
   video.defaultMuted = true;

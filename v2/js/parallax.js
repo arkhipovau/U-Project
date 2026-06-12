@@ -38,7 +38,7 @@ export function initParallax() {
     let scale = SCALE_IMG;
     if (kind === "bg") scale = SCALE_BG;
     else if (kind === "opening") scale = 1;
-    else if (el.closest(".days__card")) scale = 1.06;
+    else if (el.closest(".days__card") || el.closest(".beyond__card-media")) scale = 1;
 
     el.style.transform = `translate3d(0, ${y}px, 0) scale(${scale})`;
   }

@@ -1,6 +1,6 @@
 /* —— Hero (Figma 711:1216 — 378×794) —— */
 .hero {
-  --hero-content-top: calc(var(--site-chrome-height) + 158px);
+  --hero-content-top: calc(var(--site-chrome-height) + 126px);
   --hero-content-bottom: 62px;
   --hero-title-cards-gap: 36px;
 
@@ -635,7 +635,7 @@ video.opening__bg-media {
   max-width: var(--max-width);
   margin: 0 auto;
   padding-block: var(--space-section-top-60) var(--space-section-bottom-40);
-  padding-inline: var(--pad-left) var(--pad-right);
+  padding-inline: var(--beyond-pad);
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -648,8 +648,8 @@ video.opening__bg-media {
   flex-direction: column;
   gap: var(--space-xs);
   width: 100%;
-  max-width: var(--content-width);
-  margin-bottom: var(--space-xl);
+  max-width: var(--beyond-card-width);
+  margin-bottom: 31px;
 }
 
 .beyond__title {
@@ -674,7 +674,7 @@ video.opening__bg-media {
   flex-direction: column;
   gap: 14px;
   width: 100%;
-  max-width: var(--content-width);
+  max-width: var(--beyond-card-width);
 }
 
 .beyond__card {
@@ -707,7 +707,7 @@ video.opening__bg-media {
   width: 100%;
   flex: 1 1 auto;
   min-height: 0;
-  padding: var(--space-md) var(--space-md) 0;
+  padding: var(--space-sm) var(--space-sm) 0;
   overflow: hidden;
   border-radius: calc(var(--radius-card) - 4px);
   background: transparent;
@@ -792,15 +792,15 @@ video.opening__bg-media {
   flex-direction: column;
   gap: var(--space-xs);
   width: 100%;
-  padding-inline: var(--pad-left) var(--pad-right);
+  padding-inline: var(--days-pad);
   box-sizing: border-box;
 }
 
-/* Figma frame edge — clip 412px stage at x=32 (visible width = frame − 32) */
+/* Figma 614:2836 — stage bleeds past frame right; left edge at 16px */
 .days__viewport {
   overflow: hidden;
   width: 100%;
-  padding-left: var(--pad-left);
+  padding-left: var(--days-pad);
   box-sizing: border-box;
 }
 
@@ -821,7 +821,7 @@ video.opening__bg-media {
   color: #161514;
 }
 
-/* Figma 614:2836 — 412px stage extends past frame; .days__viewport clips at 378 */
+/* Figma 614:2836 — stage extends past frame; scaled with --beyond-card-width */
 .days__carousel {
   --days-scale: 1;
 
@@ -830,11 +830,11 @@ video.opening__bg-media {
   flex-direction: column;
   align-items: stretch;
   gap: var(--space-sm);
-  width: 412px;
+  width: var(--days-stage-width);
   max-width: none;
 }
 
-/* Viewport up to 412×348; positions scaled in experiences.js */
+/* Viewport height set in experiences.js; default matches scaled Figma active card */
 .days__stage {
   --days-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --days-duration: 700ms;
@@ -842,7 +842,7 @@ video.opening__bg-media {
 
   position: relative;
   width: 100%;
-  height: 347.77px;
+  height: var(--days-active-height);
   overflow: visible;
   touch-action: pan-y;
   user-select: none;
@@ -861,7 +861,7 @@ video.opening__bg-media {
 .days__track {
   position: relative;
   width: 100%;
-  height: 347.77px;
+  height: var(--days-active-height);
   transition: transform var(--days-duration) var(--days-ease);
 }
 
@@ -928,6 +928,15 @@ video.opening__bg-media {
   height: 100%;
   object-fit: cover;
   background: #d9d9d9;
+  transition: opacity 0.35s var(--ease-cinematic);
+}
+
+.days__card img.is-loading {
+  opacity: 0.92;
+}
+
+.days__card img.is-ready {
+  opacity: 1;
 }
 
 .days__card::after {

@@ -8,28 +8,28 @@
     <title>Utopia — An Ecosystem of Retreats (v2)</title>
     <link rel="icon" href="../assets/logo-mark.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="css/fonts.css?v=20260612-1406" />
-    <link rel="stylesheet" href="css/tokens.css?v=20260612-1540" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260612-1740" />
     <link rel="stylesheet" href="css/base.css?v=20260612-1540" />
-    <link rel="stylesheet" href="css/components.css?v=20260612-1500" />
-    <link rel="stylesheet" href="css/sections.css?v=20260612-1540" />
+    <link rel="stylesheet" href="css/components.css?v=20260604-2000" />
+    <link rel="stylesheet" href="css/sections.css?v=20260604-2000" />
     <link rel="stylesheet" href="css/menu.css?v=20260612-1400" />
     <link rel="stylesheet" href="css/parallax.css?v=20260610-1310" />
-    <link rel="stylesheet" href="css/responsive.css?v=20260610-2600" />
+    <link rel="stylesheet" href="css/responsive.css?v=20260612-1800" />
     <link rel="stylesheet" href="css/reveal.css?v=20260604-1700" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="css/hero-swiper.css?v=20260604-1755" />
+    <link rel="stylesheet" href="css/hero-swiper.css?v=20260604-2000" />
     <link
       rel="preload"
       as="image"
-      href="../assets/opt/enhanced_hero-bg-roca.jpg?v=20260610-1330"
+      href="../assets/opt/enhanced_hero-bg-roca.jpg?v=20260604-2000"
       fetchpriority="high"
     />
   </head>
-  <body class="has-fixed-chrome is-past-hero" data-page-version="v2">
+  <body class="has-fixed-chrome" data-page-version="v2">
     <header class="site-chrome is-visible" id="site-chrome" aria-hidden="false">
       <div class="site-chrome__row">
         <button
@@ -58,9 +58,7 @@
       <!-- Screen 1: Hero (378×794) -->
       <section class="hero" id="top" aria-label="Hero">
         <div class="hero__emblem" aria-hidden="true">
-          <div class="hero__emblem-glass">
-            <img class="hero__emblem-mark" src="../assets/hero-emblem.svg" alt="" width="100" height="100" />
-          </div>
+          <img class="hero__emblem-mark" src="../assets/logo-mark-dark.svg" alt="" width="29" height="40" />
         </div>
 
         <!-- Background swiper (controlled by cards swiper) -->
@@ -219,11 +217,11 @@
             <div class="parallax-media beyond__card-media">
               <video
                 class="beyond__image beyond__video"
-                data-parallax="img"
                 data-src="../assets/jet.mp4?v=20260604-1527"
-                poster="../assets/opt/beyond-jet.jpg?v=20260610-1330"
-                width="314"
-                height="200"
+                data-poster="../assets/beyond-jet.png"
+                poster="../assets/opt/beyond-jet.jpg?v=20260604-2000"
+                width="346"
+                height="220"
                 muted
                 loop
                 playsinline
@@ -246,11 +244,11 @@
             <div class="parallax-media beyond__card-media">
               <video
                 class="beyond__image beyond__video"
-                data-parallax="img"
                 data-src="../assets/yacht.mp4?v=20260604-1525"
-                poster="../assets/opt/beyond-yacht.jpg?v=20260610-1330"
-                width="314"
-                height="200"
+                data-poster="../assets/beyond-yacht.png"
+                poster="../assets/opt/beyond-yacht.jpg?v=20260604-2000"
+                width="346"
+                height="220"
                 muted
                 loop
                 playsinline
@@ -287,15 +285,15 @@
             <div class="days__stage" aria-roledescription="carousel" aria-label="Experience highlights">
               <div class="days__track">
                 <article class="days__card" data-index="0" data-label="Water Sports">
-                  <img src="../assets/opt/days-water.png?v=20260611-1400" alt="" width="260" height="348" loading="lazy" decoding="async" data-parallax="img" />
+                  <img data-src="../assets/days-water.png" alt="" width="287" height="383" loading="lazy" decoding="async" data-parallax="img" />
                   <p class="days__card-caption">Water Sports</p>
                 </article>
                 <article class="days__card" data-index="1" data-label="Fine Dining">
-                  <img src="../assets/opt/days-dining.jpg?v=20260610-1330" alt="" width="260" height="348" loading="lazy" decoding="async" data-parallax="img" />
+                  <img data-src="../assets/days-dining.png" alt="" width="287" height="383" loading="lazy" decoding="async" data-parallax="img" />
                   <p class="days__card-caption">Fine Dining</p>
                 </article>
                 <article class="days__card" data-index="2" data-label="Wellness">
-                  <img src="../assets/opt/days-wellness.jpg?v=20260610-1330" alt="" width="260" height="348" loading="lazy" decoding="async" data-parallax="img" />
+                  <img data-src="../assets/days-wellness.png" alt="" width="287" height="383" loading="lazy" decoding="async" data-parallax="img" />
                   <p class="days__card-caption">Wellness</p>
                 </article>
               </div>
@@ -338,7 +336,8 @@
           <video
             class="cta-final__video"
             data-src="../assets/footer.mp4"
-            poster="../assets/opt/cta-footer-poster.jpg?v=20260610-1330"
+            data-poster="../assets/opt/cta-footer-poster.jpg"
+            poster="../assets/opt/cta-footer-poster.jpg?v=20260604-2000"
             width="2052"
             height="1008"
             muted
@@ -425,6 +424,6 @@
       <a class="dock-bar__cta" href="#request">Request a stay</a>
     </nav>
 
-    <script type="module" src="js/main.js?v=20260604-3060"></script>
+    <script type="module" src="js/main.js?v=20260604-2000"></script>
   </body>
 </html>

@@ -60,7 +60,12 @@
   --hero-card-height: calc(var(--hero-card-width) * 420 / 314);
   --days-stage-max: min(412px, var(--app-width));
   --stage-media-height: 462px;
-  --beyond-card-height: 420px;
+  --beyond-pad: var(--space-sm);
+  --beyond-card-width: min(346px, calc(var(--app-width) - var(--beyond-pad) * 2));
+  --beyond-card-height: calc(var(--beyond-card-width) * 420 / 314);
+  --days-pad: var(--beyond-pad);
+  --days-stage-width: calc(412px * var(--beyond-card-width) / 314);
+  --days-active-height: calc(347.77px * var(--beyond-card-width) / 314);
 
   --chrome-bar-height: 56px;
   --site-chrome-height: calc(var(--chrome-bar-height) + env(safe-area-inset-top, 0px));

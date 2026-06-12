@@ -13,16 +13,17 @@ export function initExperiences() {
 
   if (slides.length === 0) return;
 
-  /** Figma 614:2836 — stage 412×348, gap 14px between cards */
-  const DESIGN_STAGE_W = 412;
-  const DESIGN_ACTIVE_W = 260;
-  const DESIGN_ACTIVE_H = 347.77;
-  const DESIGN_INACTIVE_W = 207.03;
-  const DESIGN_INACTIVE_H = 278.08;
+  /** Figma 614:2836 — scaled to match 16px inset (346px content vs 314px base) */
+  const CARD_RATIO = 346 / 314;
+  const DESIGN_STAGE_W = 412 * CARD_RATIO;
+  const DESIGN_ACTIVE_W = 260 * CARD_RATIO;
+  const DESIGN_ACTIVE_H = 347.77 * CARD_RATIO;
+  const DESIGN_INACTIVE_W = 207.03 * CARD_RATIO;
+  const DESIGN_INACTIVE_H = 278.08 * CARD_RATIO;
   const DESIGN_INACTIVE_Y = 0;
-  const DESIGN_GAP = 14;
-  const PEEK_LEFT = -136;
-  const VISIBLE_NEXT_X_MAX = 292;
+  const DESIGN_GAP = 14 * CARD_RATIO;
+  const PEEK_LEFT = -136 * CARD_RATIO;
+  const VISIBLE_NEXT_X_MAX = 292 * CARD_RATIO;
   const SWIPE_THRESHOLD = 40;
   const AUTOPLAY_MS = 5000;
   const count = slides.length;

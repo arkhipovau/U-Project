@@ -11,9 +11,11 @@ import { initMenu } from "./menu.js";
 import { initParallax } from "./parallax.js";
 import { initReveal } from "./reveal.js";
 import { initSiteLogo } from "./site-logo.js";
+import { initCardImages } from "./lazy-media.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initViewport();
+  initCardImages();
   const parallax = initParallax();
 
   initSiteLogo();

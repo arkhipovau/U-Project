@@ -1,7 +1,7 @@
 const ECOSYSTEM_GRADIENT =
   "linear-gradient(180deg, rgba(51, 47, 46, 0) 86.13%, #332f2e 108.21%)";
 
-export const MEDIA_VERSION = "20260612-1200";
+export const MEDIA_VERSION = "20260604-2000";
 
 /** No re-encode — keeps full source bitrate (footer CTA). */
 const SOURCE_ONLY_VIDEOS = new Set(["footer"]);
@@ -12,13 +12,85 @@ function cacheKey(url) {
   return url;
 }
 
-/** Mobile delivery — full-res JPEG in ../assets/opt/ (see scripts/optimize-media.sh). */
+/** Mobile delivery — JPEG in ../assets/opt/ (see scripts/optimize-media.sh). */
 export function resolveImageUrl(url) {
   if (!url) return url;
   const [path] = url.split("?");
-  const match = path.match(/^assets\/(.+)\.(png|jpe?g)$/i);
-  if (!match) return url;
-  return `../assets/opt/${match[1]}.jpg?v=${MEDIA_VERSION}`;
+
+  const optMatch = path.match(/(?:^|\.\.\/)assets\/opt\/(.+)\.(png|jpe?g)$/i);
+  if (optMatch) {
+    return `../assets/opt/${optMatch[1]}.jpg?v=${MEDIA_VERSION}`;
+  }
+
+  const sourceMatch = path.match(/(?:^|\.\.\/)assets\/(?!opt\/)(.+)\.(png|jpe?g)$/i);
+  if (!sourceMatch) return url;
+
+  return `../assets/opt/${sourceMatch[1]}.jpg?v=${MEDIA_VERSION}`;
+}
+
+export function resolvePosterUrl(url) {
+  return resolveImageUrl(url);
+}
+
+function finishCardImage(img) {
+  img.classList.remove("is-loading");
+  img.classList.add("is-ready");
+}
+
+/** Card-sized image — opt JPEG with loading state. */
+export function loadCardImage(img, url) {
+  if (!img) return Promise.resolve();
+
+  const source = url || img.dataset.src || img.getAttribute("src");
+  const deliveryUrl = resolveImageUrl(source);
+  if (!deliveryUrl) return Promise.resolve();
+
+  img.dataset.loadedUrl = deliveryUrl;
+
+  if (img.complete && img.naturalWidth > 0 && img.src.includes(deliveryUrl.split("?")[0])) {
+    finishCardImage(img);
+    return Promise.resolve();
+  }
+
+  img.classList.add("is-loading");
+
+  return new Promise((resolve) => {
+    const onDone = () => {
+      finishCardImage(img);
+      resolve();
+    };
+
+    img.decoding = "async";
+    img.onload = onDone;
+    img.onerror = () => {
+      if (deliveryUrl !== source && source) {
+        img.src = source;
+        img.onload = onDone;
+        img.onerror = () => {
+          img.classList.remove("is-loading");
+          resolve();
+        };
+        return;
+      }
+      img.classList.remove("is-loading");
+      resolve();
+    };
+    img.src = deliveryUrl;
+  });
+}
+
+/** Upgrade static card images (Days carousel, etc.) to opt delivery. */
+export function initCardImages(root = document) {
+  root.querySelectorAll("[data-card-media], .days__card img").forEach((img) => {
+    loadCardImage(img);
+  });
+}
+
+export function applyVideoPoster(video) {
+  if (!video) return;
+  const raw = video.dataset.poster || video.getAttribute("poster");
+  if (!raw) return;
+  video.poster = resolvePosterUrl(raw);
 }
 
 function applyBackground(el, deliveryUrl, gradient) {
