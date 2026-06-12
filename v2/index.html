@@ -8,13 +8,13 @@
     <title>Utopia — An Ecosystem of Retreats (v2)</title>
     <link rel="icon" href="../assets/logo-mark.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="css/fonts.css?v=20260612-1406" />
-    <link rel="stylesheet" href="css/tokens.css?v=20260612-1740" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260604-2140" />
     <link rel="stylesheet" href="css/base.css?v=20260612-1540" />
-    <link rel="stylesheet" href="css/components.css?v=20260604-2000" />
-    <link rel="stylesheet" href="css/sections.css?v=20260604-2000" />
+    <link rel="stylesheet" href="css/components.css?v=20260604-2150" />
+    <link rel="stylesheet" href="css/sections.css?v=20260604-2150" />
     <link rel="stylesheet" href="css/menu.css?v=20260612-1400" />
-    <link rel="stylesheet" href="css/parallax.css?v=20260610-1310" />
-    <link rel="stylesheet" href="css/responsive.css?v=20260612-1800" />
+    <link rel="stylesheet" href="css/parallax.css?v=20260604-2130" />
+    <link rel="stylesheet" href="css/responsive.css?v=20260604-2150" />
     <link rel="stylesheet" href="css/reveal.css?v=20260604-1700" />
     <link
       rel="stylesheet"
@@ -57,16 +57,15 @@
     <div class="page">
       <!-- Screen 1: Hero (378×794) -->
       <section class="hero" id="top" aria-label="Hero">
-        <div class="hero__emblem" aria-hidden="true">
-          <img class="hero__emblem-mark" src="../assets/logo-mark-dark.svg" alt="" width="29" height="40" />
-        </div>
-
         <!-- Background swiper (controlled by cards swiper) -->
         <div class="swiper hero__bg-swiper" aria-hidden="true">
           <div class="swiper-wrapper"></div>
         </div>
 
         <div class="hero__content">
+          <div class="hero__emblem" aria-hidden="true">
+            <img class="hero__emblem-mark" src="../assets/logo-mark.svg" alt="" width="29" height="40" />
+          </div>
           <h1 class="heading-hero" data-reveal>An Ecosystem of Retreats</h1>
           <div class="hero__cards-wrap" data-reveal>
             <!-- Cards swiper (master) -->
@@ -280,31 +279,34 @@
           </p>
         </div>
 
-        <div class="days__viewport" data-reveal>
-          <div class="days__carousel">
-            <div class="days__stage" aria-roledescription="carousel" aria-label="Experience highlights">
-              <div class="days__track">
-                <article class="days__card" data-index="0" data-label="Water Sports">
-                  <img data-src="../assets/days-water.png" alt="" width="287" height="383" loading="lazy" decoding="async" data-parallax="img" />
-                  <p class="days__card-caption">Water Sports</p>
-                </article>
-                <article class="days__card" data-index="1" data-label="Fine Dining">
-                  <img data-src="../assets/days-dining.png" alt="" width="287" height="383" loading="lazy" decoding="async" data-parallax="img" />
-                  <p class="days__card-caption">Fine Dining</p>
-                </article>
-                <article class="days__card" data-index="2" data-label="Wellness">
-                  <img data-src="../assets/days-wellness.png" alt="" width="287" height="383" loading="lazy" decoding="async" data-parallax="img" />
-                  <p class="days__card-caption">Wellness</p>
-                </article>
+        <div class="days__showcase" data-reveal>
+          <div class="days__viewport">
+            <div class="days__carousel">
+              <div class="days__stage" aria-roledescription="carousel" aria-label="Experience highlights">
+                <div class="days__track">
+                  <article class="days__card" data-index="0" data-label="Water Sports">
+                    <img data-src="../assets/days-water.png" alt="" width="287" height="383" loading="lazy" decoding="async" data-parallax="img" />
+                  </article>
+                  <article class="days__card" data-index="1" data-label="Fine Dining">
+                    <img data-src="../assets/days-dining.png" alt="" width="287" height="383" loading="lazy" decoding="async" data-parallax="img" />
+                  </article>
+                  <article class="days__card" data-index="2" data-label="Wellness">
+                    <img data-src="../assets/days-wellness.png" alt="" width="287" height="383" loading="lazy" decoding="async" data-parallax="img" />
+                  </article>
+                </div>
+                <button type="button" class="days__hit days__hit--prev" aria-label="Previous slide"></button>
+                <button type="button" class="days__hit days__hit--next" aria-label="Next slide"></button>
               </div>
-              <button type="button" class="days__hit days__hit--prev" aria-label="Previous slide"></button>
-              <button type="button" class="days__hit days__hit--next" aria-label="Next slide"></button>
             </div>
+          </div>
+
+          <div class="days__meta">
+            <p class="days__caption" aria-live="polite">Water Sports</p>
             <div class="days__footer">
               <div
                 class="days__progress"
                 role="progressbar"
-                aria-label="Carousel autoplay"
+                aria-label="Water Sports, carousel autoplay"
                 aria-valuemin="0"
                 aria-valuemax="100"
                 aria-valuenow="0"

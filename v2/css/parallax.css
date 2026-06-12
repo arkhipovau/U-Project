@@ -12,7 +12,12 @@
     width: 128%;
   }
 
-  .parallax-media {
+  .parallax-media:not(.beyond__card-media) {
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .beyond__card-media.parallax-media {
     overflow: hidden;
     flex-shrink: 0;
   }

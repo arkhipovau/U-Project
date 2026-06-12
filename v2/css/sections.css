@@ -1,6 +1,6 @@
 /* —— Hero (Figma 711:1216 — 378×794) —— */
 .hero {
-  --hero-content-top: calc(var(--site-chrome-height) + 126px);
+  --hero-content-top: calc(var(--site-chrome-height) + 48px);
   --hero-content-bottom: 62px;
   --hero-title-cards-gap: 36px;
 
@@ -635,7 +635,7 @@ video.opening__bg-media {
   max-width: var(--max-width);
   margin: 0 auto;
   padding-block: var(--space-section-top-60) var(--space-section-bottom-40);
-  padding-inline: var(--beyond-pad);
+  padding-inline: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -648,7 +648,8 @@ video.opening__bg-media {
   flex-direction: column;
   gap: var(--space-xs);
   width: 100%;
-  max-width: var(--beyond-card-width);
+  box-sizing: border-box;
+  padding-inline: var(--pad-left) var(--pad-right);
   margin-bottom: 31px;
 }
 
@@ -675,12 +676,14 @@ video.opening__bg-media {
   gap: 14px;
   width: 100%;
   max-width: var(--beyond-card-width);
+  box-sizing: border-box;
+  padding-inline: var(--beyond-pad);
 }
 
 .beyond__card {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: var(--beyond-card-inner-gap);
   width: 100%;
   height: var(--beyond-card-height);
   box-sizing: border-box;
@@ -705,12 +708,19 @@ video.opening__bg-media {
 .beyond__card-media {
   box-sizing: border-box;
   width: 100%;
-  flex: 1 1 auto;
-  min-height: 0;
-  padding: var(--space-sm) var(--space-sm) 0;
+  flex: 0 0 var(--beyond-card-media-height);
+  height: var(--beyond-card-media-height);
+  min-height: var(--beyond-card-media-height);
+  max-height: var(--beyond-card-media-height);
+  padding: var(--space-sm) var(--beyond-card-media-inset-x) 0;
   overflow: hidden;
   border-radius: calc(var(--radius-card) - 4px);
   background: transparent;
+}
+
+.beyond__card-media.parallax-media {
+  display: flex;
+  flex-direction: column;
 }
 
 .beyond__image {
@@ -734,9 +744,13 @@ video.opening__bg-media {
 .beyond__card-body {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: var(--space-xxs);
-  flex-shrink: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: auto;
   padding: 0 var(--space-md) var(--space-md);
+  box-sizing: border-box;
 }
 
 .beyond__head {
@@ -792,11 +806,18 @@ video.opening__bg-media {
   flex-direction: column;
   gap: var(--space-xs);
   width: 100%;
-  padding-inline: var(--days-pad);
+  padding-inline: var(--pad-left) var(--pad-right);
   box-sizing: border-box;
 }
 
 /* Figma 614:2836 — stage bleeds past frame right; left edge at 16px */
+.days__showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
 .days__viewport {
   overflow: hidden;
   width: 100%;
@@ -826,10 +847,7 @@ video.opening__bg-media {
   --days-scale: 1;
 
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--space-sm);
+  display: block;
   width: var(--days-stage-width);
   max-width: none;
 }
@@ -953,28 +971,26 @@ video.opening__bg-media {
   pointer-events: none;
 }
 
-.days__card-caption {
-  position: absolute;
-  z-index: 1;
-  left: calc(20px * var(--days-scale, 1));
-  bottom: calc(20px * var(--days-scale, 1));
+.days__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  width: 100%;
+  padding-inline: var(--pad-left) var(--pad-right);
+  box-sizing: border-box;
+}
+
+.days__caption {
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: var(--text-sans-sm);
   line-height: var(--leading-sans);
-  color: #ffffff;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity var(--days-duration) var(--days-ease);
-  pointer-events: none;
+  color: #161514;
 }
 
-.days__card.is-active .days__card-caption {
-  opacity: 1;
-}
-
-/* Figma Frame 2131330167 — pill progress centered under active card */
+/* Figma Frame 2131330167 — pill progress under active slide label */
 .days__footer {
   display: flex;
   align-items: flex-start;
@@ -991,8 +1007,6 @@ video.opening__bg-media {
   align-items: center;
   gap: calc(4px * var(--days-scale, 1));
   height: calc(16px * var(--days-scale, 1));
-  margin-left: var(--days-active-half-w, 130px);
-  transform: translateX(-50%);
   padding: calc(6px * var(--days-scale, 1)) calc(8px * var(--days-scale, 1));
   border-radius: calc(30px * var(--days-scale, 1));
   background: rgba(0, 0, 0, 0.06);

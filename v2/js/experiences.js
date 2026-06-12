@@ -4,6 +4,7 @@ export function initExperiences() {
   const track = document.querySelector(".days__track");
   const progress = document.querySelector(".days__progress");
   const progressFill = document.querySelector(".days__progress-fill");
+  const caption = document.querySelector(".days__caption");
   if (!stage || !track || !progress || !progressFill) return;
 
   const slides = [...track.querySelectorAll(".days__card")];
@@ -121,14 +122,12 @@ export function initExperiences() {
     track.style.height = `${h}px`;
     stage.style.setProperty("--days-scale", String(scale));
     stage.closest(".days__carousel")?.style.setProperty("--days-scale", String(scale));
-    stage.closest(".days__carousel")?.style.setProperty(
-      "--days-active-half-w",
-      `${(DESIGN_ACTIVE_W / 2) * scale}px`,
-    );
   }
 
   function syncProgressUI() {
     const label = slides[active]?.dataset.label || "";
+
+    if (caption) caption.textContent = label;
 
     progress.dataset.active = String(active);
     progressItems.forEach((item, i) => {

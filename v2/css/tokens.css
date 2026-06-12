@@ -63,6 +63,9 @@
   --beyond-pad: var(--space-sm);
   --beyond-card-width: min(346px, calc(var(--app-width) - var(--beyond-pad) * 2));
   --beyond-card-height: calc(var(--beyond-card-width) * 420 / 314);
+  --beyond-card-inner-gap: 18px;
+  --beyond-card-media-height: calc(272px * var(--beyond-card-width) / 314);
+  --beyond-card-media-inset-x: calc(20px * var(--beyond-card-width) / 314);
   --days-pad: var(--beyond-pad);
   --days-stage-width: calc(412px * var(--beyond-card-width) / 314);
   --days-active-height: calc(347.77px * var(--beyond-card-width) / 314);

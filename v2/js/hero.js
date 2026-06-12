@@ -4,7 +4,7 @@
 import Swiper from "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs";
 import { COMING_SOON_PAGE } from "./coming-soon.js";
 import { HERO_LOCATIONS } from "./data.js";
-import { loadBackgroundImage, loadCardImage, prefetchImage } from "./lazy-media.js";
+import { loadBackgroundImage, prefetchImage } from "./lazy-media.js";
 
 /** Figma hero location card — 314×420 */
 const HERO_CARD_DESIGN_W = 314;
@@ -94,21 +94,12 @@ export function initHero(parallax) {
     const card = document.createElement("a");
     card.className = "location-card";
     card.href = COMING_SOON_PAGE;
-    const cardMedia = document.createElement("img");
-    cardMedia.className = "location-card__media";
-    cardMedia.alt = "";
-    cardMedia.loading = "lazy";
-    cardMedia.decoding = "async";
-    card.appendChild(cardMedia);
-    loadCardImage(cardMedia, loc.bg);
-
-    const label = document.createElement("div");
-    label.className = "location-card__label";
-    label.innerHTML = `
-      <span>${loc.label}</span>
-      <img src="../assets/chevron.svg" alt="" width="12" height="12" draggable="false" />
+    card.innerHTML = `
+      <div class="location-card__label">
+        <span>${loc.label}</span>
+        <img src="../assets/chevron.svg" alt="" width="12" height="12" draggable="false" />
+      </div>
     `;
-    card.appendChild(label);
     cardSlide.appendChild(card);
     cardsWrapper.appendChild(cardSlide);
   });

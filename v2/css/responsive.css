@@ -20,8 +20,8 @@ body {
 
   .hero {
     --hero-content-top: max(
-      calc(var(--site-chrome-height) + 126px),
-      calc(env(safe-area-inset-top, 0px) + 174px)
+      calc(var(--site-chrome-height) + 48px),
+      calc(env(safe-area-inset-top, 0px) + 96px)
     );
     --hero-content-bottom: calc(var(--dock-safe) - 8px);
 
