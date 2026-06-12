@@ -681,7 +681,7 @@ video.opening__bg-media {
 
 .beyond__card {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: minmax(0, 1fr) auto;
   gap: var(--beyond-card-inner-gap);
   width: 100%;
   height: var(--beyond-card-height);
@@ -708,8 +708,10 @@ video.opening__bg-media {
 
 .beyond__card-media {
   box-sizing: border-box;
+  grid-row: 1;
   width: 100%;
   min-height: 0;
+  height: 100%;
   padding: var(--space-sm) var(--beyond-card-media-inset-x) 0;
   overflow: hidden;
   border-radius: calc(var(--radius-card) - 4px);
@@ -721,6 +723,7 @@ video.opening__bg-media {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
+  flex-shrink: 1;
   min-height: 0;
 }
 
@@ -735,10 +738,11 @@ video.opening__bg-media {
 .beyond__card-media .beyond__image,
 .beyond__card-media .beyond__video {
   border-radius: inherit;
-  width: var(--beyond-card-video-size);
-  max-width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
   object-fit: cover;
   object-position: center;
 }
@@ -752,7 +756,6 @@ video.opening__bg-media {
   display: flex;
   flex-direction: column;
   gap: var(--space-xxs);
-  align-self: end;
   grid-row: 2;
   padding: 0 var(--space-md) var(--space-md);
   box-sizing: border-box;
