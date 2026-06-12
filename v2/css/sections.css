@@ -600,7 +600,12 @@ video.opening__bg-media {
   height: 100%;
   border-radius: inherit;
   background: #ffffff;
-  transition: width 0.2s linear;
+  transition: none;
+  will-change: width;
+}
+
+.opening__progress-fill.is-loading {
+  transition: width 0.24s linear;
 }
 
 .opening__progress-fill.is-playing {
@@ -620,11 +625,9 @@ video.opening__bg-media {
     transition: none;
   }
 
-  .opening__progress-fill {
-    transition: none;
-  }
-
-  .opening__progress-fill.is-playing {
+  .opening__progress-fill,
+  .opening__progress-fill.is-playing,
+  .opening__progress-fill.is-loading {
     transition: none;
   }
 }
